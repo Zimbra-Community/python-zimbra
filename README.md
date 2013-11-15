@@ -15,6 +15,14 @@ on how to use the SOAP backend.
 
 For details refer to the [API-Documentation](http://zimbra-community.github.io/python-zimbra/docs/)
 
+Installation
+------------
+
+To install, either use things like easy_install or pip with the package
+"python-zimbra". (You may have to add --pre to download a prerelease) or
+download the package and put the "pythonzimbra" directory into your python
+path.
+
 Tutorial
 --------
 
