@@ -59,7 +59,7 @@ class ResponseJson(Response):
 
             if key == 'Fault':
 
-                has_fault
+                has_fault = True
 
         ret_dict['hasFault'] = has_fault
 

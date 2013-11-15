@@ -58,8 +58,6 @@ class RequestJson(Request):
 
         if self.batch_request:
 
-            request_node = self.request_dict['Body']['BatchRequest']
-
             request_id = self.batch_request_id
 
             request_dict['requestId'] = request_id
