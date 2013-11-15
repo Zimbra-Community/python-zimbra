@@ -83,3 +83,25 @@ class Response(object):
         """
 
         pass
+
+    def is_fault(self):
+
+        """ Checks, wether this response has at least one fault response (
+        supports both batch and single responses)
+        """
+
+        if self.is_batch():
+
+            info = self.get_batch()
+
+            return info['hasFault']
+
+        else:
+
+            my_response = self.get_response()
+
+            if my_response.keys()[0] == 'Fault':
+
+                return True
+
+        return False

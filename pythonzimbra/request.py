@@ -44,6 +44,21 @@ class Request(object):
                     "%s is not a valid context parameter." % key
                 )
 
+    def set_auth_token(self, token):
+
+        """Convenience function to inject the auth token into the header
+
+        :param token: Auth token
+        """
+
+        self.set_context_params(
+            {
+                'authToken': {
+                    '_content': token
+                }
+            }
+        )
+
     def enable_batch(self, namespace, onerror="continue"):
 
         """Enables batch request gathering.
