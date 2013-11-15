@@ -25,6 +25,22 @@ tests Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`test_request_json` Module
+-------------------------------
+
+.. automodule:: tests.test_request_json
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_response_json` Module
+--------------------------------
+
+.. automodule:: tests.test_response_json
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`test_request_xml` Module
 ------------------------------
 

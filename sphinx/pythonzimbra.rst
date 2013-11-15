@@ -25,6 +25,13 @@ pythonzimbra Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`request_json` Module
+--------------------------
+
+.. automodule:: pythonzimbra.request_json
+    :members:
+    :show-inheritance:
+
 :mod:`request_xml` Module
 -------------------------
 
@@ -38,6 +45,13 @@ pythonzimbra Package
 .. automodule:: pythonzimbra.response
     :members:
     :undoc-members:
+    :show-inheritance:
+
+:mod:`response_json` Module
+---------------------------
+
+.. automodule:: pythonzimbra.response_json
+    :members:
     :show-inheritance:
 
 :mod:`response_xml` Module

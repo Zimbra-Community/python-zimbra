@@ -9,8 +9,8 @@ class TestAuth(TestCase):
 
         def test_auth_xml(self):
 
-            """ Send a configured auth request and check a successfully
-            returned token
+            """ Send a configured auth request in XML format and check a
+            successfully returned token
             """
 
             config = get_config()
@@ -46,8 +46,8 @@ class TestAuth(TestCase):
 
         def test_auth_json(self):
 
-            """ Send a configured auth request and check a successfully
-            returned token
+            """ Send a configured auth request in json format and check a
+            successfully returned token
             """
 
             config = get_config()
