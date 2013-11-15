@@ -23,7 +23,8 @@ class TestResponseXml(TestCase):
                            '.NETWORK"/></GetVersionInfoResponse></soap:Body' \
                            '></soap:Envelope>'
 
-    """ The result we test against (coming from a GetVersionInfoRequest) """
+    """ The result we test against (coming from a GetVersionInfoRequest by
+    running zmsoap -z --json -t admin GetVersionInfoRequest -vv) """
 
     response = None
 
@@ -57,11 +58,7 @@ class TestResponseXml(TestCase):
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_body()),
-            "Unexpected body returned. Expected: %s. Got: %s" % (
-                expected_result,
-                pickle.dumps(self.response.get_body())
-            )
+            pickle.dumps(self.response.get_body())
         )
 
     def test_get_header(self):
@@ -71,11 +68,7 @@ class TestResponseXml(TestCase):
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_header()),
-            "Unexpected header returned. Expected: %s. Got: %s" % (
-                expected_result,
-                pickle.dumps(self.response.get_body())
-            )
+            pickle.dumps(self.response.get_header())
         )
 
     def test_is_batch(self):
@@ -109,9 +102,5 @@ class TestResponseXml(TestCase):
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_response()),
-            "Unexpected response returned. Expected: %s. Got: %s" % (
-                expected_result,
-                pickle.dumps(self.response.get_body())
-            )
+            pickle.dumps(self.response.get_response())
         )

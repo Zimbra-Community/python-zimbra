@@ -1,7 +1,6 @@
 """ Request handling and generation (XML version). """
 
 import xml.dom.minidom
-from pythonzimbra.exceptions.request import NoNamespaceGiven
 from pythonzimbra.tools import xmlserializer
 from request import Request
 
@@ -82,16 +81,16 @@ class RequestXml(Request):
 
     def add_request(self, request_name, request_dict, namespace=None):
 
+        super(RequestXml, self).add_request(
+            request_name,
+            request_dict,
+            namespace
+        )
+
         request_node = self.request_doc.createElement(request_name)
         xmlserializer.dict_to_dom(request_node, request_dict)
 
         if not self.batch_request:
-
-            if not namespace:
-                raise NoNamespaceGiven(
-                    'You have added a request without specifying a XML '
-                    'namespace, but you are not in batch request mode.'
-                )
 
             request_node.setAttribute('xmlns', namespace)
 

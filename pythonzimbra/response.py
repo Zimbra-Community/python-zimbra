@@ -104,3 +104,43 @@ class Response(object):
                 return True
 
         return False
+
+    def _filter_response(self, response_dict):
+
+        """ Add additional filters to the response dictionary
+
+        Currently the response dictionary is filtered like this:
+
+          * If a list only has one item, the list is replaced by that item
+          * Keys with "_jsns" are removed (they only exist in the
+            json-version and thus aren't compatible)
+
+        :param response_dict: the pregenerated, but unfiltered response dict
+        :type response_dict: dict
+        :return: The filtered dictionary
+        :rtype: dict
+        """
+
+        filtered_dict = {}
+
+        for key, value in response_dict.iteritems():
+
+            if key == '_jsns':
+
+                continue
+
+            if type(value) == list and len(value) == 1:
+
+                filtered_dict[key] = value[0]
+
+            elif type(value) == dict:
+
+                tmp_dict = self._filter_response(value)
+
+                filtered_dict[key] = tmp_dict
+
+            else:
+
+                filtered_dict[key] = value
+
+        return filtered_dict

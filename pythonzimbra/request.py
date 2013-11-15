@@ -1,6 +1,6 @@
 """ Request handling and generation. """
 
-from pythonzimbra.exceptions.request import RequestHeaderContextException
+from pythonzimbra.exceptions.request import RequestHeaderContextException, NoNamespaceGiven
 
 
 class Request(object):
@@ -95,6 +95,8 @@ class Request(object):
         requesting is enabled. Has to update the self.batch_request_id after
         adding a batch request!
 
+        Implementing classes should call this first for checks.
+
         :param request_name: The name of the request
         :param request_dict: The request parameters as a serializable dict.
           Check out xmlserializer documentation about this.
@@ -104,7 +106,13 @@ class Request(object):
         :rtype: int or None
         """
 
-        pass
+        if not self.batch_request:
+
+            if not namespace:
+                raise NoNamespaceGiven(
+                    'You have added a request without specifying a XML '
+                    'namespace, but you are not in batch request mode.'
+                )
 
     def get_request(self):
 

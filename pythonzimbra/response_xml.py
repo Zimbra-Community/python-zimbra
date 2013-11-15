@@ -71,6 +71,8 @@ class ResponseXml(Response):
 
         ret_dict['hasFault'] = has_fault
 
+        return ret_dict
+
     def get_response(self, request_id=0):
 
         if self.is_batch():
@@ -83,7 +85,7 @@ class ResponseXml(Response):
 
                 if child.getAttribute("requestId") == request_id:
 
-                    return dom_to_dict(child)
+                    return self._filter_response(dom_to_dict(child))
 
             return None
 
@@ -93,4 +95,4 @@ class ResponseXml(Response):
                 "*", "Body"
             ).item(0)
 
-            return dom_to_dict(search_node.firstChild)
+            return self._filter_response(dom_to_dict(search_node.firstChild))

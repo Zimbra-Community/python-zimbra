@@ -13,6 +13,8 @@ speak to the Zimbra SOAP API.
 Please refer to the [official SOAP documentation by Zimbra](http://wiki.zimbra.com/wiki/SOAP_API_Reference_Material_Beginning_with_ZCS_8.0)
 on how to use the SOAP backend.
 
+For details refer to the [API-Documentation](http://zimbra-community.github.io/python-zimbra/docs/)
+
 Tutorial
 --------
 

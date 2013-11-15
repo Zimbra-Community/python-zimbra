@@ -3,15 +3,17 @@ authentication token """
 
 from datetime import datetime
 from urllib2 import HTTPError
+from pythonzimbra.request_json import RequestJson
 
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.communication import Communication
+from pythonzimbra.response_json import ResponseJson
 from pythonzimbra.response_xml import ResponseXml
 from pythonzimbra.tools import preauth
 
 
 def authenticate(url, account, key, by='name', expires=0, timestamp=None,
-                 timeout=None):
+                 timeout=None, request_type="xml"):
 
     """ Authenticate to the Zimbra server
 
@@ -33,7 +35,13 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
 
     pak = preauth.create_preauth(account, key, by, expires, timestamp)
 
-    auth_request = RequestXml()
+    if request_type == 'xml':
+
+        auth_request = RequestXml()
+
+    else:
+
+        auth_request = RequestJson()
 
     auth_request.add_request(
         'AuthRequest',
@@ -53,7 +61,13 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
 
     server = Communication(url, timeout)
 
-    response = ResponseXml()
+    if request_type == 'xml':
+
+        response = ResponseXml()
+
+    else:
+
+        response = ResponseJson()
 
     try:
 

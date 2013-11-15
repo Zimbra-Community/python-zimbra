@@ -48,12 +48,7 @@ class TestXmlSerializer(TestCase):
 
         self.assertEqual(
             expected_result,
-            test_node.toxml(),
-            "Error converting a dictionary to an XML. Expected: %s. Got: %s"
-            % (
-                expected_result,
-                test_node.toxml()
-            )
+            test_node.toxml()
         )
 
     def test_dom_to_dict(self):
@@ -87,10 +82,5 @@ class TestXmlSerializer(TestCase):
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(test_dict),
-            "Error converting a XML document to a dictionary. Expected %s. "
-            "Got: %s" % (
-                expected_result,
-                pickle.dumps(test_dict)
-            )
+            pickle.dumps(test_dict)
         )

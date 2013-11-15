@@ -1,12 +1,12 @@
 """ Request tests """
 
 from unittest import TestCase
-from pythonzimbra.request_xml import RequestXml
+from pythonzimbra.request_json import RequestJson
 from pythonzimbra.exceptions.request import \
     NoNamespaceGiven, RequestHeaderContextException
 
 
-class TestRequestXml(TestCase):
+class TestRequestJson(TestCase):
     """ Request tests
     """
 
@@ -21,18 +21,14 @@ class TestRequestXml(TestCase):
         self.setUp()
 
     def setUp(self):
-        self.request = RequestXml()
+        self.request = RequestJson()
 
     def test_empty_request(self):
         """ Create an empty request and check the created xml
         """
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context' \
-                          ' xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '/></soap:Envelope>'
+        expected_result = '{"Body": {}, "Header": {"context": {"_jsns": ' \
+                          '"urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -92,20 +88,18 @@ class TestRequestXml(TestCase):
             }
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/><authToken>1234567890abcdef</authToken' \
-                          '><account by="name">user@zimbra' \
-                          '.com</account><session id="1234567890abcdef" ' \
-                          'seq="1234567890" type="admin"/><authTokenControl ' \
-                          'voidOnExpired="1"/><targetServer>mailboxserver' \
-                          '.zimbra.com</targetServer><via>proxyserver.zimbra' \
-                          '.com</via><userAgent name="Mozilla" version="1' \
-                          '.0"/><change token="1234567890abcdef" ' \
-                          'type="new"/></context></soap:Header><soap:Body' \
-                          '/></soap:Envelope>'
+        expected_result = '{"Body": {}, "Header": {"context": {"authToken": {' \
+                          '"_content": "1234567890abcdef"}, "account": {"by":' \
+                          ' "name", "_content": "user@zimbra.com"}, ' \
+                          '"via": {"_content": "proxyserver.zimbra.com"}, ' \
+                          '"targetServer": {"_content": "mailboxserver.zimbra' \
+                          '.com"}, "format": {"type": "js"}, ' \
+                          '"_jsns": "urn:zimbra", "session": {"type": ' \
+                          '"admin", "id": "1234567890abcdef", ' \
+                          '"seq": "1234567890"}, "authTokenControl": {' \
+                          '"voidOnExpired": "1"}, "userAgent": {"version": "1' \
+                          '.0", "name": "Mozilla"}, "change": {"token": ' \
+                          '"1234567890abcdef", "type": "new"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -125,13 +119,9 @@ class TestRequestXml(TestCase):
 
         self.request.enable_batch('urn:zimbra')
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
+        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
+                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
+                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -149,13 +139,9 @@ class TestRequestXml(TestCase):
 
         self.request.enable_batch('urn:zimbra', 'stop')
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="stop" ' \
-                          'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
+        expected_result = '{"Body": {"BatchRequest": {"onerror": "stop", ' \
+                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
+                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -197,15 +183,9 @@ class TestRequestXml(TestCase):
             )
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"><GetInfoRequest requestId="1" ' \
-                          'sections="mbox,' \
-                          'prefs"/></BatchRequest></soap:Body></soap:Envelope>'
+        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
+                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
+                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -236,17 +216,9 @@ class TestRequestXml(TestCase):
             )
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"><GetInfoRequest requestId="1" ' \
-                          'sections="mbox,prefs"/><GetInfoRequest ' \
-                          'requestId="2" ' \
-                          'sections="zimlets"/></BatchRequest></soap:Body' \
-                          '></soap:Envelope>'
+        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
+                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
+                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -292,14 +264,10 @@ class TestRequestXml(TestCase):
                 )
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><GetInfoRequest sections="mbox,' \
-                          'prefs" ' \
-                          'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
+        expected_result = '{"Body": {"GetInfoRequest": {"_jsns": ' \
+                          '"urn:zimbra", "sections": "mbox,prefs"}}, ' \
+                          '"Header": {"context": {"_jsns": "urn:zimbra", ' \
+                          '"format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
