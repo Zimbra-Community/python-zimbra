@@ -1,8 +1,6 @@
 """ Request handling and generation """
 
-import xml.dom.minidom
-from pythonzimbra.exceptions.request import RequestHeaderContextException, NoXMLNSGiven
-from pythonzimbra.tools import xmlserializer
+from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class Request(object):

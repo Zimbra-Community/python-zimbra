@@ -1,8 +1,6 @@
 """ Zimbra communication handler """
-import re
 
 import urllib2
-from xml.dom import minidom
 
 
 class Communication(object):

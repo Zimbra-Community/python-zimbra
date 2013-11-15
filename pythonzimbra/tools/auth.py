@@ -44,7 +44,7 @@ def authenticate(url, byval, key, by='name', expires=0, timestamp=None,
 
         server.send_request(auth_request, response)
 
-    except HTTPError as e:
+    except HTTPError:
 
         # A HTTPError (which is an AuthError in most cases) occured. Simply
         # return nothing

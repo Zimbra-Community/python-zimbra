@@ -5,7 +5,7 @@ def dict_to_dom(root_node, xml_dict):
     """ Create a DOM node and optionally several subnodes from a dictionary.
 
     :param root_node: DOM-Node set the dictionary is applied upon
-    :type root_node: xml.dom.Node
+    :type root_node: xml.dom.Element
     :param xml_dict: The dictionary containding the nodes to process. This
     dictionary is expected in this format:
       {
