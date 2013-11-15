@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pythonzimbra.communication &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pythonzimbra.communication</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Zimbra communication handler &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">urllib2</span>
+
+
+<div class="viewcode-block" id="Communication"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication">[docs]</a><span class="k">class</span> <span class="nc">Communication</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Zimbra communication handler</span>
+
+<span class="sd">    Sends requests to the zimbra SOAP server and returns the responses in a</span>
+<span class="sd">    dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># URL to the zimbra soap interface</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c"># Timeout of the request</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Initialize the communication handler</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+<div class="viewcode-block" id="Communication.send_request"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication.send_request">[docs]</a>    <span class="k">def</span> <span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Send the request</span>
+
+<span class="sd">        Sends the request and retrieves the results, formats them and returns</span>
+<span class="sd">         them in a dict or a list (when it&#39;s a batchresponse). If something</span>
+<span class="sd">         goes wrong, raises a SoapFailure or a HTTPError on system-side</span>
+<span class="sd">         failures. Note: AuthRequest raises an HTTPError on failed</span>
+<span class="sd">         authentications!</span>
+
+<span class="sd">        :param request: The request to send</span>
+<span class="sd">        :type request: pythonzimbra.request.Request</span>
+<span class="sd">        :param response: A prebuilt response object</span>
+<span class="sd">        :type response: pythonzimbra.response.Response</span>
+<span class="sd">        :raises: pythonzimbra.exceptions.communication.SoapFailure or</span>
+<span class="sd">                urllib2.HTTPError</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">server_request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">server_response</span> <span class="o">=</span> <span class="n">server_request</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="c"># Return the exception to the caller on HTTPerrors</span>
+
+            <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="c"># Find the response for</span>
+
+        <span class="n">response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">server_response</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
