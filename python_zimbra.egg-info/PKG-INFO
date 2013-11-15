@@ -1,0 +1,23 @@
+Metadata-Version: 1.1
+Name: python-zimbra
+Version: 1.0-rc1
+Summary: Python classes to access Zimbra SOAP backend with a few utilities.
+Home-page: https://github.com/Zimbra-Community/python-zimbra
+Author: Dennis Ploeger
+Author-email: develop@dieploegers.de
+License: BSD 2-clause License
+Description: Python classes to access Zimbra SOAP backend with a few utilities. Handles creating and sending Zimbra SOAP queries to the backend and adds a few utilities such as a preauth generator.
+        
+        For more information, please visit https://github.com/Zimbra-Community/python-zimbra
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries

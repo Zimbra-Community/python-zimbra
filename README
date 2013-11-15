@@ -1,0 +1,3 @@
+Python classes to access Zimbra SOAP backend with a few utilities. Handles creating and sending Zimbra SOAP queries to the backend and adds a few utilities such as a preauth generator.
+
+For more information, please visit https://github.com/Zimbra-Community/python-zimbra
