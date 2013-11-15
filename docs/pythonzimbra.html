@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pythonzimbra Package &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="index.html" />
+    <link rel="next" title="exceptions Package" href="pythonzimbra.exceptions.html" />
+    <link rel="prev" title="Welcome to Python-Zimbra’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.exceptions.html" title="exceptions Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Python-Zimbra’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pythonzimbra-package">
+<h1>pythonzimbra Package<a class="headerlink" href="#pythonzimbra-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#module-pythonzimbra" title="pythonzimbra"><tt class="xref py py-mod docutils literal"><span class="pre">pythonzimbra</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pythonzimbra"></span><p>Python-Zimbra Package.</p>
+</div>
+<div class="section" id="module-pythonzimbra.communication">
+<span id="communication-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">communication</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.communication" title="Permalink to this headline">¶</a></h2>
+<p>Zimbra communication handler.</p>
+<dl class="class">
+<dt id="pythonzimbra.communication.Communication">
+<em class="property">class </em><tt class="descclassname">pythonzimbra.communication.</tt><tt class="descname">Communication</tt><big>(</big><em>url</em>, <em>timeout=None</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/communication.html#Communication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.communication.Communication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Zimbra communication handler.</p>
+<p>Sends requests to the zimbra SOAP server and returns the responses in a
+dictionary.</p>
+<dl class="method">
+<dt id="pythonzimbra.communication.Communication.send_request">
+<tt class="descname">send_request</tt><big>(</big><em>request</em>, <em>response</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/communication.html#Communication.send_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.communication.Communication.send_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the request.</p>
+<dl class="docutils">
+<dt>Sends the request and retrieves the results, formats them and returns</dt>
+<dd>them in a dict or a list (when it&#8217;s a batchresponse). If something
+goes wrong, raises a SoapFailure or a HTTPError on system-side
+failures. Note: AuthRequest raises an HTTPError on failed
+authentications!</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> (<a class="reference internal" href="#pythonzimbra.request.Request" title="pythonzimbra.request.Request"><em>pythonzimbra.request.Request</em></a>) &#8211; The request to send</li>
+<li><strong>response</strong> (<a class="reference internal" href="#pythonzimbra.response.Response" title="pythonzimbra.response.Response"><em>pythonzimbra.response.Response</em></a>) &#8211; A prebuilt response object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises :</th><td class="field-body"><p class="first last">pythonzimbra.exceptions.communication.SoapFailure or
+urllib2.HTTPError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.communication.Communication.timeout">
+<tt class="descname">timeout</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.communication.Communication.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timeout of the request</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.communication.Communication.url">
+<tt class="descname">url</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.communication.Communication.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL to the zimbra soap interface</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.request">
+<span id="request-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">request</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.request" title="Permalink to this headline">¶</a></h2>
+<p>Request handling and generation.</p>
+<dl class="class">
+<dt id="pythonzimbra.request.Request">
+<em class="property">class </em><tt class="descclassname">pythonzimbra.request.</tt><tt class="descname">Request</tt><a class="reference internal" href="_modules/pythonzimbra/request.html#Request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Zimbra SOAP request generation and handling.</p>
+<dl class="method">
+<dt id="pythonzimbra.request.Request.add_request">
+<tt class="descname">add_request</tt><big>(</big><em>request_name</em>, <em>request_dict</em>, <em>namespace=None</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.add_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a request.</p>
+<p>This adds a request to the body or to the batchrequest-node if batch
+requesting is enabled. Has to update the self.batch_request_id after
+adding a batch request!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request_name</strong> &#8211; The name of the request</li>
+<li><strong>request_dict</strong> &#8211; The request parameters as a serializable dict.
+Check out xmlserializer documentation about this.</li>
+<li><strong>namespace</strong> &#8211; The XML namespace of the request. (Please don&#8217;t use
+the request_dict to specify it, use this parameter)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The current request id (if batch processing) or None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.request.Request.batch_request">
+<tt class="descname">batch_request</tt><em class="property"> = False</em><a class="headerlink" href="#pythonzimbra.request.Request.batch_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are we doing batch requests?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.request.Request.batch_request_id">
+<tt class="descname">batch_request_id</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.request.Request.batch_request_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>If so, keep the current request id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.request.Request.enable_batch">
+<tt class="descname">enable_batch</tt><big>(</big><em>namespace</em>, <em>onerror='continue'</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.enable_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.enable_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables batch request gathering.</p>
+<p>Do this first and then consecutively call &#8220;add_request&#8221; to add more
+requests. All requests have to be the same namespace, so specify the
+xml namespace (i.e. &#8220;<a class="reference external" href="urn:zimbra">urn:zimbra</a>&#8221;) here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>namespace</strong> &#8211; The XML namespace of the requests to come</li>
+<li><strong>onerror</strong> &#8211; &#8220;continue&#8221; (default) if one request fails (and
+response with soap Faults for the request) or &#8220;stop&#8221; processing.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.request.Request.get_request">
+<tt class="descname">get_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.get_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.get_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the request in the native form.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.request.Request.set_auth_token">
+<tt class="descname">set_auth_token</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.set_auth_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.set_auth_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to inject the auth token into the header.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>token</strong> &#8211; Auth token</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.request.Request.set_context_params">
+<tt class="descname">set_context_params</tt><big>(</big><em>params</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.set_context_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.set_context_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set header context parameters. Refer to the top of &lt;Zimbra
+Server-Root&gt;/docs/soap.txt about specifics.</p>
+<p>The &lt;format&gt;-Parameter cannot be changed, because it is set by the
+implementing class.</p>
+<p>Should be called by implementing method to check for valid context
+params.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>params</strong> &#8211; A Dict containing context parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.request.Request.valid_context_params">
+<tt class="descname">valid_context_params</tt><em class="property"> = ['authToken', 'authTokenControl', 'session', 'account', 'change', 'targetServer', 'userAgent', 'via']</em><a class="headerlink" href="#pythonzimbra.request.Request.valid_context_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Valid parameter name for Soap context</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.request_xml">
+<span id="request-xml-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">request_xml</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.request_xml" title="Permalink to this headline">¶</a></h2>
+<p>Request handling and generation (XML version).</p>
+<dl class="class">
+<dt id="pythonzimbra.request_xml.RequestXml">
+<em class="property">class </em><tt class="descclassname">pythonzimbra.request_xml.</tt><tt class="descname">RequestXml</tt><a class="reference internal" href="_modules/pythonzimbra/request_xml.html#RequestXml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request_xml.RequestXml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pythonzimbra.request.Request" title="pythonzimbra.request.Request"><tt class="xref py py-class docutils literal"><span class="pre">pythonzimbra.request.Request</span></tt></a></p>
+<p>Zimbra SOAP request generation and handling (XML version).</p>
+<dl class="attribute">
+<dt id="pythonzimbra.request_xml.RequestXml.body_node">
+<tt class="descname">body_node</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.request_xml.RequestXml.body_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Body node</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.request_xml.RequestXml.context_node">
+<tt class="descname">context_node</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.request_xml.RequestXml.context_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Header context</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pythonzimbra.request_xml.RequestXml.request_doc">
+<tt class="descname">request_doc</tt><em class="property"> = None</em><a class="headerlink" href="#pythonzimbra.request_xml.RequestXml.request_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>The XML request we&#8217;re building up</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.response">
+<span id="response-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">response</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.response" title="Permalink to this headline">¶</a></h2>
+<p>Zimbra response access.</p>
+<dl class="class">
+<dt id="pythonzimbra.response.Response">
+<em class="property">class </em><tt class="descclassname">pythonzimbra.response.</tt><tt class="descname">Response</tt><a class="reference internal" href="_modules/pythonzimbra/response.html#Response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Unified access to Zimbra responses.</p>
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_batch">
+<tt class="descname">get_batch</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.get_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.get_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an informative dictionary about a batch response.</p>
+<p>Returns a dictionary containing the following information:</p>
+<div class="highlight-python"><pre>{
+    "hasFault": &lt;bool wether the batch has at least one SoapFault
+    "idToName": {
+        &lt;A dictionary mapping a response id to the corresponding
+        response name or Fault&gt;
+    }
+    "nameToId": {
+        &lt;A dictionary mapping response names (or Fault) to the
+        corresponding response id(s)
+    }
+}</pre>
+</div>
+<p>If the method is called with no batch response existing, returns None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Informative dictionary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_body">
+<tt class="descname">get_body</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.get_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.get_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the body of the response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The response body in the documented dictionary format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_header">
+<tt class="descname">get_header</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.get_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the header of the response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The response header in the documented dictionary format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_response">
+<tt class="descname">get_response</tt><big>(</big><em>request_id=0</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.get_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.get_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the response with the given request_id.</p>
+<p>Returns the specific response. If &#8220;request_id&#8221; isn&#8217;t provided or 0,
+the first (or only one in a non-batch) response is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.is_batch">
+<tt class="descname">is_batch</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.is_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.is_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether we have a BatchResponse.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Whether we have a BatchResponse</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.is_fault">
+<tt class="descname">is_fault</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.is_fault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.is_fault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks, wether this response has at least one fault response (
+supports both batch and single responses)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.set_response">
+<tt class="descname">set_response</tt><big>(</big><em>response_text</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/response.html#Response.set_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.response.Response.set_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret the response object.</p>
+<p>Creates the internal response object by converting the given text
+from the HTTP communication into a managed object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.response_xml">
+<span id="response-xml-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">response_xml</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.response_xml" title="Permalink to this headline">¶</a></h2>
+<p>XML-Response format.</p>
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pythonzimbra.exceptions.html">exceptions Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.exceptions.html#id1"><tt class="docutils literal"><span class="pre">exceptions</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.exceptions.html#module-pythonzimbra.exceptions.request"><tt class="docutils literal"><span class="pre">request</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pythonzimbra.tools.html">tools Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.tools.html#id1"><tt class="docutils literal"><span class="pre">tools</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.auth"><tt class="docutils literal"><span class="pre">auth</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.preauth"><tt class="docutils literal"><span class="pre">preauth</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.xmlserializer"><tt class="docutils literal"><span class="pre">xmlserializer</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pythonzimbra Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">pythonzimbra</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.communication"><tt class="docutils literal"><span class="pre">communication</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.request"><tt class="docutils literal"><span class="pre">request</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.request_xml"><tt class="docutils literal"><span class="pre">request_xml</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.response"><tt class="docutils literal"><span class="pre">response</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.response_xml"><tt class="docutils literal"><span class="pre">response_xml</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Python-Zimbra&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pythonzimbra.exceptions.html"
+                        title="next chapter">exceptions Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pythonzimbra.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.exceptions.html" title="exceptions Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Python-Zimbra’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

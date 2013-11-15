@@ -6,14 +6,7 @@ def dict_to_dom(root_node, xml_dict):
 
     :param root_node: DOM-Node set the dictionary is applied upon
     :type root_node: xml.dom.Element
-    :param xml_dict: The dictionary containding the nodes to process. This
-    dictionary is expected in this format:
-      {
-        '_content' : <The raw content of the tag>
-        'subtag': {...} <A subtag with other nodes. Is also a dictionary in the
-                   same format>
-        'attrib': 'value' <An attribute with its value
-      }
+    :param xml_dict: The dictionary containing the nodes to process
     :type xml_dict: dict
     """
 

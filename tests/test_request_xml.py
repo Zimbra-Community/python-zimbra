@@ -3,16 +3,16 @@
 from unittest import TestCase
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.exceptions.request import \
-    NoXMLNSGiven, RequestHeaderContextException
+    NoNamespaceGiven, RequestHeaderContextException
 
 
 class TestRequest(TestCase):
     """ Request tests
     """
 
-    # The request to be tested against
-
     request = None
+
+    """ The request to be tested against """
 
     def cleanUp(self):
         """ Clean up after one step to leave a dedicated result for the other
@@ -291,7 +291,7 @@ class TestRequest(TestCase):
         """
 
         self.assertRaises(
-            NoXMLNSGiven,
+            NoNamespaceGiven,
             self.request.add_request,
             'GetInfoRequest',
             {

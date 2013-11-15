@@ -1,31 +1,27 @@
-""" Request handling and generation (XML version) """
+""" Request handling and generation (XML version). """
 
 import xml.dom.minidom
-from pythonzimbra.exceptions.request import NoXMLNSGiven
+from pythonzimbra.exceptions.request import NoNamespaceGiven
 from pythonzimbra.tools import xmlserializer
 from request import Request
 
 
 class RequestXml(Request):
-    """ Zimbra SOAP request generation and handling
+
+    """ Zimbra SOAP request generation and handling (XML version).
     """
 
-    request_type = "xml"
-
-    # The XML request we're building up
     request_doc = None
 
-    # Header context
+    """ The XML request we're building up """
+
     context_node = None
 
-    # Body node
+    """ Header context """
+
     body_node = None
 
-    # Are we doing batch requests?
-    batch_request = False
-
-    # If so, keep the current request id
-    batch_request_id = None
+    """ Body node """
 
     def __init__(self):
 
@@ -86,27 +82,13 @@ class RequestXml(Request):
 
     def add_request(self, request_name, request_dict, namespace=None):
 
-        """ Add a request.
-
-        This adds a request to the body or to the batchrequest-node if batch
-        requesting is enabled.
-
-        :param request_name: The name of the request
-        :param request_dict: The request parameters as a serializable dict.
-        Check out xmlserializer documentation about this.
-        :param namespace: The XML namespace of the request. (Please don't use
-        the request_dict to specify it, use this parameter)
-        :returns: The current request id (if batch processing) or None
-        :rtype: int or None
-        """
-
         request_node = self.request_doc.createElement(request_name)
         xmlserializer.dict_to_dom(request_node, request_dict)
 
         if not self.batch_request:
 
             if not namespace:
-                raise NoXMLNSGiven(
+                raise NoNamespaceGiven(
                     'You have added a request without specifying a XML '
                     'namespace, but you are not in batch request mode.'
                 )

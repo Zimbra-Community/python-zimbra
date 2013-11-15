@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_xmlserializer &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="tests" href="../tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" accesskey="U">tests</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for tests.test_xmlserializer</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Tests of XML Serializer tools &quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools</span> <span class="kn">import</span> <span class="n">xmlserializer</span>
+<span class="kn">from</span> <span class="nn">xml.dom</span> <span class="kn">import</span> <span class="n">minidom</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools.xmlserializer</span> <span class="kn">import</span> <span class="n">dom_to_dict</span>
+
+
+<div class="viewcode-block" id="TestXmlSerializer"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer">[docs]</a><span class="k">class</span> <span class="nc">TestXmlSerializer</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestXmlSerializer.test_dict_to_dom"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer.test_dict_to_dom">[docs]</a>    <span class="k">def</span> <span class="nf">test_dict_to_dom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Test xml serialization using dict_to_dom method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">test_doc</span> <span class="o">=</span> <span class="n">minidom</span><span class="o">.</span><span class="n">Document</span><span class="p">()</span>
+        <span class="n">test_node</span> <span class="o">=</span> <span class="n">test_doc</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+        <span class="n">test_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;attr1&#39;</span><span class="p">:</span> <span class="s">&#39;value1&#39;</span><span class="p">,</span>
+            <span class="s">&#39;attr2&#39;</span><span class="p">:</span> <span class="s">&#39;value2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;subnode1&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">&#39;testcontent&#39;</span>
+            <span class="p">},</span>
+            <span class="s">&#39;subnode2&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;subnode2attr1&#39;</span><span class="p">:</span> <span class="s">&#39;value1&#39;</span><span class="p">,</span>
+                <span class="s">&#39;subnode2attr2&#39;</span><span class="p">:</span> <span class="s">&#39;value2&#39;</span><span class="p">,</span>
+                <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">&#39;testcontent2&#39;</span>
+            <span class="p">},</span>
+            <span class="s">&#39;subnode3&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;subnode3attr1&#39;</span><span class="p">:</span> <span class="s">&#39;value1&#39;</span><span class="p">,</span>
+                <span class="s">&#39;subnode3attr2&#39;</span><span class="p">:</span> <span class="s">&#39;value2&#39;</span><span class="p">,</span>
+                <span class="s">&#39;subnode31&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">&#39;testcontent3&#39;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">xmlserializer</span><span class="o">.</span><span class="n">dict_to_dom</span><span class="p">(</span><span class="n">test_node</span><span class="p">,</span> <span class="n">test_dict</span><span class="p">)</span>
+
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;test attr1=&quot;value1&quot; attr2=&quot;value2&quot;&gt;&lt;subnode2 &#39;</span> \
+                          <span class="s">&#39;subnode2attr1=&quot;value1&quot; &#39;</span> \
+                          <span class="s">&#39;subnode2attr2=&quot;value2&quot;&gt;testcontent2&lt;/subnode2&#39;</span> \
+                          <span class="s">&#39;&gt;&lt;subnode1&gt;testcontent&lt;/subnode1&gt;&lt;subnode3 &#39;</span> \
+                          <span class="s">&#39;subnode3attr1=&quot;value1&quot; &#39;</span> \
+                          <span class="s">&#39;subnode3attr2=&quot;value2&quot;&gt;&lt;subnode31&gt;testcontent3&#39;</span> \
+                          <span class="s">&#39;&lt;/subnode31&gt;&lt;/subnode3&gt;&lt;/test&gt;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="n">expected_result</span><span class="p">,</span>
+            <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">(),</span>
+            <span class="s">&quot;Error converting a dictionary to an XML. Expected: </span><span class="si">%s</span><span class="s">. Got: </span><span class="si">%s</span><span class="s">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="n">expected_result</span><span class="p">,</span>
+                <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestXmlSerializer.test_dom_to_dict"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer.test_dom_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_dom_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Test xml-&gt;dict serialization</span>
+
+<span class="sd">        Creates a node, generates the dict using dict_to_dom and compares a</span>
+<span class="sd">        pickled result</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">test_doc</span> <span class="o">=</span> <span class="n">minidom</span><span class="o">.</span><span class="n">Document</span><span class="p">()</span>
+
+        <span class="n">test_node</span> <span class="o">=</span> <span class="n">test_doc</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+
+        <span class="n">test_node</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&quot;testattribute&quot;</span><span class="p">,</span> <span class="s">&quot;value&quot;</span><span class="p">)</span>
+
+        <span class="n">test_subnode</span> <span class="o">=</span> <span class="n">test_doc</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s">&quot;subtest&quot;</span><span class="p">)</span>
+
+        <span class="n">test_subnode</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">test_doc</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s">&quot;testcontent&quot;</span><span class="p">))</span>
+
+        <span class="n">test_node</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">test_subnode</span><span class="p">)</span>
+
+        <span class="n">test_doc</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">test_node</span><span class="p">)</span>
+
+        <span class="n">test_dict</span> <span class="o">=</span> <span class="n">dom_to_dict</span><span class="p">(</span><span class="n">test_node</span><span class="p">)</span>
+
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&quot;(dp0</span><span class="se">\n</span><span class="s">S&#39;test&#39;</span><span class="se">\n</span><span class="s">p1</span><span class="se">\n</span><span class="s">(&quot;</span> \
+                          <span class="s">&quot;dp2</span><span class="se">\n</span><span class="s">S&#39;testattribute&#39;</span><span class="se">\n</span><span class="s">p3</span><span class="se">\n</span><span class="s">S&#39;value&#39;</span><span class="se">\n</span><span class="s">p4</span><span class="se">\n</span><span class="s">sS&quot;</span> \
+                          <span class="s">&quot;&#39;subtest&#39;</span><span class="se">\n</span><span class="s">p5</span><span class="se">\n</span><span class="s">(&quot;</span> \
+                          <span class="s">&quot;dp6</span><span class="se">\n</span><span class="s">S&#39;_content&#39;</span><span class="se">\n</span><span class="s">p7</span><span class="se">\n</span><span class="s">S&#39;testcontent&#39;</span><span class="se">\n</span><span class="s">p8</span><span class="se">\n</span><span class="s">sss.&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="n">expected_result</span><span class="p">,</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">),</span>
+            <span class="s">&quot;Error converting a XML document to a dictionary. Expected </span><span class="si">%s</span><span class="s">. &quot;</span>
+            <span class="s">&quot;Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">expected_result</span><span class="p">,</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" >tests</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

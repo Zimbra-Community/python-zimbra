@@ -1,24 +1,27 @@
-""" Request handling and generation """
+""" Request handling and generation. """
 
 from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class Request(object):
-    """ Zimbra SOAP request generation and handling
+
+    """ Zimbra SOAP request generation and handling.
+
     """
 
     valid_context_params = ['authToken', 'authTokenControl', 'session',
                             'account', 'change', 'targetServer', 'userAgent',
                             'via']
 
-    # The type of request. Has to be set by the implementing class
-    request_type = None
+    """ Valid parameter name for Soap context """
 
-    # Are we doing batch requests?
     batch_request = False
 
-    # If so, keep the current request id
+    """ Are we doing batch requests? """
+
     batch_request_id = None
+
+    """ If so, keep the current request id """
 
     def set_context_params(self, params):
 
@@ -44,7 +47,7 @@ class Request(object):
 
     def set_auth_token(self, token):
 
-        """Convenience function to inject the auth token into the header
+        """ Convenience function to inject the auth token into the header.
 
         :param token: Auth token
         """
@@ -59,7 +62,7 @@ class Request(object):
 
     def enable_batch(self, namespace, onerror="continue"):
 
-        """Enables batch request gathering.
+        """ Enables batch request gathering.
 
         Do this first and then consecutively call "add_request" to add more
         requests. All requests have to be the same namespace, so specify the
@@ -67,7 +70,7 @@ class Request(object):
 
         :param namespace: The XML namespace of the requests to come
         :param onerror: "continue" (default) if one request fails (and
-        response with soap Faults for the request) or "stop" processing.
+          response with soap Faults for the request) or "stop" processing.
         """
 
         self.batch_request = True
@@ -94,9 +97,9 @@ class Request(object):
 
         :param request_name: The name of the request
         :param request_dict: The request parameters as a serializable dict.
-        Check out xmlserializer documentation about this.
+          Check out xmlserializer documentation about this.
         :param namespace: The XML namespace of the request. (Please don't use
-        the request_dict to specify it, use this parameter)
+          the request_dict to specify it, use this parameter)
         :returns: The current request id (if batch processing) or None
         :rtype: int or None
         """
@@ -104,7 +107,8 @@ class Request(object):
         pass
 
     def get_request(self):
-        """ Return the request in the native form
+
+        """ Return the request in the native form.
         """
 
         pass

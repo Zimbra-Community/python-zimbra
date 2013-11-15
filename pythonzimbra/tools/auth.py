@@ -10,13 +10,28 @@ from pythonzimbra.response_xml import ResponseXml
 from pythonzimbra.tools import preauth
 
 
-def authenticate(url, byval, key, by='name', expires=0, timestamp=None,
+def authenticate(url, account, key, by='name', expires=0, timestamp=None,
                  timeout=None):
+
+    """ Authenticate to the Zimbra server
+
+    :param url: URL of Zimbra SOAP service
+    :param account: The account to be authenticated against
+    :param key: The preauth key of the domain of the account
+    :param by: If the account is specified as a name, an ID or a
+      ForeignPrincipal
+    :param expires: When the token expires (or 0 for default expiration)
+    :param timestamp: When the token was requested (None for "now")
+    :param timeout: Timeout for the communication with the server. Defaults
+      to the urllib2-default
+    :return: The authentication token
+    :rtype: str or None or unicode
+    """
 
     if timestamp is None:
         timestamp = int(datetime.now().strftime("%s")) * 1000
 
-    pak = preauth.create_preauth(byval, key, by, expires, timestamp)
+    pak = preauth.create_preauth(account, key, by, expires, timestamp)
 
     auth_request = RequestXml()
 
@@ -25,7 +40,7 @@ def authenticate(url, byval, key, by='name', expires=0, timestamp=None,
         {
             'account': {
                 'by': by,
-                '_content': byval
+                '_content': account
             },
             'preauth': {
                 'timestamp': timestamp,

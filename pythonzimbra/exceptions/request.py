@@ -4,8 +4,17 @@ import exceptions
 
 
 class RequestHeaderContextException(exceptions.BaseException):
+
+    """ Invalid context parameter specified
+
+    """
+
     pass
 
 
-class NoXMLNSGiven(exceptions.BaseException):
+class NoNamespaceGiven(exceptions.BaseException):
+
+    """ No namespace specified, when it should be
+    """
+
     pass

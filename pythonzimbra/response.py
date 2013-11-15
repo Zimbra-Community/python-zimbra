@@ -1,13 +1,11 @@
-""" Zimbra response access """
+""" Zimbra response access. """
 
 
 class Response(object):
 
-    """ Unified access to Zimbra responses
-    """
+    """ Unified access to Zimbra responses.
 
-    # The type of response (set by implementing class)
-    response_type = None
+    """
 
     def set_response(self, response_text):
 
@@ -21,7 +19,7 @@ class Response(object):
 
     def get_header(self):
 
-        """ Return the header of the response
+        """ Return the header of the response.
 
         :returns: The response header in the documented dictionary format
         :rtype: dict
@@ -31,7 +29,7 @@ class Response(object):
 
     def get_body(self):
 
-        """ Return the body of the response
+        """ Return the body of the response.
 
         :returns: The response body in the documented dictionary format
         :rtype: dict
@@ -41,7 +39,7 @@ class Response(object):
 
     def is_batch(self):
 
-        """ Returns whether we have a BatchResponse
+        """ Returns whether we have a BatchResponse.
 
         :returns: Whether we have a BatchResponse
         :rtype: bool
@@ -53,18 +51,19 @@ class Response(object):
 
         """ Returns an informative dictionary about a batch response.
 
-        Returns a dictionary containing the following information:
-        {
-            "hasFault": <bool wether the batch has at least one SoapFault
-            "idToName": {
-                <A dictionary mapping a response id to the corresponding
-                response name or Fault>
+        Returns a dictionary containing the following information::
+
+            {
+                "hasFault": <bool wether the batch has at least one SoapFault
+                "idToName": {
+                    <A dictionary mapping a response id to the corresponding
+                    response name or Fault>
+                }
+                "nameToId": {
+                    <A dictionary mapping response names (or Fault) to the
+                    corresponding response id(s)
+                }
             }
-            "nameToId": {
-                <A dictionary mapping response names (or Fault) to the
-                corresponding response id(s)
-            }
-        }
 
         If the method is called with no batch response existing, returns None
 
@@ -76,7 +75,7 @@ class Response(object):
 
     def get_response(self, request_id=0):
 
-        """ Returns the response with the given request_id
+        """ Returns the response with the given request_id.
 
         Returns the specific response. If "request_id" isn't provided or 0,
         the first (or only one in a non-batch) response is returned.

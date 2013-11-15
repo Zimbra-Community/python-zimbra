@@ -1,4 +1,4 @@
-""" XML-Response format """
+""" XML-Response format. """
 
 from xml.dom import minidom
 from pythonzimbra.tools.xmlserializer import dom_to_dict
@@ -7,11 +7,9 @@ from response import Response
 
 class ResponseXml(Response):
 
-    response_type = "xml"
-
-    # The response document we're working on
-
     response_doc = None
+
+    """ The response document we're working on """
 
     def set_response(self, response_text):
 

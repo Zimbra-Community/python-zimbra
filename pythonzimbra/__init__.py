@@ -1,2 +1,2 @@
-""" Python-Zimbra Package """
+""" Python-Zimbra Package. """
 

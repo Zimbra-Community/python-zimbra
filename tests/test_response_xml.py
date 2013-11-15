@@ -10,8 +10,6 @@ class TestResponseXml(TestCase):
     """ Response class tests
     """
 
-    # The result we test against (coming from a GetVersionInfoRequest)
-
     tested_server_result = '<soap:Envelope xmlns:soap="http://www.w3' \
                            '.org/2003/05/soap-envelope"><soap:Header><context' \
                            ' xmlns="urn:zimbra"/></soap:Header><soap:Body' \
@@ -25,9 +23,11 @@ class TestResponseXml(TestCase):
                            '.NETWORK"/></GetVersionInfoResponse></soap:Body' \
                            '></soap:Envelope>'
 
-    # Our response object
+    """ The result we test against (coming from a GetVersionInfoRequest) """
 
     response = None
+
+    """ Our response object """
 
     def setUp(self):
 

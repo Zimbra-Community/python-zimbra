@@ -1,27 +1,28 @@
-""" Zimbra communication handler """
+""" Zimbra communication handler. """
 
 import urllib2
 
 
 class Communication(object):
 
-    """ Zimbra communication handler
+    """ Zimbra communication handler.
 
     Sends requests to the zimbra SOAP server and returns the responses in a
     dictionary.
-    """
 
-    # URL to the zimbra soap interface
+    """
 
     url = None
 
-    # Timeout of the request
+    """ URL to the zimbra soap interface """
 
     timeout = None
 
+    """ Timeout of the request """
+
     def __init__(self, url, timeout=None):
 
-        """ Initialize the communication handler
+        """ Initialize the communication handler.
         """
 
         self.url = url
@@ -29,7 +30,7 @@ class Communication(object):
 
     def send_request(self, request, response):
 
-        """ Send the request
+        """ Send the request.
 
         Sends the request and retrieves the results, formats them and returns
          them in a dict or a list (when it's a batchresponse). If something

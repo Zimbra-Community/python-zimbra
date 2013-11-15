@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tools Package &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="index.html" />
+    <link rel="up" title="pythonzimbra Package" href="pythonzimbra.html" />
+    <link rel="next" title="tests Package" href="tests.html" />
+    <link rel="prev" title="exceptions Package" href="pythonzimbra.exceptions.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="tests Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.exceptions.html" title="exceptions Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonzimbra.html" accesskey="U">pythonzimbra Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tools-package">
+<h1>tools Package<a class="headerlink" href="#tools-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">tools</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pythonzimbra.tools"></span><p>Short description</p>
+</div>
+<div class="section" id="module-pythonzimbra.tools.auth">
+<span id="auth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">auth</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.tools.auth" title="Permalink to this headline">¶</a></h2>
+<p>Run an AuthRequest against the zimbra server and return the
+authentication token</p>
+<dl class="function">
+<dt id="pythonzimbra.tools.auth.authenticate">
+<tt class="descclassname">pythonzimbra.tools.auth.</tt><tt class="descname">authenticate</tt><big>(</big><em>url</em>, <em>account</em>, <em>key</em>, <em>by='name'</em>, <em>expires=0</em>, <em>timestamp=None</em>, <em>timeout=None</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/auth.html#authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.auth.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticate to the Zimbra server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>url</strong> &#8211; URL of Zimbra SOAP service</li>
+<li><strong>account</strong> &#8211; The account to be authenticated against</li>
+<li><strong>key</strong> &#8211; The preauth key of the domain of the account</li>
+<li><strong>by</strong> &#8211; If the account is specified as a name, an ID or a
+ForeignPrincipal</li>
+<li><strong>expires</strong> &#8211; When the token expires (or 0 for default expiration)</li>
+<li><strong>timestamp</strong> &#8211; When the token was requested (None for &#8220;now&#8221;)</li>
+<li><strong>timeout</strong> &#8211; Timeout for the communication with the server. Defaults
+to the urllib2-default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The authentication token</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str or None or unicode</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.tools.preauth">
+<span id="preauth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">preauth</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.tools.preauth" title="Permalink to this headline">¶</a></h2>
+<p>Preauth Generator</p>
+<dl class="function">
+<dt id="pythonzimbra.tools.preauth.create_preauth">
+<tt class="descclassname">pythonzimbra.tools.preauth.</tt><tt class="descname">create_preauth</tt><big>(</big><em>byval</em>, <em>key</em>, <em>by='name'</em>, <em>expires=0</em>, <em>timestamp=None</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/preauth.html#create_preauth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.preauth.create_preauth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a zimbra preauth value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>byval</strong> &#8211; The value of the targeted user (according to the
+by-parameter). For example: The account name, if &#8220;by&#8221; is &#8220;name&#8221;.</li>
+<li><strong>key</strong> &#8211; The domain preauth key (you can retrieve that using zmprov gd)</li>
+<li><strong>by</strong> &#8211; What type is the byval-parameter? Valid parameters are &#8220;name&#8221;
+(default), &#8220;id&#8221; and &#8220;foreignPrincipal&#8221;</li>
+<li><strong>expires</strong> &#8211; Milliseconds when the auth token expires. Defaults to 0
+for default account expiration</li>
+<li><strong>timestamp</strong> &#8211; Current timestamp (is calculated by default)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The preauth value to be used in an AuthRequest</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pythonzimbra.tools.xmlserializer">
+<span id="xmlserializer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">xmlserializer</span></tt> Module<a class="headerlink" href="#module-pythonzimbra.tools.xmlserializer" title="Permalink to this headline">¶</a></h2>
+<p>Tools to easily serialize XML from other input forms</p>
+<dl class="function">
+<dt id="pythonzimbra.tools.xmlserializer.dict_to_dom">
+<tt class="descclassname">pythonzimbra.tools.xmlserializer.</tt><tt class="descname">dict_to_dom</tt><big>(</big><em>root_node</em>, <em>xml_dict</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/xmlserializer.html#dict_to_dom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.xmlserializer.dict_to_dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DOM node and optionally several subnodes from a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root_node</strong> (<em>xml.dom.Element</em>) &#8211; DOM-Node set the dictionary is applied upon</li>
+<li><strong>xml_dict</strong> (<em>dict</em>) &#8211; The dictionary containing the nodes to process</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pythonzimbra.tools.xmlserializer.dom_to_dict">
+<tt class="descclassname">pythonzimbra.tools.xmlserializer.</tt><tt class="descname">dom_to_dict</tt><big>(</big><em>root_node</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/xmlserializer.html#dom_to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.xmlserializer.dom_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes the given node to the dictionary</p>
+<p>Serializes the given node to the documented dictionary format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root_node</strong> &#8211; Node to serialize</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The dictionary</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tools Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">tools</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.tools.auth"><tt class="docutils literal"><span class="pre">auth</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.tools.preauth"><tt class="docutils literal"><span class="pre">preauth</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pythonzimbra.tools.xmlserializer"><tt class="docutils literal"><span class="pre">xmlserializer</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pythonzimbra.exceptions.html"
+                        title="previous chapter">exceptions Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tests.html"
+                        title="next chapter">tests Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pythonzimbra.tools.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="tests Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.exceptions.html" title="exceptions Package"
+             >previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="pythonzimbra.html" >pythonzimbra Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pythonzimbra.tools.xmlserializer &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pythonzimbra.tools.xmlserializer</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Tools to easily serialize XML from other input forms &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="dict_to_dom"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.xmlserializer.dict_to_dom">[docs]</a><span class="k">def</span> <span class="nf">dict_to_dom</span><span class="p">(</span><span class="n">root_node</span><span class="p">,</span> <span class="n">xml_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Create a DOM node and optionally several subnodes from a dictionary.</span>
+
+<span class="sd">    :param root_node: DOM-Node set the dictionary is applied upon</span>
+<span class="sd">    :type root_node: xml.dom.Element</span>
+<span class="sd">    :param xml_dict: The dictionary containding the nodes to process. This</span>
+<span class="sd">    dictionary is expected in this format:</span>
+<span class="sd">      {</span>
+<span class="sd">        &#39;_content&#39; : &lt;The raw content of the tag&gt;</span>
+<span class="sd">        &#39;subtag&#39;: {...} &lt;A subtag with other nodes. Is also a dictionary in the</span>
+<span class="sd">                   same format&gt;</span>
+<span class="sd">        &#39;attrib&#39;: &#39;value&#39; &lt;An attribute with its value</span>
+<span class="sd">      }</span>
+<span class="sd">    :type xml_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="s">&#39;_content&#39;</span> <span class="ow">in</span> <span class="n">xml_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+
+        <span class="n">root_node</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span>
+            <span class="n">root_node</span><span class="o">.</span><span class="n">ownerDocument</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">xml_dict</span><span class="p">[</span><span class="s">&#39;_content&#39;</span><span class="p">]))</span>
+        <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">xml_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&#39;_content&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+
+            <span class="c"># Root node</span>
+
+            <span class="n">tmp_node</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">ownerDocument</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+            <span class="n">dict_to_dom</span><span class="p">(</span><span class="n">tmp_node</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="n">root_node</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">tmp_node</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c"># Attributes</span>
+
+            <span class="n">root_node</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span>
+                <span class="n">key</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="dom_to_dict"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.xmlserializer.dom_to_dict">[docs]</a><span class="k">def</span> <span class="nf">dom_to_dict</span><span class="p">(</span><span class="n">root_node</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Serializes the given node to the dictionary</span>
+
+<span class="sd">    Serializes the given node to the documented dictionary format.</span>
+
+<span class="sd">    :param root_node: Node to serialize</span>
+<span class="sd">    :returns: The dictionary</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">root_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">root_node</span><span class="o">.</span><span class="n">tagName</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+
+    <span class="n">node_dict</span> <span class="o">=</span> <span class="n">root_dict</span><span class="p">[</span><span class="n">root_node</span><span class="o">.</span><span class="n">tagName</span><span class="p">]</span>
+
+    <span class="c"># Set attributes</span>
+
+    <span class="k">if</span> <span class="n">root_node</span><span class="o">.</span><span class="n">hasAttributes</span><span class="p">():</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">root_node</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+
+            <span class="n">node_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="c"># Check out child nodes</span>
+
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root_node</span><span class="o">.</span><span class="n">childNodes</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">nodeType</span> <span class="o">==</span> <span class="n">root_node</span><span class="o">.</span><span class="n">TEXT_NODE</span><span class="p">:</span>
+
+            <span class="c"># This is the content</span>
+
+            <span class="n">node_dict</span><span class="p">[</span><span class="s">&#39;_content&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">subnode_dict</span> <span class="o">=</span> <span class="n">dom_to_dict</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+            <span class="n">node_dict</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tagName</span><span class="p">]</span> <span class="o">=</span> <span class="n">subnode_dict</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tagName</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">root_dict</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

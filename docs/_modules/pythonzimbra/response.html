@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pythonzimbra.response &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pythonzimbra.response</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Zimbra response access &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="Response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response">[docs]</a><span class="k">class</span> <span class="nc">Response</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Unified access to Zimbra responses</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># The type of response (set by implementing class)</span>
+    <span class="n">response_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Response.set_response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.set_response">[docs]</a>    <span class="k">def</span> <span class="nf">set_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_text</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Interpret the response object.</span>
+
+<span class="sd">        Creates the internal response object by converting the given text</span>
+<span class="sd">        from the HTTP communication into a managed object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_header"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_header">[docs]</a>    <span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Return the header of the response</span>
+
+<span class="sd">        :returns: The response header in the documented dictionary format</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_body"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Return the body of the response</span>
+
+<span class="sd">        :returns: The response body in the documented dictionary format</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.is_batch"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.is_batch">[docs]</a>    <span class="k">def</span> <span class="nf">is_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Returns whether we have a BatchResponse</span>
+
+<span class="sd">        :returns: Whether we have a BatchResponse</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_batch"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Returns an informative dictionary about a batch response.</span>
+
+<span class="sd">        Returns a dictionary containing the following information:</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;hasFault&quot;: &lt;bool wether the batch has at least one SoapFault</span>
+<span class="sd">            &quot;idToName&quot;: {</span>
+<span class="sd">                &lt;A dictionary mapping a response id to the corresponding</span>
+<span class="sd">                response name or Fault&gt;</span>
+<span class="sd">            }</span>
+<span class="sd">            &quot;nameToId&quot;: {</span>
+<span class="sd">                &lt;A dictionary mapping response names (or Fault) to the</span>
+<span class="sd">                corresponding response id(s)</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">        If the method is called with no batch response existing, returns None</span>
+
+<span class="sd">        :returns: Informative dictionary</span>
+<span class="sd">        :rtype: dict or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_response">[docs]</a>    <span class="k">def</span> <span class="nf">get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Returns the response with the given request_id</span>
+
+<span class="sd">        Returns the specific response. If &quot;request_id&quot; isn&#39;t provided or 0,</span>
+<span class="sd">        the first (or only one in a non-batch) response is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.is_fault"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.is_fault">[docs]</a>    <span class="k">def</span> <span class="nf">is_fault</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Checks, wether this response has at least one fault response (</span>
+<span class="sd">        supports both batch and single responses)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_batch</span><span class="p">():</span>
+
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_batch</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;hasFault&#39;</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">my_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">my_response</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Fault&#39;</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="bp">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

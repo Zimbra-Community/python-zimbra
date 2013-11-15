@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests Package &mdash; Python-Zimbra 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.0 documentation" href="index.html" />
+    <link rel="prev" title="tools Package" href="pythonzimbra.tools.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.tools.html" title="tools Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tests-package">
+<h1>tests Package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#module-tests" title="tests"><tt class="xref py py-mod docutils literal"><span class="pre">tests</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-tests"></span><p>Python-Zimbra test suite</p>
+<dl class="function">
+<dt id="tests.get_config">
+<tt class="descclassname">tests.</tt><tt class="descname">get_config</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests.html#get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.get_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_auth">
+<span id="test-auth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_auth</span></tt> Module<a class="headerlink" href="#module-tests.test_auth" title="Permalink to this headline">¶</a></h2>
+<p>Test the auth tool</p>
+<dl class="class">
+<dt id="tests.test_auth.TestAuth">
+<em class="property">class </em><tt class="descclassname">tests.test_auth.</tt><tt class="descname">TestAuth</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="tests.test_auth.TestAuth.test_auth">
+<tt class="descname">test_auth</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured auth request and check a successfully
+returned token</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_preauth">
+<span id="test-preauth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_preauth</span></tt> Module<a class="headerlink" href="#module-tests.test_preauth" title="Permalink to this headline">¶</a></h2>
+<p>Test Preauth tool</p>
+<dl class="class">
+<dt id="tests.test_preauth.TestPreauth">
+<em class="property">class </em><tt class="descclassname">tests.test_preauth.</tt><tt class="descname">TestPreauth</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_preauth.html#TestPreauth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_preauth.TestPreauth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="tests.test_preauth.TestPreauth.test_create_preauth">
+<tt class="descname">test_create_preauth</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_preauth.html#TestPreauth.test_create_preauth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_preauth.TestPreauth.test_create_preauth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test creating a preauth</p>
+<p>This is mostly bogus, as the return value cannot be tested against
+something senseful. It&#8217;s just tested if the method can be called and
+it returns a str.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_request_xml">
+<span id="test-request-xml-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_request_xml</span></tt> Module<a class="headerlink" href="#module-tests.test_request_xml" title="Permalink to this headline">¶</a></h2>
+<p>Request tests</p>
+<dl class="class">
+<dt id="tests.test_request_xml.TestRequest">
+<em class="property">class </em><tt class="descclassname">tests.test_request_xml.</tt><tt class="descname">TestRequest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<p>Request tests</p>
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.cleanUp">
+<tt class="descname">cleanUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.cleanUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up after one step to leave a dedicated result for the other
+test cases.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tests.test_request_xml.TestRequest.request">
+<tt class="descname">request</tt><em class="property"> = None</em><a class="headerlink" href="#tests.test_request_xml.TestRequest.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>The request to be tested against</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_add_request">
+<tt class="descname">test_add_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_add_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding a request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_add_request_missing_xmlns">
+<tt class="descname">test_add_request_missing_xmlns</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_add_request_missing_xmlns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_add_request_missing_xmlns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding a request without specifying a XML namespace</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_batch_add_request">
+<tt class="descname">test_batch_add_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_batch_add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_batch_add_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding multiple request to a batch request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_empty_request">
+<tt class="descname">test_empty_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_empty_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_empty_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty request and check the created xml</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_enable_batch_default">
+<tt class="descname">test_enable_batch_default</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_enable_batch_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_enable_batch_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test enabling batch requests</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_enable_batch_stop">
+<tt class="descname">test_enable_batch_stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_enable_batch_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_enable_batch_stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test enabling batch requests with additional parameter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_set_context_params">
+<tt class="descname">test_set_context_params</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_set_context_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_set_context_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add all currently accepted params and check the result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_request_xml.TestRequest.test_set_context_params_failtype">
+<tt class="descname">test_set_context_params_failtype</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequest.test_set_context_params_failtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequest.test_set_context_params_failtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add context parameters to the request and expect the method to
+send an exception</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_response_xml">
+<span id="test-response-xml-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_response_xml</span></tt> Module<a class="headerlink" href="#module-tests.test_response_xml" title="Permalink to this headline">¶</a></h2>
+<p>Testing response class</p>
+<dl class="class">
+<dt id="tests.test_response_xml.TestResponseXml">
+<em class="property">class </em><tt class="descclassname">tests.test_response_xml.</tt><tt class="descname">TestResponseXml</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<p>Response class tests</p>
+<dl class="attribute">
+<dt id="tests.test_response_xml.TestResponseXml.response">
+<tt class="descname">response</tt><em class="property"> = None</em><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Our response object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a Response object and set our tested server result string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_get_batch">
+<tt class="descname">test_get_batch</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_get_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_get_body">
+<tt class="descname">test_get_body</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_get_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the body against a pickled expectation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_get_header">
+<tt class="descname">test_get_header</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_get_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_get_response">
+<tt class="descname">test_get_response</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_get_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_is_batch">
+<tt class="descname">test_is_batch</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_is_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_is_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tests.test_response_xml.TestResponseXml.tested_server_result">
+<tt class="descname">tested_server_result</tt><em class="property"> = '&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;GetVersionInfoResponse xmlns=&quot;urn:zimbraAdmin&quot;&gt;&lt;info platform=&quot;UBUNTU12_64&quot; host=&quot;zre-ubuntu12-64&quot; minorversion=&quot;0&quot; microversion=&quot;5&quot; buildDate=&quot;20130910-1244&quot; type=&quot;NETWORK&quot; majorversion=&quot;8&quot; release=&quot;20130910124124&quot; version=&quot;8.0.5_GA_5839.NETWORK&quot;/&gt;&lt;/GetVersionInfoResponse&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;'</em><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.tested_server_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>The result we test against (coming from a GetVersionInfoRequest)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tests.test_xmlserializer">
+<span id="test-xmlserializer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_xmlserializer</span></tt> Module<a class="headerlink" href="#module-tests.test_xmlserializer" title="Permalink to this headline">¶</a></h2>
+<p>Tests of XML Serializer tools</p>
+<dl class="class">
+<dt id="tests.test_xmlserializer.TestXmlSerializer">
+<em class="property">class </em><tt class="descclassname">tests.test_xmlserializer.</tt><tt class="descname">TestXmlSerializer</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_xmlserializer.html#TestXmlSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_xmlserializer.TestXmlSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="tests.test_xmlserializer.TestXmlSerializer.test_dict_to_dom">
+<tt class="descname">test_dict_to_dom</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_xmlserializer.html#TestXmlSerializer.test_dict_to_dom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_xmlserializer.TestXmlSerializer.test_dict_to_dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test xml serialization using dict_to_dom method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_xmlserializer.TestXmlSerializer.test_dom_to_dict">
+<tt class="descname">test_dom_to_dict</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_xmlserializer.html#TestXmlSerializer.test_dom_to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_xmlserializer.TestXmlSerializer.test_dom_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test xml-&gt;dict serialization</p>
+<p>Creates a node, generates the dict using dict_to_dom and compares a
+pickled result</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tests Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-tests.test_auth"><tt class="docutils literal"><span class="pre">test_auth</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-tests.test_preauth"><tt class="docutils literal"><span class="pre">test_preauth</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-tests.test_request_xml"><tt class="docutils literal"><span class="pre">test_request_xml</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-tests.test_response_xml"><tt class="docutils literal"><span class="pre">test_response_xml</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-tests.test_xmlserializer"><tt class="docutils literal"><span class="pre">test_xmlserializer</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pythonzimbra.tools.html"
+                        title="previous chapter">tools Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/tests.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pythonzimbra.tools.html" title="tools Package"
+             >previous</a> |</li>
+        <li><a href="index.html">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
