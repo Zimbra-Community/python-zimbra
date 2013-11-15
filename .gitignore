@@ -1,0 +1,4 @@
+# Ignore local test configuration
+
+tests/config.ini
+*.pyc

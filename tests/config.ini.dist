@@ -1,0 +1,25 @@
+# Additional configuration for tests
+
+[auth_test]
+
+# The URL of the zimbra soap service
+url=None
+
+# The account to be logged in using preauth
+account=None
+
+# The preauth key of the domain the account is member of
+preauthkey=None
+
+# What is in "account"? A name, an ID, a ForeignPrincipal?
+account_by=name
+
+# When does the token expire?
+expires=0
+
+# When is the token generated?
+timestamp=None
+
+# Is the auth testing enabled? Set this to true if you have configured the
+# other values!
+enabled=False

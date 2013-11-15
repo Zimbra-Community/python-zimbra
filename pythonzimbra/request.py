@@ -1,0 +1,103 @@
+""" Request handling and generation """
+
+import xml.dom.minidom
+from pythonzimbra.exceptions.request import RequestHeaderContextException, NoXMLNSGiven
+from pythonzimbra.tools import xmlserializer
+
+
+class Request(object):
+    """ Zimbra SOAP request generation and handling
+    """
+
+    valid_context_params = ['authToken', 'authTokenControl', 'session',
+                            'account', 'change', 'targetServer', 'userAgent',
+                            'via']
+
+    # The type of request. Has to be set by the implementing class
+    request_type = None
+
+    # Are we doing batch requests?
+    batch_request = False
+
+    # If so, keep the current request id
+    batch_request_id = None
+
+    def set_context_params(self, params):
+
+        """ Set header context parameters. Refer to the top of <Zimbra
+        Server-Root>/docs/soap.txt about specifics.
+
+        The <format>-Parameter cannot be changed, because it is set by the
+        implementing class.
+
+        Should be called by implementing method to check for valid context
+        params.
+
+        :param params: A Dict containing context parameters.
+        """
+
+        for key, value in params.iteritems():
+
+            if key not in self.valid_context_params:
+
+                raise RequestHeaderContextException(
+                    "%s is not a valid context parameter." % key
+                )
+
+    def enable_batch(self, namespace, onerror="continue"):
+
+        """Enables batch request gathering.
+
+        Do this first and then consecutively call "add_request" to add more
+        requests. All requests have to be the same namespace, so specify the
+        xml namespace (i.e. "urn:zimbra") here.
+
+        :param namespace: The XML namespace of the requests to come
+        :param onerror: "continue" (default) if one request fails (and
+        response with soap Faults for the request) or "stop" processing.
+        """
+
+        self.batch_request = True
+        self.batch_request_id = 1
+
+        self._create_batch_node(namespace, onerror)
+
+    def _create_batch_node(self, namespace, onerror):
+
+        """Prepare the request structure to support batch mode
+
+        The params are like in enable_batch
+        """
+
+        pass
+
+    def add_request(self, request_name, request_dict, namespace=None):
+
+        """ Add a request.
+
+        This adds a request to the body or to the batchrequest-node if batch
+        requesting is enabled. Has to update the self.batch_request_id after
+        adding a batch request!
+
+        :param request_name: The name of the request
+        :param request_dict: The request parameters as a serializable dict.
+        Check out xmlserializer documentation about this.
+        :param namespace: The XML namespace of the request. (Please don't use
+        the request_dict to specify it, use this parameter)
+        :returns: The current request id (if batch processing) or None
+        :rtype: int or None
+        """
+
+        pass
+
+    def get_request(self):
+        """ Return the request in the native form
+        """
+
+        pass
+
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
+        return self.get_request()
