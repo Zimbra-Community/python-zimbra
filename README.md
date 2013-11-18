@@ -120,7 +120,8 @@ in XML this would look like this:
     </RequestName>
 
 All requests should conform to this dictionary format and the responses are
-also returned in this format.
+also returned in this format. Subnodes can also contain lists of
+dictionaries, which will create multiple subnodes with the same tag.
 
 Warning
 -------
