@@ -31,6 +31,16 @@ def dict_to_dom(root_node, xml_dict):
 
             root_node.appendChild(tmp_node)
 
+        elif type(value) == list:
+
+            for multinode in value:
+
+                tmp_node = root_node.ownerDocument.createElement(key)
+
+                dict_to_dom(tmp_node, multinode)
+
+                root_node.appendChild(tmp_node)
+
         else:
 
             # Attributes
