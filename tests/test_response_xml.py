@@ -26,6 +26,20 @@ class TestResponseXml(TestCase):
     """ The result we test against (coming from a GetVersionInfoRequest by
     running zmsoap -z --json -t admin GetVersionInfoRequest -vv) """
 
+
+    tested_server_result_multi_value = \
+        '<soap:Envelope xmlns:soap="http://www.w3' \
+        '.org/2003/05/soap-envelope"><soap:Header><context' \
+        ' xmlns="urn:zimbra"/></soap:Header><soap:Body' \
+        '><GetAllDomainsResponse> ' \
+        '<domain id="b37d6b9" name="client1.unbound.example.fr"></domain>' \
+        '<domain id="444d6b9" name="client1.unbound.example.fr"></domain>' \
+        '</GetAllDomainsResponse></soap:Body' \
+        '></soap:Envelope>'\
+
+
+    """ This one is a stripped version of a GetAlDomains """
+
     response = None
 
     """ Our response object """
@@ -37,6 +51,9 @@ class TestResponseXml(TestCase):
 
         self.response = ResponseXml()
         self.response.set_response(self.tested_server_result)
+
+        self.response_multi = ResponseXml()
+        self.response_multi.set_response(self.tested_server_result_multi_value)
 
     def test_get_body(self):
 
@@ -104,3 +121,19 @@ class TestResponseXml(TestCase):
             expected_result,
             pickle.dumps(self.response.get_response())
         )
+
+
+    def test_get_response_multi(self):
+        """ For cases where we have several tags with the same name.
+
+        In that case, for a given tag name as a key, we want a list of dicts
+        containing the content of each tag, instead of a single dict.
+        """
+
+        resp = self.response_multi.get_response()
+        gad_resp = resp['GetAllDomainsResponse']
+
+        self.assertTrue(gad_resp.has_key('domain'))
+        self.assertTrue(gad_resp['domain'])
+        self.assertIsInstance(gad_resp['domain'], list)
+        self.assertEqual(len(gad_resp['domain']), 2)
