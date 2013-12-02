@@ -1,4 +1,6 @@
 # Ignore local test configuration
-
+build/
+dist/
+*.egg-info/
 tests/config.ini
 *.pyc
