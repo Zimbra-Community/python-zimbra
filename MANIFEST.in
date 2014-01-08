@@ -1,0 +1,4 @@
+include LICENSE
+include README
+recursive-include pythonzimbra/exceptions * 
+recursive-include pythonzimbra/tools * 
