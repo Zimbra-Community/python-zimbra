@@ -89,8 +89,20 @@ def dom_to_dict(root_node):
         else:
 
             subnode_dict = dom_to_dict(child)
+            new_val = subnode_dict[child.tagName]
 
-            node_dict[child.tagName] = subnode_dict[child.tagName]
+            # If we have several child with same name, put them in a list.
+
+            if node_dict.has_key(child.tagName):
+                prev_val = node_dict[child.tagName]
+
+                if type(prev_val) != list:
+                    node_dict[child.tagName] = [prev_val]
+
+                node_dict[child.tagName].append(new_val)
+
+            else:
+                node_dict[child.tagName] = new_val
 
     return root_dict
 

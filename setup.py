@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='python-zimbra',
-    version='1.0-rc2',
+    version='1.0-rc4',
     packages=['pythonzimbra'],
     include_package_data=True,
     license='BSD 2-clause License',  # example license
