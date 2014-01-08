@@ -93,6 +93,16 @@ Print the version info:
 The framework also supports Zimbra batch requests. Please refer to the class
 docs for more information.
 
+Authentication against the administration console
+-------------------------------------------------
+
+Zimbra currently doesn't support the preauth-method for authentications against
+the admin-console (URL "https://<your-zimbra-server:7071/service/admin/soap").
+
+python-zimbra's auth tool can be used to authenticate to this url by specifying
+the password instead of the preauth-key and setting the parameter admin_auth to
+True. (see API docs for specifics)
+
 Used dictionary
 ---------------
 

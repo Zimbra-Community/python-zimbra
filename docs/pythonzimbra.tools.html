@@ -68,7 +68,7 @@
 authentication token</p>
 <dl class="function">
 <dt id="pythonzimbra.tools.auth.authenticate">
-<tt class="descclassname">pythonzimbra.tools.auth.</tt><tt class="descname">authenticate</tt><big>(</big><em>url</em>, <em>account</em>, <em>key</em>, <em>by='name'</em>, <em>expires=0</em>, <em>timestamp=None</em>, <em>timeout=None</em>, <em>request_type='xml'</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/auth.html#authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.auth.authenticate" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">pythonzimbra.tools.auth.</tt><tt class="descname">authenticate</tt><big>(</big><em>url</em>, <em>account</em>, <em>key</em>, <em>by='name'</em>, <em>expires=0</em>, <em>timestamp=None</em>, <em>timeout=None</em>, <em>request_type='xml'</em>, <em>admin_auth=False</em>, <em>use_password=False</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/tools/auth.html#authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.tools.auth.authenticate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Authenticate to the Zimbra server</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -77,13 +77,21 @@ authentication token</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>url</strong> &#8211; URL of Zimbra SOAP service</li>
 <li><strong>account</strong> &#8211; The account to be authenticated against</li>
-<li><strong>key</strong> &#8211; The preauth key of the domain of the account</li>
+<li><strong>key</strong> &#8211; The preauth key of the domain of the account or a password (if
+admin_auth or use_password is True)</li>
 <li><strong>by</strong> &#8211; If the account is specified as a name, an ID or a
 ForeignPrincipal</li>
 <li><strong>expires</strong> &#8211; When the token expires (or 0 for default expiration)</li>
 <li><strong>timestamp</strong> &#8211; When the token was requested (None for &#8220;now&#8221;)</li>
 <li><strong>timeout</strong> &#8211; Timeout for the communication with the server. Defaults
 to the urllib2-default</li>
+<li><strong>request_type</strong> &#8211; Which type of request to use (&#8220;xml&#8221; (default) or
+&#8220;json&#8221;)</li>
+<li><strong>admin_auth</strong> &#8211; This request should authenticate and generate an admin
+token. The &#8220;key&#8221;-parameter therefore holds the admin password (implies
+use_password)</li>
+<li><strong>use_password</strong> &#8211; The &#8220;key&#8221;-parameter holds a password. Do a password-
+based user authentication.</li>
 </ul>
 </td>
 </tr>
