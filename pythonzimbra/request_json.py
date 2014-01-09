@@ -27,6 +27,11 @@ class RequestJson(Request):
             'Body': {}
         }
 
+    def clean(self):
+        super(RequestJson, self).clean()
+
+        self.__init__()
+
     def set_context_params(self, params):
 
         # Call parent method

@@ -57,6 +57,11 @@ class RequestXml(Request):
 
         self.request_doc.appendChild(root_node)
 
+    def clean(self):
+        super(RequestXml, self).clean()
+
+        self.__init__()
+
     def set_context_params(self, params):
 
         # Call parent method

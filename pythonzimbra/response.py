@@ -7,6 +7,13 @@ class Response(object):
 
     """
 
+    def clean(self):
+
+        """ Clean up the response, so it can be used again
+        """
+
+        pass
+
     def set_response(self, response_text):
 
         """ Interpret the response object.

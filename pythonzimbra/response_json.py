@@ -10,6 +10,10 @@ class ResponseJson(Response):
 
     """ The dictionary we'll be working on """
 
+    def clean(self):
+        super(ResponseJson, self).clean()
+        self.response_dict = None
+
     def set_response(self, response_text):
 
         self.response_dict = json.loads(response_text)
