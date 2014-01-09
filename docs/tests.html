@@ -69,6 +69,20 @@
 <em class="property">class </em><tt class="descclassname">tests.test_auth.</tt><tt class="descname">TestAuth</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
 <dl class="method">
+<dt id="tests.test_auth.TestAuth.test_admin_auth_json">
+<tt class="descname">test_admin_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured admin auth request in json format using the
+admin auth-method and check a successfully returned token</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_auth.TestAuth.test_admin_auth_xml">
+<tt class="descname">test_admin_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured admin auth request in xml format using the
+admin auth-method and check a successfully returned token</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="tests.test_auth.TestAuth.test_auth_json">
 <tt class="descname">test_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in json format and check a
@@ -80,6 +94,20 @@ successfully returned token</p>
 <tt class="descname">test_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_xml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in XML format and check a
 successfully returned token</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_auth.TestAuth.test_password_auth_json">
+<tt class="descname">test_password_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured auth request in json format using password
+based authentication and check a successfully returned token</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_auth.TestAuth.test_password_auth_xml">
+<tt class="descname">test_password_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured auth request in xml format using password
+based authentication and check a successfully returned token</p>
 </dd></dl>
 
 </dd></dl>
@@ -367,6 +395,14 @@ send an exception</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="tests.test_response_xml.TestResponseXml.test_get_response_multi">
+<tt class="descname">test_get_response_multi</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_response_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>For cases where we have several tags with the same name.</p>
+<p>In that case, for a given tag name as a key, we want a list of dicts
+containing the content of each tag, instead of a single dict.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="tests.test_response_xml.TestResponseXml.test_is_batch">
 <tt class="descname">test_is_batch</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_is_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_is_batch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -376,6 +412,12 @@ send an exception</p>
 <tt class="descname">tested_server_result</tt><em class="property"> = '&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;GetVersionInfoResponse xmlns=&quot;urn:zimbraAdmin&quot;&gt;&lt;info platform=&quot;UBUNTU12_64&quot; host=&quot;zre-ubuntu12-64&quot; minorversion=&quot;0&quot; microversion=&quot;5&quot; buildDate=&quot;20130910-1244&quot; type=&quot;NETWORK&quot; majorversion=&quot;8&quot; release=&quot;20130910124124&quot; version=&quot;8.0.5_GA_5839.NETWORK&quot;/&gt;&lt;/GetVersionInfoResponse&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;'</em><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.tested_server_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>The result we test against (coming from a GetVersionInfoRequest by
 running zmsoap -z &#8211;json -t admin GetVersionInfoRequest -vv)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tests.test_response_xml.TestResponseXml.tested_server_result_multi_value">
+<tt class="descname">tested_server_result_multi_value</tt><em class="property"> = '&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;GetAllDomainsResponse&gt; &lt;domain id=&quot;b37d6b9&quot; name=&quot;client1.unbound.example.fr&quot;&gt;&lt;/domain&gt;&lt;domain id=&quot;444d6b9&quot; name=&quot;client1.unbound.example.fr&quot;&gt;&lt;/domain&gt;&lt;/GetAllDomainsResponse&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;'</em><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.tested_server_result_multi_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>This one is a stripped version of a GetAlDomains</p>
 </dd></dl>
 
 </dd></dl>

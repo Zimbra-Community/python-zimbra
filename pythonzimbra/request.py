@@ -23,6 +23,14 @@ class Request(object):
 
     """ If so, keep the current request id """
 
+    def clean(self):
+
+        """ Clean up request, so the request object can be reused
+        """
+
+        self.batch_request = False
+        self.batch_request_id = None
+
     def set_context_params(self, params):
 
         """ Set header context parameters. Refer to the top of <Zimbra

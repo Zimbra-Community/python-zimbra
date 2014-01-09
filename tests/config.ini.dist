@@ -1,5 +1,7 @@
 # Additional configuration for tests
 
+# Testing user authentication using preauth key
+
 [auth_test]
 
 # The URL of the zimbra soap service
@@ -19,6 +21,75 @@ expires=0
 
 # When is the token generated?
 timestamp=None
+
+# Is the auth testing enabled? Set this to true if you have configured the
+# other values!
+enabled=False
+
+# Testing user authentication using password
+
+[auth_by_password_test]
+
+# The URL of the zimbra soap service
+url=None
+
+# The account to be logged in using password based authentication
+account=None
+
+# The password of the account
+password=None
+
+# What is in "account"? A name, an ID, a ForeignPrincipal?
+account_by=name
+
+# Is the auth testing enabled? Set this to true if you have configured the
+# other values!
+enabled=False
+
+# Testing admin authentication (using password)
+
+[admin_auth_test]
+
+# The URL of the zimbra admin-soap service
+url=None
+
+# The admin account to be logged in
+account=None
+
+# The password of the admin account
+password=None
+
+# What is in "account"? A name, an ID, a ForeignPrincipal?
+account_by=name
+
+# Is the auth testing enabled? Set this to true if you have configured the
+# other values!
+enabled=False
+
+# Testing creating and removing an account
+
+[admin_request_test]
+
+# The URL of the zimbra admin-soap service
+url=None
+
+# The admin account to be logged in
+account=None
+
+# The password of the admin account
+password=None
+
+# What is in "account"? A name, an ID, a ForeignPrincipal?
+account_by=name
+
+# What URL to use for testing the authentication of the new user
+user_url=None
+
+# What account can be created and removed for testing purposes?
+test_account=None
+
+# The password of that account
+test_password=None
 
 # Is the auth testing enabled? Set this to true if you have configured the
 # other values!

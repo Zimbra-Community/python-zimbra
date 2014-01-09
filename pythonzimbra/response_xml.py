@@ -11,6 +11,10 @@ class ResponseXml(Response):
 
     """ The response document we're working on """
 
+    def clean(self):
+        super(ResponseXml, self).clean()
+        self.response_doc = None
+
     def set_response(self, response_text):
 
         self.response_doc = minidom.parseString(response_text)
