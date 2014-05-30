@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='python-zimbra',
-    version='1.0-rc5',
+    version='1.0',
     packages=['pythonzimbra'],
     include_package_data=True,
     license='BSD 2-clause License',  # example license
@@ -18,7 +18,7 @@ setup(
     author='Dennis Ploeger',
     author_email='develop@dieploegers.de',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License', # example license
         'Operating System :: POSIX',
