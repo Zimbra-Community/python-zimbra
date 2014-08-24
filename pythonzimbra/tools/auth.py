@@ -1,7 +1,7 @@
 """ Run an AuthRequest against the zimbra server and return the
 authentication token """
 
-from datetime import datetime
+import time
 from urllib2 import HTTPError
 from pythonzimbra.request_json import RequestJson
 
@@ -40,7 +40,7 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
     """
 
     if timestamp is None:
-        timestamp = int(datetime.now().strftime("%s")) * 1000
+        timestamp = int(time.time()) * 1000
 
     pak = ""
     if not admin_auth:
