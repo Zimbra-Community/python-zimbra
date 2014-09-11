@@ -24,10 +24,10 @@ class TestAdmin(TestCase):
             # Run only if enabled
 
             token = authenticate(
-                config.get("admin_request_test", "url"),
-                config.get("admin_request_test", "account"),
-                config.get("admin_request_test", "password"),
-                config.get("admin_request_test", "account_by"),
+                config.get("admin_request_test", "admin_url"),
+                config.get("admin_request_test", "admin_account"),
+                config.get("admin_request_test", "admin_password"),
+                config.get("admin_request_test", "admin_account_by"),
                 admin_auth=True,
                 request_type=request_type
             )
@@ -39,7 +39,7 @@ class TestAdmin(TestCase):
 
             # Create an account
 
-            comm = Communication(config.get("admin_request_test", "url"))
+            comm = Communication(config.get("admin_request_test", "admin_url"))
 
             if request_type == "xml":
 
@@ -85,7 +85,7 @@ class TestAdmin(TestCase):
             # Try to log in as the new account
 
             user_token = authenticate(
-                config.get("admin_request_test", "user_url"),
+                config.get("admin_request_test", "url"),
                 config.get("admin_request_test", "test_account"),
                 config.get("admin_request_test", "test_password"),
                 "name",
@@ -133,4 +133,4 @@ class TestAdmin(TestCase):
         it afterwards. Assumes, that this works correctly (in json format)
         """
 
-        self.run_admin_test("xml")
+        self.run_admin_test("json")

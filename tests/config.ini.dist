@@ -1,20 +1,39 @@
 # Additional configuration for tests
 
-# Testing user authentication using preauth key
+# These default values are used in every section if not overridden
 
-[auth_test]
+[DEFAULT]
 
 # The URL of the zimbra soap service
 url=None
 
-# The account to be logged in using preauth
+# The user account to be logged in using preauth or password auth
 account=None
+
+# The password of the user
+password=None
 
 # The preauth key of the domain the account is member of
 preauthkey=None
 
 # What is in "account"? A name, an ID, a ForeignPrincipal?
 account_by=name
+
+# The URL of the zimbra admin-soap service
+admin_url=None
+
+# The admin account to be logged in
+admin_account=None
+
+# The password of the admin account
+admin_password=None
+
+# What is in admin "account"? A name, an ID, a ForeignPrincipal?
+admin_account_by=name
+
+# Testing user authentication using preauth key
+
+[auth_test]
 
 # When does the token expire?
 expires=0
@@ -30,18 +49,6 @@ enabled=False
 
 [auth_by_password_test]
 
-# The URL of the zimbra soap service
-url=None
-
-# The account to be logged in using password based authentication
-account=None
-
-# The password of the account
-password=None
-
-# What is in "account"? A name, an ID, a ForeignPrincipal?
-account_by=name
-
 # Is the auth testing enabled? Set this to true if you have configured the
 # other values!
 enabled=False
@@ -49,18 +56,6 @@ enabled=False
 # Testing admin authentication (using password)
 
 [admin_auth_test]
-
-# The URL of the zimbra admin-soap service
-url=None
-
-# The admin account to be logged in
-account=None
-
-# The password of the admin account
-password=None
-
-# What is in "account"? A name, an ID, a ForeignPrincipal?
-account_by=name
 
 # Is the auth testing enabled? Set this to true if you have configured the
 # other values!
@@ -70,26 +65,22 @@ enabled=False
 
 [admin_request_test]
 
-# The URL of the zimbra admin-soap service
-url=None
-
-# The admin account to be logged in
-account=None
-
-# The password of the admin account
-password=None
-
-# What is in "account"? A name, an ID, a ForeignPrincipal?
-account_by=name
-
-# What URL to use for testing the authentication of the new user
-user_url=None
-
 # What account can be created and removed for testing purposes?
 test_account=None
 
 # The password of that account
 test_password=None
+
+# Is the auth testing enabled? Set this to true if you have configured the
+# other values!
+enabled=False
+
+# Testing a fault
+
+[fault_test]
+
+# Non-existent folder
+folder=None
 
 # Is the auth testing enabled? Set this to true if you have configured the
 # other values!

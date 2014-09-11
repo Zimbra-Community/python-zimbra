@@ -1,4 +1,5 @@
 """ Zimbra response access. """
+import re
 
 
 class Response(object):
@@ -106,7 +107,7 @@ class Response(object):
 
             my_response = self.get_response()
 
-            if my_response.keys()[0] == 'Fault':
+            if my_response.keys()[0] == "Fault":
 
                 return True
 

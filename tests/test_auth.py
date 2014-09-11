@@ -147,10 +147,10 @@ class TestAuth(TestCase):
             # Run only if enabled
 
             response = authenticate(
-                config.get("admin_auth_test", "url"),
-                config.get("admin_auth_test", "account"),
-                config.get("admin_auth_test", "password"),
-                config.get("admin_auth_test", "account_by"),
+                config.get("admin_auth_test", "admin_url"),
+                config.get("admin_auth_test", "admin_account"),
+                config.get("admin_auth_test", "admin_password"),
+                config.get("admin_auth_test", "admin_account_by"),
                 admin_auth=True,
                 request_type="xml"
             )
@@ -173,10 +173,10 @@ class TestAuth(TestCase):
             # Run only if enabled
 
             response = authenticate(
-                config.get("admin_auth_test", "url"),
-                config.get("admin_auth_test", "account"),
-                config.get("admin_auth_test", "password"),
-                config.get("admin_auth_test", "account_by"),
+                config.get("admin_auth_test", "admin_url"),
+                config.get("admin_auth_test", "admin_account"),
+                config.get("admin_auth_test", "admin_password"),
+                config.get("admin_auth_test", "admin_account_by"),
                 admin_auth=True,
                 request_type="json"
             )

@@ -60,18 +60,17 @@ class TestResponseXml(TestCase):
         """ Checks the body against a pickled expectation
         """
 
-        expected_result = "(dp0\nVsoap:Body\np1\n(" \
+        expected_result = "(dp0\nVBody\np1\n(" \
                           "dp2\nVGetVersionInfoResponse\np3\n(" \
                           "dp4\nVinfo\np5\n(" \
                           "dp6\nVmajorversion\np7\nV8\np8\nsVminorversion\np9" \
                           "\nV0\np10\nsVmicroversion\np11\nV5\np12" \
                           "\nsVplatform\np13\nVUBUNTU12_64\np14\nsVhost\np15" \
                           "\nVzre-ubuntu12-64\np16\nsVversion\np17\nV8.0" \
-                          ".5_GA_5839" \
-                          ".NETWORK\np18\nsVrelease\np19\nV20130910124124" \
-                          "\np20\nsVtype\np21\nVNETWORK\np22\nsVbuildDate" \
-                          "\np23\nV20130910-1244\np24\nssS'xmlns'\np25\nVurn" \
-                          ":zimbraAdmin\np26\nsss."
+                          ".5_GA_5839.NETWORK\np18\nsVrelease\np19" \
+                          "\nV20130910124124\np20\nsVtype\np21\nVNETWORK\np22" \
+                          "\nsVbuildDate\np23\nV20130910-1244\np24\nssS" \
+                          "'xmlns'\np25\nVurn:zimbraAdmin\np26\nsss."
 
         self.assertEqual(
             expected_result,
@@ -80,7 +79,7 @@ class TestResponseXml(TestCase):
 
     def test_get_header(self):
 
-        expected_result = "(dp0\nVsoap:Header\np1\n(dp2\nVcontext\np3\n(" \
+        expected_result = "(dp0\nVHeader\np1\n(dp2\nVcontext\np3\n(" \
                           "dp4\nS'xmlns'\np5\nVurn:zimbra\np6\nsss."
 
         self.assertEqual(
