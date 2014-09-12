@@ -42,16 +42,16 @@ class RequestJson(Request):
 
             self.request_dict['Header']['context'][key] = value
 
-    def _create_batch_node(self, namespace, onerror):
+    def _create_batch_node(self, onerror):
 
         self.request_dict['Body'] = {
             'BatchRequest': {
-                '_jsns': namespace,
+                '_jsns': "urn:zimbra",
                 'onerror': onerror
             }
         }
 
-    def add_request(self, request_name, request_dict, namespace=None):
+    def add_request(self, request_name, request_dict, namespace):
 
         super(RequestJson, self).add_request(
             request_name,
@@ -60,6 +60,7 @@ class RequestJson(Request):
         )
 
         request_node = self.request_dict['Body']
+        request_dict['_jsns'] = namespace
 
         if self.batch_request:
 
@@ -69,11 +70,20 @@ class RequestJson(Request):
 
             self.batch_request_id += 1
 
+            if request_name in request_node["BatchRequest"]:
+
+                tmp = request_node["BatchRequest"][request_name]
+
+                request_node["BatchRequest"][request_name] = [
+                    tmp,
+                    request_dict
+                ]
+
+            else:
+
+                request_node["BatchRequest"][request_name] = request_dict
+
             return request_id
-
-        else:
-
-            request_dict['_jsns'] = namespace
 
         request_node[request_name] = request_dict
 

@@ -91,6 +91,38 @@ class Response(object):
 
         pass
 
+    def get_fault_code(self):
+
+        """
+        Returns the fault error code of this response (overridden)
+
+        We provide this additional method because of zimbra bug
+         https://bugzilla.zimbra.com/show_bug.cgi?id=95490
+
+        For batch responses, we return a dict of fault codes. The key is
+        the request_id.
+
+        :return: Fault code string
+        """
+
+        pass
+
+    def get_fault_message(self):
+
+        """
+        Returns the fault error message of this response (overridden)
+
+        We provide this additional method because of zimbra bug
+         https://bugzilla.zimbra.com/show_bug.cgi?id=95490
+
+        For batch responses, we return a dict of fault messages. The key is
+        the request_id.
+
+        :return: Fault code error message
+        """
+
+        pass
+
     def is_fault(self):
 
         """ Checks, wether this response has at least one fault response (

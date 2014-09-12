@@ -125,13 +125,13 @@ class TestRequestXml(TestCase):
 
         self.request.enable_batch('urn:zimbra')
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
+        expected_result = \
+            '<?xml version="1.0" ?><soap:Envelope ' \
+            'xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap' \
+            ':Header><context xmlns="urn:zimbra"><format ' \
+            'type="xml"/></context></soap:Header><soap:Body><BatchRequest ' \
+            'onerror="urn:zimbra" ' \
+            'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
 
         self.assertEqual(
             expected_result,
@@ -147,7 +147,7 @@ class TestRequestXml(TestCase):
         """ Test enabling batch requests with additional parameter
         """
 
-        self.request.enable_batch('urn:zimbra', 'stop')
+        self.request.enable_batch('stop')
 
         expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
                           'xmlns:soap="http://www.w3' \
@@ -171,13 +171,14 @@ class TestRequestXml(TestCase):
         """ Test adding multiple request to a batch request
         """
 
-        self.request.enable_batch('urn:zimbra')
+        self.request.enable_batch()
 
         request_id = self.request.add_request(
             'GetInfoRequest',
             {
                 'sections': 'mbox,prefs'
-            }
+            },
+            'urn:zimbra'
         )
 
         self.assertIsInstance(
@@ -197,15 +198,14 @@ class TestRequestXml(TestCase):
             )
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"><GetInfoRequest requestId="1" ' \
-                          'sections="mbox,' \
-                          'prefs"/></BatchRequest></soap:Body></soap:Envelope>'
+        expected_result = \
+            '<?xml version="1.0" ?><soap:Envelope ' \
+            'xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap' \
+            ':Header><context xmlns="urn:zimbra"><format ' \
+            'type="xml"/></context></soap:Header><soap:Body><BatchRequest ' \
+            'onerror="continue" xmlns="urn:zimbra"><GetInfoRequest ' \
+            'requestId="1" sections="mbox,prefs" ' \
+            'xmlns="urn:zimbra"/></BatchRequest></soap:Body></soap:Envelope>'
 
         self.assertEqual(
             expected_result,
@@ -216,7 +216,8 @@ class TestRequestXml(TestCase):
             'GetInfoRequest',
             {
                 'sections': 'zimlets'
-            }
+            },
+            'urn:zimbra'
         )
 
         self.assertIsInstance(
@@ -236,17 +237,16 @@ class TestRequestXml(TestCase):
             )
         )
 
-        expected_result = '<?xml version="1.0" ?><soap:Envelope ' \
-                          'xmlns:soap="http://www.w3' \
-                          '.org/2003/05/soap-envelope"><soap:Header><context ' \
-                          'xmlns="urn:zimbra"><format ' \
-                          'type="xml"/></context></soap:Header><soap:Body' \
-                          '><BatchRequest onerror="continue" ' \
-                          'xmlns="urn:zimbra"><GetInfoRequest requestId="1" ' \
-                          'sections="mbox,prefs"/><GetInfoRequest ' \
-                          'requestId="2" ' \
-                          'sections="zimlets"/></BatchRequest></soap:Body' \
-                          '></soap:Envelope>'
+        expected_result = \
+            '<?xml version="1.0" ?><soap:Envelope ' \
+            'xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap' \
+            ':Header><context xmlns="urn:zimbra"><format ' \
+            'type="xml"/></context></soap:Header><soap:Body><BatchRequest ' \
+            'onerror="continue" xmlns="urn:zimbra"><GetInfoRequest ' \
+            'requestId="1" sections="mbox,prefs" ' \
+            'xmlns="urn:zimbra"/><GetInfoRequest requestId="2" ' \
+            'sections="zimlets" ' \
+            'xmlns="urn:zimbra"/></BatchRequest></soap:Body></soap:Envelope>'
 
         self.assertEqual(
             expected_result,
@@ -256,20 +256,6 @@ class TestRequestXml(TestCase):
         # Clean up
 
         self.setUp()
-
-    def test_add_request_missing_xmlns(self):
-
-        """ Test adding a request without specifying a XML namespace
-        """
-
-        self.assertRaises(
-            NoNamespaceGiven,
-            self.request.add_request,
-            'GetInfoRequest',
-            {
-                'sections': 'mbox,prefs'
-            }
-        )
 
     def test_add_request(self):
 

@@ -117,7 +117,7 @@ class TestRequestJson(TestCase):
 
         # Check with default parameter
 
-        self.request.enable_batch('urn:zimbra')
+        self.request.enable_batch()
 
         expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
                           '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
@@ -137,7 +137,7 @@ class TestRequestJson(TestCase):
         """ Test enabling batch requests with additional parameter
         """
 
-        self.request.enable_batch('urn:zimbra', 'stop')
+        self.request.enable_batch('stop')
 
         expected_result = '{"Body": {"BatchRequest": {"onerror": "stop", ' \
                           '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
@@ -157,13 +157,14 @@ class TestRequestJson(TestCase):
         """ Test adding multiple request to a batch request
         """
 
-        self.request.enable_batch('urn:zimbra')
+        self.request.enable_batch()
 
         request_id = self.request.add_request(
             'GetInfoRequest',
             {
                 'sections': 'mbox,prefs'
-            }
+            },
+            "urn_zimbra"
         )
 
         self.assertIsInstance(
@@ -183,9 +184,11 @@ class TestRequestJson(TestCase):
             )
         )
 
-        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
-                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
-                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = \
+            '{"Body": {"BatchRequest": {"onerror": "continue", "_jsns": ' \
+            '"urn:zimbra", "GetInfoRequest": {"_jsns": "urn_zimbra", ' \
+            '"sections": "mbox,prefs", "requestId": 1}}}, "Header": {' \
+            '"context": {"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -196,7 +199,8 @@ class TestRequestJson(TestCase):
             'GetInfoRequest',
             {
                 'sections': 'zimlets'
-            }
+            },
+            "urn:zimbra"
         )
 
         self.assertIsInstance(
@@ -216,9 +220,13 @@ class TestRequestJson(TestCase):
             )
         )
 
-        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
-                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
-                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = \
+            '{"Body": {"BatchRequest": {"onerror": "continue", "_jsns": ' \
+            '"urn:zimbra", "GetInfoRequest": [{"_jsns": "urn_zimbra", ' \
+            '"sections": "mbox,prefs", "requestId": 1}, {"_jsns": ' \
+            '"urn:zimbra", "sections": "zimlets", "requestId": 2}]}}, ' \
+            '"Header": {"context": {"_jsns": "urn:zimbra", "format": {' \
+            '"type": "js"}}}}'
 
         self.assertEqual(
             expected_result,
@@ -228,20 +236,6 @@ class TestRequestJson(TestCase):
         # Clean up
 
         self.setUp()
-
-    def test_add_request_missing_xmlns(self):
-
-        """ Test adding a request without specifying a XML namespace
-        """
-
-        self.assertRaises(
-            NoNamespaceGiven,
-            self.request.add_request,
-            'GetInfoRequest',
-            {
-                'sections': 'mbox,prefs'
-            }
-        )
 
     def test_add_request(self):
 
