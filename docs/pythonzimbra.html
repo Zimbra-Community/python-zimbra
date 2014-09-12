@@ -124,7 +124,7 @@ urllib2.HTTPError</p>
 <p>Zimbra SOAP request generation and handling.</p>
 <dl class="method">
 <dt id="pythonzimbra.request.Request.add_request">
-<tt class="descname">add_request</tt><big>(</big><em>request_name</em>, <em>request_dict</em>, <em>namespace=None</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.add_request" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_request</tt><big>(</big><em>request_name</em>, <em>request_dict</em>, <em>namespace</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.add_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a request.</p>
 <p>This adds a request to the body or to the batchrequest-node if batch
 requesting is enabled. Has to update the self.batch_request_id after
@@ -173,21 +173,16 @@ the request_dict to specify it, use this parameter)</li>
 
 <dl class="method">
 <dt id="pythonzimbra.request.Request.enable_batch">
-<tt class="descname">enable_batch</tt><big>(</big><em>namespace</em>, <em>onerror='continue'</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.enable_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.enable_batch" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">enable_batch</tt><big>(</big><em>onerror='continue'</em><big>)</big><a class="reference internal" href="_modules/pythonzimbra/request.html#Request.enable_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pythonzimbra.request.Request.enable_batch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables batch request gathering.</p>
 <p>Do this first and then consecutively call &#8220;add_request&#8221; to add more
-requests. All requests have to be the same namespace, so specify the
-xml namespace (i.e. &#8220;<a class="reference external" href="urn:zimbra">urn:zimbra</a>&#8221;) here.</p>
+requests.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>namespace</strong> &#8211; The XML namespace of the requests to come</li>
-<li><strong>onerror</strong> &#8211; &#8220;continue&#8221; (default) if one request fails (and
-response with soap Faults for the request) or &#8220;stop&#8221; processing.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>onerror</strong> &#8211; &#8220;continue&#8221; (default) if one request fails (and
+response with soap Faults for the request) or &#8220;stop&#8221; processing.</td>
 </tr>
 </tbody>
 </table>
@@ -329,6 +324,46 @@ params.</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The response body in the documented dictionary format</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_fault_code">
+<tt class="descname">get_fault_code</tt><big>(</big><big>)</big><a class="headerlink" href="#pythonzimbra.response.Response.get_fault_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fault error code of this response (overridden)</p>
+<dl class="docutils">
+<dt>We provide this additional method because of zimbra bug</dt>
+<dd><a class="reference external" href="https://bugzilla.zimbra.com/show_bug.cgi?id=95490">https://bugzilla.zimbra.com/show_bug.cgi?id=95490</a></dd>
+</dl>
+<p>For batch responses, we return a dict of fault codes. The key is
+the request_id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fault code string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pythonzimbra.response.Response.get_fault_message">
+<tt class="descname">get_fault_message</tt><big>(</big><big>)</big><a class="headerlink" href="#pythonzimbra.response.Response.get_fault_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fault error message of this response (overridden)</p>
+<dl class="docutils">
+<dt>We provide this additional method because of zimbra bug</dt>
+<dd><a class="reference external" href="https://bugzilla.zimbra.com/show_bug.cgi?id=95490">https://bugzilla.zimbra.com/show_bug.cgi?id=95490</a></dd>
+</dl>
+<p>For batch responses, we return a dict of fault messages. The key is
+the request_id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fault code error message</td>
 </tr>
 </tbody>
 </table>
