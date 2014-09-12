@@ -26,7 +26,7 @@ path.
 Tutorial
 --------
 
-If you'd like to get the current version information from your zimbra admin,
+If you'd like to get information about a folder of a specific user, 
 this is how you do it:
 
 First, import the needed libraries (You will learn about them later):
@@ -37,8 +37,8 @@ First, import the needed libraries (You will learn about them later):
     from pythonzimbra.communication import Communication
 
 Let's assume you have a variable called "url" which holds the URL to your
-Zimbra server. For our example this has to be an administrative url,
-so it's something like "https://<yourzimbraserver>:7071/service/admin/soap"
+Zimbra server. For our example this has to be the URL for the user backend, 
+that is typically "https://<yourzimbraserver>/service/soap".
 
 Now, build up the communication object:
 
@@ -50,7 +50,7 @@ auth-helper:
 
     token = auth.authenticate(
         url,
-        'myadminuser@mydomain.com',
+        'myuser@mydomain.com',
         'fkiwfki2ri32fiqepnfpwenufpsecretpreauthkey'
     )
 
@@ -69,7 +69,15 @@ inject the authentication token into it,
 and add our (very simple) GetVersionInfo request,
 which is in the urn:zimbraAdmin-namespace:
 
-    info_request.add_request('GetVersionInfoRequest', {}, 'urn:zimbraAdmin')
+    info_request.add_request(
+        "GetFolderRequest", 
+        {
+            "folder": {
+                "path": "/inbox"
+            }
+        }, 
+        "urn:zimbraAdmin"
+    )
 
 Now, we prepare a response object for the transport (this has to use the same
  method (xml or json) as the request object):
@@ -86,12 +94,36 @@ Now, if the response was successful and has now Fault-object:
 
     if not info_response.is_fault():
 
-Print the version info:
+Print the message count of that folder:
 
-    print info_response.get_response()['GetVersionInfoResponse']['info']['version']
+    print info_response.get_response()['GetFolderResponse']['folder']['n']
 
-The framework also supports Zimbra batch requests. Please refer to the class
-docs for more information.
+Batch requests
+--------------
+
+Working with batch requests is also possible. To do that, 
+you'll have to first enable the batch mode on the request:
+
+    request.enable_batch()
+
+And can afterwards add multiple requests using add_request to it. You'll get 
+the request id of the specific request as a return value. Use that id to 
+retrieve the response later using get_response(id).
+
+Working with faults
+-------------------
+
+If you get a response, that resulted in a fault, you can check that with:
+
+    response.is_fault()
+    
+To get further information about the response, use the two methods
+
+    response.get_fault_code()
+    response.get_fault_message()
+    
+The fault_code is Zimbra's own fault message code (like mail.NO_SUCH_FOLDER).
+ The message is a more elaborate message like (no such folder path: /...).
 
 Authentication against the administration console
 -------------------------------------------------
