@@ -46,22 +46,24 @@ class Communication(object):
                 urllib2.HTTPError
         """
 
-        server_request = urllib2.urlopen(
-            self.url,
-            request.get_request(),
-            self.timeout
-        )
-
         try:
 
-            server_response = server_request.read()
+            server_request = urllib2.urlopen(
+                self.url,
+                request.get_request(),
+                self.timeout
+            )
+
+            response.set_response(server_request.read())
 
         except urllib2.HTTPError as e:
 
-            # Return the exception to the caller on HTTPerrors
+            if e.code == 500:
 
-            raise e
+                # 500 codes normally returns a SoapFault, that we can use
 
-        # Find the response for
+                response.set_response(e.fp.read())
 
-        response.set_response(server_response)
+            else:
+
+                raise e

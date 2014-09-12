@@ -10,6 +10,10 @@ class ResponseJson(Response):
 
     """ The dictionary we'll be working on """
 
+    def clean(self):
+        super(ResponseJson, self).clean()
+        self.response_dict = None
+
     def set_response(self, response_text):
 
         self.response_dict = json.loads(response_text)
@@ -47,6 +51,16 @@ class ResponseJson(Response):
         for key, value in self.response_dict['Body']['BatchResponse']\
             .iteritems():
 
+            if key == "_jsns":
+                # Skip Namespace attribute
+
+                continue
+
+            if key == 'Fault':
+
+                has_fault = True
+                continue
+
             request_id = value['requestId']
 
             ret_dict['idToName'][request_id] = key
@@ -56,10 +70,6 @@ class ResponseJson(Response):
                 ret_dict['nameToId'][key] = []
 
             ret_dict['nameToId'][key].append(request_id)
-
-            if key == 'Fault':
-
-                has_fault = True
 
         ret_dict['hasFault'] = has_fault
 
@@ -86,3 +96,43 @@ class ResponseJson(Response):
             return self._filter_response({
                 key: self.response_dict['Body'][key]
             })
+
+    def get_fault_code(self):
+
+        if self.is_batch():
+
+            ret_dict = {}
+
+            for response in self.response_dict['Body'][
+                'BatchResponse']["Fault"]:
+
+                request_id = response["requestId"]
+
+                ret_dict[request_id] = response["Detail"]["Error"]["Code"]
+
+            return ret_dict
+
+        else:
+
+            return self.get_response()["Fault"]["Detail"]["Error"]["Code"]
+
+    def get_fault_message(self):
+
+        if self.is_batch():
+
+            ret_dict = {}
+
+            for response in self.response_dict['Body'][
+                'BatchResponse']["Fault"]:
+
+                request_id = response["requestId"]
+
+                ret_dict[request_id] = response["Reason"]["Text"]
+
+            return ret_dict
+
+        else:
+
+            return self.get_response()["Fault"]["Reason"]["Text"]
+
+

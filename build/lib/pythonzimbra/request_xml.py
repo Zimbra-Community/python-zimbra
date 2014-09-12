@@ -57,6 +57,11 @@ class RequestXml(Request):
 
         self.request_doc.appendChild(root_node)
 
+    def clean(self):
+        super(RequestXml, self).clean()
+
+        self.__init__()
+
     def set_context_params(self, params):
 
         # Call parent method
@@ -71,15 +76,15 @@ class RequestXml(Request):
 
             self.context_node.appendChild(tmp_node)
 
-    def _create_batch_node(self, namespace, onerror):
+    def _create_batch_node(self, onerror):
 
         self.batch_node = self.request_doc.createElement("BatchRequest")
-        self.batch_node.setAttribute("xmlns", namespace)
+        self.batch_node.setAttribute("xmlns", "urn:zimbra")
         self.batch_node.setAttribute("onerror", onerror)
 
         self.body_node.appendChild(self.batch_node)
 
-    def add_request(self, request_name, request_dict, namespace=None):
+    def add_request(self, request_name, request_dict, namespace):
 
         super(RequestXml, self).add_request(
             request_name,
@@ -90,9 +95,9 @@ class RequestXml(Request):
         request_node = self.request_doc.createElement(request_name)
         xmlserializer.dict_to_dom(request_node, request_dict)
 
-        if not self.batch_request:
+        request_node.setAttribute('xmlns', namespace)
 
-            request_node.setAttribute('xmlns', namespace)
+        if not self.batch_request:
 
             self.body_node.appendChild(request_node)
 

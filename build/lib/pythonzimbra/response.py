@@ -1,4 +1,5 @@
 """ Zimbra response access. """
+import re
 
 
 class Response(object):
@@ -6,6 +7,13 @@ class Response(object):
     """ Unified access to Zimbra responses.
 
     """
+
+    def clean(self):
+
+        """ Clean up the response, so it can be used again
+        """
+
+        pass
 
     def set_response(self, response_text):
 
@@ -83,6 +91,38 @@ class Response(object):
 
         pass
 
+    def get_fault_code(self):
+
+        """
+        Returns the fault error code of this response (overridden)
+
+        We provide this additional method because of zimbra bug
+         https://bugzilla.zimbra.com/show_bug.cgi?id=95490
+
+        For batch responses, we return a dict of fault codes. The key is
+        the request_id.
+
+        :return: Fault code string
+        """
+
+        pass
+
+    def get_fault_message(self):
+
+        """
+        Returns the fault error message of this response (overridden)
+
+        We provide this additional method because of zimbra bug
+         https://bugzilla.zimbra.com/show_bug.cgi?id=95490
+
+        For batch responses, we return a dict of fault messages. The key is
+        the request_id.
+
+        :return: Fault code error message
+        """
+
+        pass
+
     def is_fault(self):
 
         """ Checks, wether this response has at least one fault response (
@@ -99,7 +139,7 @@ class Response(object):
 
             my_response = self.get_response()
 
-            if my_response.keys()[0] == 'Fault':
+            if my_response.keys()[0] == "Fault":
 
                 return True
 

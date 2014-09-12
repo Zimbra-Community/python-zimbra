@@ -23,6 +23,14 @@ class Request(object):
 
     """ If so, keep the current request id """
 
+    def clean(self):
+
+        """ Clean up request, so the request object can be reused
+        """
+
+        self.batch_request = False
+        self.batch_request_id = None
+
     def set_context_params(self, params):
 
         """ Set header context parameters. Refer to the top of <Zimbra
@@ -60,15 +68,13 @@ class Request(object):
             }
         )
 
-    def enable_batch(self, namespace, onerror="continue"):
+    def enable_batch(self, onerror="continue"):
 
         """ Enables batch request gathering.
 
         Do this first and then consecutively call "add_request" to add more
-        requests. All requests have to be the same namespace, so specify the
-        xml namespace (i.e. "urn:zimbra") here.
+        requests.
 
-        :param namespace: The XML namespace of the requests to come
         :param onerror: "continue" (default) if one request fails (and
           response with soap Faults for the request) or "stop" processing.
         """
@@ -76,9 +82,9 @@ class Request(object):
         self.batch_request = True
         self.batch_request_id = 1
 
-        self._create_batch_node(namespace, onerror)
+        self._create_batch_node(onerror)
 
-    def _create_batch_node(self, namespace, onerror):
+    def _create_batch_node(self, onerror):
 
         """Prepare the request structure to support batch mode
 
@@ -87,7 +93,7 @@ class Request(object):
 
         pass
 
-    def add_request(self, request_name, request_dict, namespace=None):
+    def add_request(self, request_name, request_dict, namespace):
 
         """ Add a request.
 
@@ -106,13 +112,9 @@ class Request(object):
         :rtype: int or None
         """
 
-        if not self.batch_request:
+        # Currently no checks
 
-            if not namespace:
-                raise NoNamespaceGiven(
-                    'You have added a request without specifying a XML '
-                    'namespace, but you are not in batch request mode.'
-                )
+        pass
 
     def get_request(self):
 

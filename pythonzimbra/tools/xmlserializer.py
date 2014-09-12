@@ -62,11 +62,19 @@ def dom_to_dict(root_node):
     :rtype: dict
     """
 
+    # Remove namespaces from tagname
+
+    tag = root_node.tagName
+
+    if ":" in tag:
+
+        tag = tag.split(":")[1]
+
     root_dict = {
-        root_node.tagName: {}
+        tag: {}
     }
 
-    node_dict = root_dict[root_node.tagName]
+    node_dict = root_dict[tag]
 
     # Set attributes
 
@@ -89,20 +97,27 @@ def dom_to_dict(root_node):
         else:
 
             subnode_dict = dom_to_dict(child)
-            new_val = subnode_dict[child.tagName]
+
+            child_tag = child.tagName
+
+            if ":" in child_tag:
+
+                child_tag = child_tag.split(":")[1]
+
+            new_val = subnode_dict[child_tag]
 
             # If we have several child with same name, put them in a list.
 
-            if node_dict.has_key(child.tagName):
-                prev_val = node_dict[child.tagName]
+            if node_dict.has_key(child_tag):
+                prev_val = node_dict[child_tag]
 
                 if type(prev_val) != list:
-                    node_dict[child.tagName] = [prev_val]
+                    node_dict[child_tag] = [prev_val]
 
-                node_dict[child.tagName].append(new_val)
+                node_dict[child_tag].append(new_val)
 
             else:
-                node_dict[child.tagName] = new_val
+                node_dict[child_tag] = new_val
 
     return root_dict
 

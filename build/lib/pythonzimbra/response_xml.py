@@ -11,6 +11,10 @@ class ResponseXml(Response):
 
     """ The response document we're working on """
 
+    def clean(self):
+        super(ResponseXml, self).clean()
+        self.response_doc = None
+
     def set_response(self, response_text):
 
         self.response_doc = minidom.parseString(response_text)
@@ -55,19 +59,26 @@ class ResponseXml(Response):
 
         for child in search_node.childNodes:
 
-            request_id = child.getAttribute("requestId")
+            tag = child.tagName
 
-            ret_dict['idToName'][request_id] = child.tagName
+            if ":" in tag:
 
-            if child.tagName not in ret_dict['nameToId'].keys():
+                tag = tag.split(":")[1]
 
-                ret_dict['nameToId'][child.tagName] = []
-
-            ret_dict['nameToId'][child.tagName].append(request_id)
-
-            if child.tagName == 'Fault':
+            if tag == 'Fault':
 
                 has_fault = True
+                continue
+
+            request_id = child.getAttribute("requestId")
+
+            ret_dict['idToName'][request_id] = tag
+
+            if tag not in ret_dict['nameToId'].keys():
+
+                ret_dict['nameToId'][tag] = []
+
+            ret_dict['nameToId'][tag].append(request_id)
 
         ret_dict['hasFault'] = has_fault
 
@@ -96,3 +107,48 @@ class ResponseXml(Response):
             ).item(0)
 
             return self._filter_response(dom_to_dict(search_node.firstChild))
+
+    def get_fault_code(self):
+
+        if self.is_batch():
+
+            ret_dict = {}
+
+            search_node = self.response_doc.getElementsByTagNameNS(
+                "*", "BatchResponse"
+            ).item(0)
+
+            for child in search_node.childNodes:
+
+                ret_dict[child.getAttribute("requestId")] = self.get_response(
+                    child.getAttribute("requestId")
+                )["Fault"]["Detail"]["Error"]["Code"]["_content"]
+
+            return ret_dict
+
+        else:
+
+            return self.get_response()["Fault"]["Detail"]["Error"][
+                "Code"]["_content"]
+
+    def get_fault_message(self):
+
+        if self.is_batch():
+
+            ret_dict = {}
+
+            search_node = self.response_doc.getElementsByTagNameNS(
+                "*", "BatchResponse"
+            ).item(0)
+
+            for child in search_node.childNodes:
+
+                ret_dict[child.getAttribute("requestId")] = self.get_response(
+                    child.getAttribute("requestId")
+                )["Fault"]["Reason"]["Text"]["_content"]
+
+            return ret_dict
+
+        else:
+
+            return self.get_response()["Fault"]["Reason"]["Text"]["_content"]
