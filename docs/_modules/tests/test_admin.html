@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_admin &mdash; Python-Zimbra 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.1 documentation" href="../../index.html" />
+    <link rel="up" title="tests" href="../tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" accesskey="U">tests</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for tests.test_admin</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Test administrative requests &quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_json</span> <span class="kn">import</span> <span class="n">ResponseJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
+<span class="kn">from</span> <span class="nn">tests</span> <span class="kn">import</span> <span class="n">get_config</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
+
+
+<div class="viewcode-block" id="TestAdmin"><a class="viewcode-back" href="../../tests.html#tests.test_admin.TestAdmin">[docs]</a><span class="k">class</span> <span class="nc">TestAdmin</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestAdmin.run_admin_test"><a class="viewcode-back" href="../../tests.html#tests.test_admin.TestAdmin.run_admin_test">[docs]</a>    <span class="k">def</span> <span class="nf">run_admin_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_type</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Actually do the work</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;admin_url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;admin_account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;admin_password&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;admin_account_by&quot;</span><span class="p">),</span>
+                <span class="n">admin_auth</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="n">request_type</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s">&quot;Authentication with the configured settings &quot;</span>
+                          <span class="s">&quot;was not successful&quot;</span><span class="p">)</span>
+
+            <span class="c"># Create an account</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;admin_url&quot;</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;xml&quot;</span><span class="p">:</span>
+
+                <span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;CreateAccountRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_account&quot;</span><span class="p">),</span>
+                    <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;test_password&quot;</span>
+                    <span class="p">)</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAdmin&quot;</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;xml&quot;</span><span class="p">:</span>
+
+                <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseJson</span><span class="p">()</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;CreateAccount faulted. (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="n">account_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span>
+            <span class="p">)[</span><span class="s">&quot;CreateAccountResponse&quot;</span><span class="p">][</span><span class="s">&quot;account&quot;</span><span class="p">][</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
+
+            <span class="c"># Try to log in as the new account</span>
+
+            <span class="n">user_token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_password&quot;</span><span class="p">),</span>
+                <span class="s">&quot;name&quot;</span><span class="p">,</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="n">request_type</span><span class="p">,</span>
+                <span class="n">use_password</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">user_token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s">&quot;Cannot log in as the test user.&quot;</span><span class="p">)</span>
+
+            <span class="c"># Remove account</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;DeleteAccountRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">account_id</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAdmin&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Cannot remove test account: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAdmin.test_admin_xml"><a class="viewcode-back" href="../../tests.html#tests.test_admin.TestAdmin.test_admin_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_admin_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Creates a new account, authenticates as this account and deletes</span>
+<span class="sd">        it afterwards. Assumes, that this works correctly (in xml format)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_admin_test</span><span class="p">(</span><span class="s">&quot;xml&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAdmin.test_admin_json"><a class="viewcode-back" href="../../tests.html#tests.test_admin.TestAdmin.test_admin_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_admin_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Creates a new account, authenticates as this account and deletes</span>
+<span class="sd">        it afterwards. Assumes, that this works correctly (in json format)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_admin_test</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" >tests</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_fault &mdash; Python-Zimbra 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.1 documentation" href="../../index.html" />
+    <link rel="up" title="tests" href="../tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" accesskey="U">tests</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for tests.test_fault</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Fault tests &quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">tests</span> <span class="kn">import</span> <span class="n">get_config</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools</span> <span class="kn">import</span> <span class="n">auth</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_json</span> <span class="kn">import</span> <span class="n">ResponseJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
+
+
+<div class="viewcode-block" id="TestRequestFault"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault">[docs]</a><span class="k">class</span> <span class="nc">TestRequestFault</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Fault tests</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">request</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="sd">&quot;&quot;&quot; The request to be tested against &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestRequestFault.cleanUp"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Clean up after one step to leave a dedicated result for the other</span>
+<span class="sd">         test cases.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.setUp"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.test_fault_non_existing_folder_json"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.test_fault_non_existing_folder_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_fault_non_existing_folder_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Request a non existing folder, so we get a fitting fault</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;enabled&#39;</span><span class="p">):</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;preauthkey&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account_by&#39;</span><span class="p">))</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseJson</span><span class="p">()</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_response</span><span class="p">(</span>
+                <span class="n">response</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.test_fault_non_existing_folder_batch_json"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.test_fault_non_existing_folder_batch_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_fault_non_existing_folder_batch_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Request a non existing folder multiple times to get multiple</span>
+<span class="sd">        faults</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;enabled&#39;</span><span class="p">):</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;preauthkey&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account_by&#39;</span><span class="p">))</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseJson</span><span class="p">()</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_response</span><span class="p">(</span>
+                <span class="n">response</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.test_fault_non_existing_folder_xml"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.test_fault_non_existing_folder_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_fault_non_existing_folder_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Request a non existing folder, so we get a fitting fault</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;enabled&#39;</span><span class="p">):</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;preauthkey&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account_by&#39;</span><span class="p">))</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_response</span><span class="p">(</span>
+                <span class="n">response</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.test_fault_non_existing_folder_batch_xml"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.test_fault_non_existing_folder_batch_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_fault_non_existing_folder_batch_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Request a non existing folder multiple times to get multiple</span>
+<span class="sd">        faults</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;enabled&#39;</span><span class="p">):</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;preauthkey&#39;</span><span class="p">),</span>
+                                      <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;account_by&#39;</span><span class="p">))</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetFolderRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;folder&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;path&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_response</span><span class="p">(</span>
+                <span class="n">response</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.check_response"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.check_response">[docs]</a>    <span class="k">def</span> <span class="nf">check_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+
+        <span class="c"># Should be a fault</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                <span class="s">&quot;Response wasn&#39;t a fault: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">())</span>
+            <span class="p">)</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;no such folder path: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fault_test&#39;</span><span class="p">,</span> <span class="s">&#39;folder&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_batch</span><span class="p">():</span>
+
+            <span class="c"># Correct error should&#39;ve been returned</span>
+
+            <span class="k">for</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                    <span class="s">&quot;mail.NO_SUCH_FOLDER&quot;</span><span class="p">,</span>
+                    <span class="n">code</span>
+                <span class="p">)</span>
+
+            <span class="c"># Correct error message should&#39;ve been returned</span>
+
+            <span class="k">for</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">fault_message</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                    <span class="n">message</span><span class="p">,</span>
+                    <span class="n">fault_message</span>
+                <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="c"># Correct error should&#39;ve been returned</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="s">&quot;mail.NO_SUCH_FOLDER&quot;</span><span class="p">,</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">()</span>
+            <span class="p">)</span>
+
+            <span class="c"># Correct error message should&#39;ve been returned</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">message</span><span class="p">,</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestRequestFault.tearDown"><a class="viewcode-back" href="../../tests.html#tests.test_fault.TestRequestFault.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="bp">None</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" >tests</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

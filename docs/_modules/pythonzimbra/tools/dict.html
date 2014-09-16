@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pythonzimbra.tools.dict &mdash; Python-Zimbra 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pythonzimbra.tools.dict</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; A tool to convert from Zimbra dicts to Python dicts</span>
+
+<span class="sd">&quot;Zimbra dicts&quot; means lists in the following form::</span>
+
+<span class="sd">    [</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;n&quot;: &quot;key&quot;,</span>
+<span class="sd">            &quot;_content&quot;: &quot;value&quot;</span>
+<span class="sd">        }</span>
+<span class="sd">    ]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="zimbra_to_python"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.dict.zimbra_to_python">[docs]</a><span class="k">def</span> <span class="nf">zimbra_to_python</span><span class="p">(</span><span class="n">zimbra_dict</span><span class="p">,</span> <span class="n">key_attribute</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span>
+    <span class="n">content_attribute</span><span class="o">=</span><span class="s">&quot;_content&quot;</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts single level Zimbra dicts to a standard python dict</span>
+
+<span class="sd">    :param zimbra_dict: The dictionary in Zimbra-Format</span>
+<span class="sd">    :return: A native python dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">local_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">zimbra_dict</span><span class="p">:</span>
+
+        <span class="n">local_dict</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="n">key_attribute</span><span class="p">]]</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="n">content_attribute</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">local_dict</span>
+
+</div>
+<div class="viewcode-block" id="get_value"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.dict.get_value">[docs]</a><span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">,</span> <span class="n">key_attribute</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span>
+    <span class="n">content_attribute</span><span class="o">=</span><span class="s">&quot;_content&quot;</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Fetch a value from a zimbra-like json dict (keys are &quot;n&quot;, values are</span>
+<span class="sd">    &quot;_content&quot;</span>
+
+<span class="sd">    This function may be slightly faster than zimbra_to_python(haystack)[</span>
+<span class="sd">    needle], because it doesn&#39;t necessarily iterate over the complete list.</span>
+
+<span class="sd">    :param haystack: The list in zimbra-dict format</span>
+<span class="sd">    :param needle: the key to search for</span>
+<span class="sd">    :return: the value or None, if the key is not found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">haystack</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="n">key_attribute</span><span class="p">]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">:</span>
+
+            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="n">content_attribute</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="bp">None</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
