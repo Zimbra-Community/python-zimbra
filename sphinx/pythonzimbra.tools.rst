@@ -17,6 +17,14 @@ tools Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`dict` Module
+------------------
+
+.. automodule:: pythonzimbra.tools.dict
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`preauth` Module
 ---------------------
 

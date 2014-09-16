@@ -1,6 +1,6 @@
 """ A tool to convert from Zimbra dicts to Python dicts
 
-"Zimbra dicts" means lists in the following form:
+"Zimbra dicts" means lists in the following form::
 
     [
         {
@@ -8,6 +8,7 @@
             "_content": "value"
         }
     ]
+
 """
 
 
@@ -18,7 +19,7 @@ def zimbra_to_python(zimbra_dict, key_attribute="n",
     Converts single level Zimbra dicts to a standard python dict
 
     :param zimbra_dict: The dictionary in Zimbra-Format
-    :return:
+    :return: A native python dict
     """
 
     local_dict = {}

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.test_autoresponse &mdash; Python-Zimbra 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python-Zimbra 1.1 documentation" href="../../index.html" />
+    <link rel="up" title="tests" href="../tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" accesskey="U">tests</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for tests.test_autoresponse</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot; Test, wether send_request can create a request automatically on its own</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
+<span class="kn">from</span> <span class="nn">tests</span> <span class="kn">import</span> <span class="n">get_config</span>
+
+
+<div class="viewcode-block" id="TestAutoresponse"><a class="viewcode-back" href="../../tests.html#tests.test_autoresponse.TestAutoresponse">[docs]</a><span class="k">class</span> <span class="nc">TestAutoresponse</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestAutoresponse.test_autoresponse_json"><a class="viewcode-back" href="../../tests.html#tests.test_autoresponse.TestAutoresponse.test_autoresponse_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_autoresponse_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a JSON-request and pass this to send_request expection a</span>
+<span class="sd">        json response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">response_type</span><span class="p">,</span>
+                <span class="s">&quot;json&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Invalid response type </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">response_type</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAutoresponse.test_autoresponse_xml"><a class="viewcode-back" href="../../tests.html#tests.test_autoresponse.TestAutoresponse.test_autoresponse_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_autoresponse_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create an XML-request and pass this to send_request expection a</span>
+<span class="sd">        xml response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;autoresponse_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">response_type</span><span class="p">,</span>
+                <span class="s">&quot;xml&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Invalid response type </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">response_type</span>
+            <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Python-Zimbra 1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../tests.html" >tests</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

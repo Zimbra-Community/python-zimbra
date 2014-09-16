@@ -1,67 +1,102 @@
-tests Package
+tests package
 =============
 
-:mod:`tests` Package
---------------------
+Submodules
+----------
 
-.. automodule:: tests
+tests.test_admin module
+-----------------------
+
+.. automodule:: tests.test_admin
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_auth` Module
------------------------
+tests.test_auth module
+----------------------
 
 .. automodule:: tests.test_auth
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_preauth` Module
---------------------------
+tests.test_autoresponse module
+------------------------------
+
+.. automodule:: tests.test_autoresponse
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test_fault module
+-----------------------
+
+.. automodule:: tests.test_fault
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test_genrequest module
+----------------------------
+
+.. automodule:: tests.test_genrequest
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test_preauth module
+-------------------------
 
 .. automodule:: tests.test_preauth
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_request_json` Module
--------------------------------
+tests.test_request_json module
+------------------------------
 
 .. automodule:: tests.test_request_json
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_response_json` Module
---------------------------------
-
-.. automodule:: tests.test_response_json
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`test_request_xml` Module
-------------------------------
+tests.test_request_xml module
+-----------------------------
 
 .. automodule:: tests.test_request_xml
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_response_xml` Module
+tests.test_response_json module
 -------------------------------
+
+.. automodule:: tests.test_response_json
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test_response_xml module
+------------------------------
 
 .. automodule:: tests.test_response_xml
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`test_xmlserializer` Module
---------------------------------
+tests.test_xmlserializer module
+-------------------------------
 
 .. automodule:: tests.test_xmlserializer
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

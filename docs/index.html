@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Python-Zimbra’s documentation! &mdash; Python-Zimbra 1.0 documentation</title>
+    <title>Welcome to Python-Zimbra’s documentation! &mdash; Python-Zimbra 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Python-Zimbra 1.0 documentation" href="#" />
+    <link rel="top" title="Python-Zimbra 1.1 documentation" href="#" />
     <link rel="next" title="pythonzimbra Package" href="pythonzimbra.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="pythonzimbra.html" title="pythonzimbra Package"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Python-Zimbra 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -71,6 +71,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pythonzimbra.tools.html">tools Package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pythonzimbra.tools.html#id1"><tt class="docutils literal"><span class="pre">tools</span></tt> Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.auth"><tt class="docutils literal"><span class="pre">auth</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.dict"><tt class="docutils literal"><span class="pre">dict</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.preauth"><tt class="docutils literal"><span class="pre">preauth</span></tt> Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pythonzimbra.tools.html#module-pythonzimbra.tools.xmlserializer"><tt class="docutils literal"><span class="pre">xmlserializer</span></tt> Module</a></li>
 </ul>
@@ -79,15 +80,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">tests Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_auth"><tt class="docutils literal"><span class="pre">test_auth</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_preauth"><tt class="docutils literal"><span class="pre">test_preauth</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_request_json"><tt class="docutils literal"><span class="pre">test_request_json</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_response_json"><tt class="docutils literal"><span class="pre">test_response_json</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_request_xml"><tt class="docutils literal"><span class="pre">test_request_xml</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_response_xml"><tt class="docutils literal"><span class="pre">test_response_xml</span></tt> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_xmlserializer"><tt class="docutils literal"><span class="pre">test_xmlserializer</span></tt> Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_admin">tests.test_admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_auth">tests.test_auth module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_autoresponse">tests.test_autoresponse module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_fault">tests.test_fault module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_genrequest">tests.test_genrequest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_preauth">tests.test_preauth module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_request_json">tests.test_request_json module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_request_xml">tests.test_request_xml module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_response_json">tests.test_response_json module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_response_xml">tests.test_response_xml module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_xmlserializer">tests.test_xmlserializer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -151,7 +157,7 @@
         <li class="right" >
           <a href="pythonzimbra.html" title="pythonzimbra Package"
              >next</a> |</li>
-        <li><a href="#">Python-Zimbra 1.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Python-Zimbra 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
