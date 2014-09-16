@@ -51,6 +51,49 @@ class TestXmlSerializer(TestCase):
             test_node.toxml()
         )
 
+    def test_dict_to_dom_unicode(self):
+
+        """ Test xml serialization using dict_to_dom method.
+        """
+
+        test_doc = minidom.Document()
+        test_node = test_doc.createElement("test")
+        test_dict = {
+            'attr1': 'value1',
+            'attr2': 'value2',
+            'subnode1': {
+                '_content': 'testcontent'
+            },
+            'subnode2': {
+                'subnode2attr1': 'value1',
+                'subnode2attr2': 'value2',
+                '_content': 'testcontent2'
+            },
+            'subnode3': {
+                'subnode3attr1': 'value1',
+                'subnode3attr2': u'value2\xf6',
+                'subnode31': {
+                    '_content': u'testcontent3\xf6'
+                }
+            }
+        }
+
+        xmlserializer.dict_to_dom(test_node, test_dict)
+
+        expected_result = '<test attr1="value1" attr2="value2"><subnode2 ' \
+                          'subnode2attr1="value1" ' \
+                          'subnode2attr2="value2">testcontent2</subnode2' \
+                          '><subnode1>testcontent</subnode1><subnode3 ' \
+                          'subnode3attr1="value1" ' \
+                          u'subnode3attr2="value2\xf6"><subnode31' \
+                          u'>testcontent3\xf6' \
+                          '</subnode31></subnode3></test>'
+
+        self.assertEqual(
+            expected_result,
+            test_node.toxml()
+        )
+
     def test_dom_to_dict(self):
 
         """ Test xml->dict serialization
