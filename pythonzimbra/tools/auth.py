@@ -14,7 +14,7 @@ from pythonzimbra.tools import preauth
 
 def authenticate(url, account, key, by='name', expires=0, timestamp=None,
                  timeout=None, request_type="xml", admin_auth=False,
-                 use_password=False):
+                 use_password=False, raise_on_error=False):
 
     """ Authenticate to the Zimbra server
 
@@ -35,7 +35,9 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
       use_password)
     :param use_password: The "key"-parameter holds a password. Do a password-
       based user authentication.
-    :return: The authentication token
+    :param raise_on_error: Should I raise an exception when an authentication
+      error occurs or just return None?
+    :return: The authentication token or None
     :rtype: str or None or unicode
     """
 
@@ -99,14 +101,18 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
 
         response = ResponseJson()
 
-    try:
+    server.send_request(auth_request, response)
 
-        server.send_request(auth_request, response)
+    if response.is_fault():
 
-    except HTTPError:
+        if raise_on_error:
 
-        # A HTTPError (which is an AuthError in most cases) occured. Simply
-        # return nothing
+            raise Exception(
+                "Cannot authenticate user: (%s) %s" % (
+                    response.get_fault_code(),
+                    response.get_fault_message()
+                )
+            )
 
         return None
 

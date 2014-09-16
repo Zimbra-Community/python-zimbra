@@ -60,7 +60,7 @@ class TestRequestFault(TestCase):
 
             comm.send_request(request, response)
 
-            self.checkResponse(
+            self.check_response(
                 response
             )
 
@@ -111,7 +111,7 @@ class TestRequestFault(TestCase):
 
             comm.send_request(request, response)
 
-            self.checkResponse(
+            self.check_response(
                 response
             )
 
@@ -148,7 +148,7 @@ class TestRequestFault(TestCase):
 
             comm.send_request(request, response)
 
-            self.checkResponse(
+            self.check_response(
                 response
             )
 
@@ -199,18 +199,19 @@ class TestRequestFault(TestCase):
 
             comm.send_request(request, response)
 
-            self.checkResponse(
+            self.check_response(
                 response
             )
 
-    def checkResponse(self, response):
+    def check_response(self, response):
 
         # Should be a fault
 
-        self.assertEqual(
-            True,
-            response.is_fault()
-        )
+        if not response.is_fault():
+
+            self.fail(
+                "Response wasn't a fault: %s" % (response.get_response())
+            )
 
         config = get_config()
 

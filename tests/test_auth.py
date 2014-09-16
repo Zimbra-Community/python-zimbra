@@ -39,10 +39,52 @@ class TestAuth(TestCase):
                 timestamp
             )
 
-            if response is None:
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not successful"
+            )
 
-                self.fail("Authentication with the configured settings "
-                          "was not successful")
+    def test_auth_failure_xml(self):
+
+        """ Send a configured auth request with a wrong password in XML format
+        and check the result
+        """
+
+        config = get_config()
+
+        if config.getboolean('auth_test', 'enabled'):
+
+            # Run only if enabled
+
+            try:
+
+                timestamp = config.getint('auth_test', 'timestamp')
+
+            except ValueError:
+
+                # If timestamp is set to a none-integer, we'll just assume
+                # that it's unset
+
+                timestamp = None
+
+            response = authenticate(
+                config.get('auth_test', 'url'),
+                config.get('auth_test', 'account'),
+                config.get('auth_test', 'preauthkey') + "1234",
+                config.get('auth_test', 'account_by'),
+                config.getint('auth_test', 'expires'),
+                timestamp
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication did not return 'None', but %s instead." % (
+                    response
+                )
+            )
 
     def test_auth_json(self):
 
@@ -77,10 +119,53 @@ class TestAuth(TestCase):
                 request_type='json'
             )
 
-            if response is None:
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not successful"
+            )
 
-                self.fail("Authentication with the configured settings "
-                          "was not successful")
+    def test_auth_failure_json(self):
+
+        """ Send a configured auth request with a wrong password in json
+        format and check the result
+        """
+
+        config = get_config()
+
+        if config.getboolean('auth_test', 'enabled'):
+
+            # Run only if enabled
+
+            try:
+
+                timestamp = config.getint('auth_test', 'timestamp')
+
+            except ValueError:
+
+                # If timestamp is set to a none-integer, we'll just assume
+                # that it's unset
+
+                timestamp = None
+
+            response = authenticate(
+                config.get('auth_test', 'url'),
+                config.get('auth_test', 'account'),
+                config.get('auth_test', 'preauthkey') + "1234",
+                config.get('auth_test', 'account_by'),
+                config.getint('auth_test', 'expires'),
+                timestamp,
+                request_type='json'
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication did not return 'None', but %s instead." % (
+                    response
+                )
+            )
 
     def test_password_auth_xml(self):
 
@@ -103,10 +188,12 @@ class TestAuth(TestCase):
                 request_type="xml"
             )
 
-            if response is None:
-
-                self.fail("Authentication with the configured settings "
-                          "was not ssuccessful")
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not ssuccessful"
+            )
 
     def test_password_auth_json(self):
 
@@ -129,10 +216,12 @@ class TestAuth(TestCase):
                 request_type="json"
             )
 
-            if response is None:
-
-                self.fail("Authentication with the configured settings "
-                          "was not ssuccessful")
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not ssuccessful"
+            )
 
     def test_admin_auth_xml(self):
 
@@ -155,10 +244,12 @@ class TestAuth(TestCase):
                 request_type="xml"
             )
 
-            if response is None:
-
-                self.fail("Authentication with the configured settings "
-                          "was not successful")
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not successful"
+            )
 
     def test_admin_auth_json(self):
 
@@ -181,7 +272,9 @@ class TestAuth(TestCase):
                 request_type="json"
             )
 
-            if response is None:
-
-                self.fail("Authentication with the configured settings "
-                          "was not successful")
+            self.assertNotEqual(
+                response,
+                None,
+                "Authentication with the configured settings "
+                "was not successful"
+            )

@@ -76,7 +76,10 @@ class TestAdmin(TestCase):
             if response.is_fault():
 
                 self.fail(
-                    "CreateAccount faulted. %s" % (response.get_response())
+                    "CreateAccount faulted. (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
                 )
 
             account_id = response.get_response(
@@ -116,7 +119,10 @@ class TestAdmin(TestCase):
             if response.is_fault():
 
                 self.fail(
-                    "Cannot remove test account. %s" % response.get_response()
+                    "Cannot remove test account: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
                 )
 
     def test_admin_xml(self):
