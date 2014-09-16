@@ -10,6 +10,8 @@ class ResponseJson(Response):
 
     """ The dictionary we'll be working on """
 
+    response_type = "json"
+
     def clean(self):
         super(ResponseJson, self).clean()
         self.response_dict = None
@@ -61,15 +63,21 @@ class ResponseJson(Response):
                 has_fault = True
                 continue
 
-            request_id = value['requestId']
+            if not isinstance(value, list):
 
-            ret_dict['idToName'][request_id] = key
+                value = [value]
 
-            if key not in ret_dict['nameToId']:
+            for item in value:
 
-                ret_dict['nameToId'][key] = []
+                request_id = item['requestId']
 
-            ret_dict['nameToId'][key].append(request_id)
+                ret_dict['idToName'][request_id] = key
+
+                if key not in ret_dict['nameToId']:
+
+                    ret_dict['nameToId'][key] = []
+
+                ret_dict['nameToId'][key].append(request_id)
 
         ret_dict['hasFault'] = has_fault
 

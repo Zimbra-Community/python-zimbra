@@ -16,6 +16,10 @@ pythonzimbra/response_json.py
 pythonzimbra/response_xml.py
 pythonzimbra/exceptions/__init__.py
 pythonzimbra/exceptions/__init__.pyc
+pythonzimbra/exceptions/auth.py
+pythonzimbra/exceptions/auth.pyc
+pythonzimbra/exceptions/communication.py
+pythonzimbra/exceptions/communication.pyc
 pythonzimbra/exceptions/request.py
 pythonzimbra/exceptions/request.pyc
 pythonzimbra/tools/__init__.py

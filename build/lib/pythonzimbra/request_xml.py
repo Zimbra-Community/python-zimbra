@@ -22,6 +22,8 @@ class RequestXml(Request):
 
     """ Body node """
 
+    request_type = "xml"
+
     def __init__(self):
 
         """ Create a new request.

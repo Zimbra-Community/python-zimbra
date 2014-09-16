@@ -11,6 +11,8 @@ class ResponseXml(Response):
 
     """ The response document we're working on """
 
+    response_type = "xml"
+
     def clean(self):
         super(ResponseXml, self).clean()
         self.response_doc = None

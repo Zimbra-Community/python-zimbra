@@ -10,6 +10,8 @@ class RequestJson(Request):
 
     """ Dictionary we're working on here """
 
+    request_type = "json"
+
     def __init__(self):
 
         """ Generate dictionary for json output
