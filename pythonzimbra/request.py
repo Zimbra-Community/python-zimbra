@@ -1,6 +1,6 @@
 """ Request handling and generation. """
 
-from pythonzimbra.exceptions.request import RequestHeaderContextException, NoNamespaceGiven
+from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class Request(object):
@@ -22,6 +22,10 @@ class Request(object):
     batch_request_id = None
 
     """ If so, keep the current request id """
+
+    request_type = None
+
+    """ The specific request will set its request type (json, xml) here """
 
     def clean(self):
 

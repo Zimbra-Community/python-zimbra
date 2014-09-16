@@ -1,6 +1,11 @@
 """ Zimbra communication handler. """
 
 import urllib2
+from pythonzimbra.request_json import RequestJson
+from pythonzimbra.request_xml import RequestXml
+from pythonzimbra.response_xml import ResponseXml
+from pythonzimbra.response_json import ResponseJson
+from exceptions.communication import *
 
 
 class Communication(object):
@@ -28,7 +33,39 @@ class Communication(object):
         self.url = url
         self.timeout = timeout
 
-    def send_request(self, request, response):
+    def gen_request(self, request_type="json", token=None, set_batch=False,
+        batch_onerror=None):
+
+        """ Convenience method to quickly generate a token
+
+        :param request_type: Type of request (defaults to json)
+        :param token: Authentication token
+        :param set_batch: Also set this request to batch mode?
+        :param batch_onerror: Onerror-parameter for batch mode
+        :return: The request
+        """
+
+        if request_type == "json":
+
+            local_request = RequestJson()
+
+        elif request_type == "xml":
+
+            local_request = RequestXml()
+
+        else:
+
+            raise UnknownRequestType()
+
+        if not token is None:
+            local_request.set_auth_token(token)
+
+        if set_batch:
+            local_request.enable_batch(batch_onerror)
+
+        return local_request
+
+    def send_request(self, request, response=None):
 
         """ Send the request.
 
@@ -46,6 +83,22 @@ class Communication(object):
                 urllib2.HTTPError
         """
 
+        local_response = None
+
+        if response is None:
+
+            if request.request_type == "json":
+
+                local_response = ResponseJson()
+
+            elif request.request_type == "xml":
+
+                local_response = ResponseXml()
+
+            else:
+
+                raise UnknownRequestType()
+
         try:
 
             server_request = urllib2.urlopen(
@@ -54,7 +107,13 @@ class Communication(object):
                 self.timeout
             )
 
-            response.set_response(server_request.read())
+            if response is None:
+
+                local_response.set_response(server_request.read())
+
+            else:
+
+                response.set_response(server_request.read())
 
         except urllib2.HTTPError as e:
 
@@ -62,8 +121,17 @@ class Communication(object):
 
                 # 500 codes normally returns a SoapFault, that we can use
 
-                response.set_response(e.fp.read())
+                if response is None:
+
+                    local_response.set_response(e.fp.read())
+
+                else:
+
+                    response.set_response(e.fp.read())
 
             else:
 
                 raise e
+
+        if response is None:
+            return local_response

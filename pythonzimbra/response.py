@@ -1,5 +1,4 @@
 """ Zimbra response access. """
-import re
 
 
 class Response(object):
@@ -7,6 +6,10 @@ class Response(object):
     """ Unified access to Zimbra responses.
 
     """
+
+    response_type = None
+
+    """ The actual response will set its response type (xml, json) here """
 
     def clean(self):
 

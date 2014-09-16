@@ -82,6 +82,19 @@ enabled=False
 # Non-existent folder
 folder=None
 
-# Is the auth testing enabled? Set this to true if you have configured the
-# other values!
+# Is the test enabled?
+enabled=False
+
+# Testing automatic response generation
+
+[autoresponse_test]
+
+# Is the test enabled?
+enabled=False
+
+# Testing convenience methods
+
+[genrequest_test]
+
+# Is the test enabled?
 enabled=False

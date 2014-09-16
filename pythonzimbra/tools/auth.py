@@ -2,7 +2,6 @@
 authentication token """
 
 import time
-from urllib2 import HTTPError
 from pythonzimbra.request_json import RequestJson
 
 from pythonzimbra.request_xml import RequestXml
@@ -10,6 +9,7 @@ from pythonzimbra.communication import Communication
 from pythonzimbra.response_json import ResponseJson
 from pythonzimbra.response_xml import ResponseXml
 from pythonzimbra.tools import preauth
+from pythonzimbra.exceptions.auth import *
 
 
 def authenticate(url, account, key, by='name', expires=0, timestamp=None,
@@ -107,7 +107,7 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
 
         if raise_on_error:
 
-            raise Exception(
+            raise AuthenticationFailed(
                 "Cannot authenticate user: (%s) %s" % (
                     response.get_fault_code(),
                     response.get_fault_message()
