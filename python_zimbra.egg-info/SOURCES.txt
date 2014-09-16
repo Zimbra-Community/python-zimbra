@@ -15,8 +15,14 @@ pythonzimbra/response.py
 pythonzimbra/response_json.py
 pythonzimbra/response_xml.py
 pythonzimbra/exceptions/__init__.py
+pythonzimbra/exceptions/__init__.pyc
 pythonzimbra/exceptions/request.py
+pythonzimbra/exceptions/request.pyc
 pythonzimbra/tools/__init__.py
+pythonzimbra/tools/__init__.pyc
 pythonzimbra/tools/auth.py
+pythonzimbra/tools/auth.pyc
 pythonzimbra/tools/preauth.py
+pythonzimbra/tools/preauth.pyc
 pythonzimbra/tools/xmlserializer.py
+pythonzimbra/tools/xmlserializer.pyc
