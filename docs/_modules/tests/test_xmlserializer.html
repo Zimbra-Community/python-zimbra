@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -100,12 +98,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">(),</span>
-            <span class="s">&quot;Error converting a dictionary to an XML. Expected: </span><span class="si">%s</span><span class="s">. Got: </span><span class="si">%s</span><span class="s">&quot;</span>
-            <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
-            <span class="p">)</span>
+            <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestXmlSerializer.test_dom_to_dict"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer.test_dom_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_dom_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -139,12 +132,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">),</span>
-            <span class="s">&quot;Error converting a XML document to a dictionary. Expected </span><span class="si">%s</span><span class="s">. &quot;</span>
-            <span class="s">&quot;Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">)</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
@@ -186,7 +174,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

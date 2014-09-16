@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -52,53 +50,118 @@
 <span class="sd">&quot;&quot;&quot; Run an AuthRequest against the zimbra server and return the</span>
 <span class="sd">authentication token &quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
 
 <span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_json</span> <span class="kn">import</span> <span class="n">ResponseJson</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.tools</span> <span class="kn">import</span> <span class="n">preauth</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.exceptions.auth</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="authenticate"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.auth.authenticate">[docs]</a><span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">byval</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                 <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="authenticate"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.auth.authenticate">[docs]</a><span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;xml&quot;</span><span class="p">,</span> <span class="n">admin_auth</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">use_password</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">raise_on_error</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Authenticate to the Zimbra server</span>
+
+<span class="sd">    :param url: URL of Zimbra SOAP service</span>
+<span class="sd">    :param account: The account to be authenticated against</span>
+<span class="sd">    :param key: The preauth key of the domain of the account or a password (if</span>
+<span class="sd">      admin_auth or use_password is True)</span>
+<span class="sd">    :param by: If the account is specified as a name, an ID or a</span>
+<span class="sd">      ForeignPrincipal</span>
+<span class="sd">    :param expires: When the token expires (or 0 for default expiration)</span>
+<span class="sd">    :param timestamp: When the token was requested (None for &quot;now&quot;)</span>
+<span class="sd">    :param timeout: Timeout for the communication with the server. Defaults</span>
+<span class="sd">      to the urllib2-default</span>
+<span class="sd">    :param request_type: Which type of request to use (&quot;xml&quot; (default) or</span>
+<span class="sd">      &quot;json&quot;)</span>
+<span class="sd">    :param admin_auth: This request should authenticate and generate an admin</span>
+<span class="sd">      token. The &quot;key&quot;-parameter therefore holds the admin password (implies</span>
+<span class="sd">      use_password)</span>
+<span class="sd">    :param use_password: The &quot;key&quot;-parameter holds a password. Do a password-</span>
+<span class="sd">      based user authentication.</span>
+<span class="sd">    :param raise_on_error: Should I raise an exception when an authentication</span>
+<span class="sd">      error occurs or just return None?</span>
+<span class="sd">    :return: The authentication token or None</span>
+<span class="sd">    :rtype: str or None or unicode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">*</span> <span class="mi">1000</span>
 
-    <span class="n">pak</span> <span class="o">=</span> <span class="n">preauth</span><span class="o">.</span><span class="n">create_preauth</span><span class="p">(</span><span class="n">byval</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">expires</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+    <span class="n">pak</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">admin_auth</span><span class="p">:</span>
+        <span class="n">pak</span> <span class="o">=</span> <span class="n">preauth</span><span class="o">.</span><span class="n">create_preauth</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">expires</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
 
-    <span class="n">auth_request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&#39;xml&#39;</span><span class="p">:</span>
+
+        <span class="n">auth_request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">auth_request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+
+    <span class="n">request_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;account&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;by&#39;</span><span class="p">:</span> <span class="n">by</span><span class="p">,</span>
+            <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="n">account</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">ns</span> <span class="o">=</span> <span class="s">&quot;urn:zimbraAccount&quot;</span>
+
+    <span class="k">if</span> <span class="n">admin_auth</span><span class="p">:</span>
+
+        <span class="n">ns</span> <span class="o">=</span> <span class="s">&quot;urn:zimbraAdmin&quot;</span>
+
+        <span class="n">request_data</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">elif</span> <span class="n">use_password</span><span class="p">:</span>
+
+        <span class="n">request_data</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="n">key</span>
+        <span class="p">}</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">request_data</span><span class="p">[</span><span class="s">&#39;preauth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+            <span class="s">&#39;expires&#39;</span><span class="p">:</span> <span class="n">expires</span><span class="p">,</span>
+            <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="n">pak</span>
+        <span class="p">}</span>
 
     <span class="n">auth_request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
         <span class="s">&#39;AuthRequest&#39;</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="s">&#39;account&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">&#39;by&#39;</span><span class="p">:</span> <span class="n">by</span><span class="p">,</span>
-                <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="n">byval</span>
-            <span class="p">},</span>
-            <span class="s">&#39;preauth&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
-                <span class="s">&#39;expires&#39;</span><span class="p">:</span> <span class="n">expires</span><span class="p">,</span>
-                <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="n">pak</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-        <span class="s">&#39;urn:zimbraAccount&#39;</span>
+        <span class="n">request_data</span><span class="p">,</span>
+        <span class="n">ns</span>
     <span class="p">)</span>
 
     <span class="n">server</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
 
-    <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&#39;xml&#39;</span><span class="p">:</span>
 
-    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
 
-        <span class="n">server</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">auth_request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
 
-    <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseJson</span><span class="p">()</span>
 
-        <span class="c"># A HTTPError (which is an AuthError in most cases) occured. Simply</span>
-        <span class="c"># return nothing</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">auth_request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">raise_on_error</span><span class="p">:</span>
+
+            <span class="k">raise</span> <span class="n">AuthenticationFailed</span><span class="p">(</span>
+                <span class="s">&quot;Cannot authenticate user: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                    <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">None</span>
 
@@ -142,7 +205,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

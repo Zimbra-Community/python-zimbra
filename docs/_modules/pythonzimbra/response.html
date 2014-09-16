@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -49,17 +47,26 @@
           <div class="body">
             
   <h1>Source code for pythonzimbra.response</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot; Zimbra response access &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Zimbra response access. &quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="Response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response">[docs]</a><span class="k">class</span> <span class="nc">Response</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot; Unified access to Zimbra responses</span>
+    <span class="sd">&quot;&quot;&quot; Unified access to Zimbra responses.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># The type of response (set by implementing class)</span>
     <span class="n">response_type</span> <span class="o">=</span> <span class="bp">None</span>
 
+    <span class="sd">&quot;&quot;&quot; The actual response will set its response type (xml, json) here &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Response.clean"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Clean up the response, so it can be used again</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
 <div class="viewcode-block" id="Response.set_response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.set_response">[docs]</a>    <span class="k">def</span> <span class="nf">set_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_text</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; Interpret the response object.</span>
@@ -72,7 +79,7 @@
 </div>
 <div class="viewcode-block" id="Response.get_header"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_header">[docs]</a>    <span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Return the header of the response</span>
+        <span class="sd">&quot;&quot;&quot; Return the header of the response.</span>
 
 <span class="sd">        :returns: The response header in the documented dictionary format</span>
 <span class="sd">        :rtype: dict</span>
@@ -82,7 +89,7 @@
 </div>
 <div class="viewcode-block" id="Response.get_body"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Return the body of the response</span>
+        <span class="sd">&quot;&quot;&quot; Return the body of the response.</span>
 
 <span class="sd">        :returns: The response body in the documented dictionary format</span>
 <span class="sd">        :rtype: dict</span>
@@ -92,7 +99,7 @@
 </div>
 <div class="viewcode-block" id="Response.is_batch"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.is_batch">[docs]</a>    <span class="k">def</span> <span class="nf">is_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Returns whether we have a BatchResponse</span>
+        <span class="sd">&quot;&quot;&quot; Returns whether we have a BatchResponse.</span>
 
 <span class="sd">        :returns: Whether we have a BatchResponse</span>
 <span class="sd">        :rtype: bool</span>
@@ -104,18 +111,19 @@
 
         <span class="sd">&quot;&quot;&quot; Returns an informative dictionary about a batch response.</span>
 
-<span class="sd">        Returns a dictionary containing the following information:</span>
-<span class="sd">        {</span>
-<span class="sd">            &quot;hasFault&quot;: &lt;bool wether the batch has at least one SoapFault</span>
-<span class="sd">            &quot;idToName&quot;: {</span>
-<span class="sd">                &lt;A dictionary mapping a response id to the corresponding</span>
-<span class="sd">                response name or Fault&gt;</span>
+<span class="sd">        Returns a dictionary containing the following information::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;hasFault&quot;: &lt;bool wether the batch has at least one SoapFault</span>
+<span class="sd">                &quot;idToName&quot;: {</span>
+<span class="sd">                    &lt;A dictionary mapping a response id to the corresponding</span>
+<span class="sd">                    response name or Fault&gt;</span>
+<span class="sd">                }</span>
+<span class="sd">                &quot;nameToId&quot;: {</span>
+<span class="sd">                    &lt;A dictionary mapping response names (or Fault) to the</span>
+<span class="sd">                    corresponding response id(s)</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
-<span class="sd">            &quot;nameToId&quot;: {</span>
-<span class="sd">                &lt;A dictionary mapping response names (or Fault) to the</span>
-<span class="sd">                corresponding response id(s)</span>
-<span class="sd">            }</span>
-<span class="sd">        }</span>
 
 <span class="sd">        If the method is called with no batch response existing, returns None</span>
 
@@ -127,10 +135,42 @@
 </div>
 <div class="viewcode-block" id="Response.get_response"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_response">[docs]</a>    <span class="k">def</span> <span class="nf">get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Returns the response with the given request_id</span>
+        <span class="sd">&quot;&quot;&quot; Returns the response with the given request_id.</span>
 
 <span class="sd">        Returns the specific response. If &quot;request_id&quot; isn&#39;t provided or 0,</span>
 <span class="sd">        the first (or only one in a non-batch) response is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_fault_code"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_fault_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_fault_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the fault error code of this response (overridden)</span>
+
+<span class="sd">        We provide this additional method because of zimbra bug</span>
+<span class="sd">         https://bugzilla.zimbra.com/show_bug.cgi?id=95490</span>
+
+<span class="sd">        For batch responses, we return a dict of fault codes. The key is</span>
+<span class="sd">        the request_id.</span>
+
+<span class="sd">        :return: Fault code string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Response.get_fault_message"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.response.Response.get_fault_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_fault_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the fault error message of this response (overridden)</span>
+
+<span class="sd">        We provide this additional method because of zimbra bug</span>
+<span class="sd">         https://bugzilla.zimbra.com/show_bug.cgi?id=95490</span>
+
+<span class="sd">        For batch responses, we return a dict of fault messages. The key is</span>
+<span class="sd">        the request_id.</span>
+
+<span class="sd">        :return: Fault code error message</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">pass</span>
@@ -151,11 +191,51 @@
 
             <span class="n">my_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
 
-            <span class="k">if</span> <span class="n">my_response</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Fault&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">my_response</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;Fault&quot;</span><span class="p">:</span>
 
                 <span class="k">return</span> <span class="bp">True</span>
 
-        <span class="k">return</span> <span class="bp">False</span></div></div>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+    <span class="k">def</span> <span class="nf">_filter_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_dict</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Add additional filters to the response dictionary</span>
+
+<span class="sd">        Currently the response dictionary is filtered like this:</span>
+
+<span class="sd">          * If a list only has one item, the list is replaced by that item</span>
+<span class="sd">          * Keys with &quot;_jsns&quot; are removed (they only exist in the</span>
+<span class="sd">            json-version and thus aren&#39;t compatible)</span>
+
+<span class="sd">        :param response_dict: the pregenerated, but unfiltered response dict</span>
+<span class="sd">        :type response_dict: dict</span>
+<span class="sd">        :return: The filtered dictionary</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">filtered_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">response_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&#39;_jsns&#39;</span><span class="p">:</span>
+
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+
+                <span class="n">filtered_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+
+                <span class="n">tmp_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_response</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+                <span class="n">filtered_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_dict</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">filtered_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">filtered_dict</span></div>
 </pre></div>
 
           </div>
@@ -195,7 +275,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -49,38 +47,76 @@
           <div class="body">
             
   <h1>Source code for pythonzimbra.communication</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot; Zimbra communication handler &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Zimbra communication handler. &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.response_json</span> <span class="kn">import</span> <span class="n">ResponseJson</span>
+<span class="kn">from</span> <span class="nn">exceptions.communication</span> <span class="kn">import</span> <span class="o">*</span>
 
 
 <div class="viewcode-block" id="Communication"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication">[docs]</a><span class="k">class</span> <span class="nc">Communication</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot; Zimbra communication handler</span>
+    <span class="sd">&quot;&quot;&quot; Zimbra communication handler.</span>
 
 <span class="sd">    Sends requests to the zimbra SOAP server and returns the responses in a</span>
 <span class="sd">    dictionary.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># URL to the zimbra soap interface</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">url</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="c"># Timeout of the request</span>
+    <span class="sd">&quot;&quot;&quot; URL to the zimbra soap interface &quot;&quot;&quot;</span>
 
     <span class="n">timeout</span> <span class="o">=</span> <span class="bp">None</span>
 
+    <span class="sd">&quot;&quot;&quot; Timeout of the request &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Initialize the communication handler</span>
+        <span class="sd">&quot;&quot;&quot; Initialize the communication handler.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
 
-<div class="viewcode-block" id="Communication.send_request"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication.send_request">[docs]</a>    <span class="k">def</span> <span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<div class="viewcode-block" id="Communication.gen_request"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication.gen_request">[docs]</a>    <span class="k">def</span> <span class="nf">gen_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;json&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">set_batch</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">batch_onerror</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Send the request</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to quickly generate a token</span>
+
+<span class="sd">        :param request_type: Type of request (defaults to json)</span>
+<span class="sd">        :param token: Authentication token</span>
+<span class="sd">        :param set_batch: Also set this request to batch mode?</span>
+<span class="sd">        :param batch_onerror: Onerror-parameter for batch mode</span>
+<span class="sd">        :return: The request</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;json&quot;</span><span class="p">:</span>
+
+            <span class="n">local_request</span> <span class="o">=</span> <span class="n">RequestJson</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;xml&quot;</span><span class="p">:</span>
+
+            <span class="n">local_request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="k">raise</span> <span class="n">UnknownRequestType</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">local_request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">set_batch</span><span class="p">:</span>
+            <span class="n">local_request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="n">batch_onerror</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">local_request</span>
+</div>
+<div class="viewcode-block" id="Communication.send_request"><a class="viewcode-back" href="../../pythonzimbra.html#pythonzimbra.communication.Communication.send_request">[docs]</a>    <span class="k">def</span> <span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Send the request.</span>
 
 <span class="sd">        Sends the request and retrieves the results, formats them and returns</span>
 <span class="sd">         them in a dict or a list (when it&#39;s a batchresponse). If something</span>
@@ -96,25 +132,58 @@
 <span class="sd">                urllib2.HTTPError</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">server_request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
-        <span class="p">)</span>
+        <span class="n">local_response</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;json&quot;</span><span class="p">:</span>
+
+                <span class="n">local_response</span> <span class="o">=</span> <span class="n">ResponseJson</span><span class="p">()</span>
+
+            <span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">request_type</span> <span class="o">==</span> <span class="s">&quot;xml&quot;</span><span class="p">:</span>
+
+                <span class="n">local_response</span> <span class="o">=</span> <span class="n">ResponseXml</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">raise</span> <span class="n">UnknownRequestType</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
 
-            <span class="n">server_response</span> <span class="o">=</span> <span class="n">server_request</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">server_request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+
+                <span class="n">local_response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">server_request</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">server_request</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
         <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
-            <span class="c"># Return the exception to the caller on HTTPerrors</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
 
-            <span class="k">raise</span> <span class="n">e</span>
+                <span class="c"># 500 codes normally returns a SoapFault, that we can use</span>
 
-        <span class="c"># Find the response for</span>
+                <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
 
-        <span class="n">response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">server_response</span><span class="p">)</span></div></div>
+                    <span class="n">local_response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+                <span class="k">else</span><span class="p">:</span>
+
+                    <span class="n">response</span><span class="o">.</span><span class="n">set_response</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">local_response</span></div></div>
 </pre></div>
 
           </div>
@@ -154,7 +223,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

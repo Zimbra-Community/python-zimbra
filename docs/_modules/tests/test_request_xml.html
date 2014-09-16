@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -55,27 +53,27 @@
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.exceptions.request</span> <span class="kn">import</span> \
-    <span class="n">NoXMLNSGiven</span><span class="p">,</span> <span class="n">RequestHeaderContextException</span>
+    <span class="n">NoNamespaceGiven</span><span class="p">,</span> <span class="n">RequestHeaderContextException</span>
 
 
-<div class="viewcode-block" id="TestRequest"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest">[docs]</a><span class="k">class</span> <span class="nc">TestRequest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml">[docs]</a><span class="k">class</span> <span class="nc">TestRequestXml</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Request tests</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c"># The request to be tested against</span>
-
     <span class="n">request</span> <span class="o">=</span> <span class="bp">None</span>
 
-<div class="viewcode-block" id="TestRequest.cleanUp"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The request to be tested against &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestRequestXml.cleanUp"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.cleanUp">[docs]</a>    <span class="k">def</span> <span class="nf">cleanUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Clean up after one step to leave a dedicated result for the other</span>
 <span class="sd">         test cases.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.setUp"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.setUp"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">RequestXml</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_empty_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_empty_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_empty_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_empty_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_empty_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_empty_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create an empty request and check the created xml</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -88,14 +86,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&quot;Empty request not as expected. Expected: </span><span class="si">%s</span><span class="s">. Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_set_context_params_failtype"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_set_context_params_failtype">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_context_params_failtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_set_context_params_failtype"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_set_context_params_failtype">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_context_params_failtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add context parameters to the request and expect the method to</span>
 <span class="sd">        send an exception</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -110,7 +104,7 @@
             <span class="p">}</span>
         <span class="p">)</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_set_context_params"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_set_context_params">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_context_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_set_context_params"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_set_context_params">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_context_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add all currently accepted params and check the result</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -165,18 +159,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&#39;Unexpected result. Expected: </span><span class="si">%s</span><span class="s">. Got: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up after this test</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_enable_batch_default"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_enable_batch_default">[docs]</a>    <span class="k">def</span> <span class="nf">test_enable_batch_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_enable_batch_default"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_enable_batch_default">[docs]</a>    <span class="k">def</span> <span class="nf">test_enable_batch_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; Test enabling batch requests</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -185,34 +175,29 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="s">&#39;urn:zimbra&#39;</span><span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
-                          <span class="s">&#39;xmlns:soap=&quot;http://www.w3&#39;</span> \
-                          <span class="s">&#39;.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
-                          <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;BatchRequest onerror=&quot;continue&quot; &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> \
+            <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
+            <span class="s">&#39;xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap&#39;</span> \
+            <span class="s">&#39;:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
+            <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;BatchRequest &#39;</span> \
+            <span class="s">&#39;onerror=&quot;urn:zimbra&quot; &#39;</span> \
+            <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&#39;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&#39;Unexpected result with default parameter (continue): Expected </span><span class="si">%s</span><span class="s">&#39;</span>
-            <span class="s">&#39;. Got </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_enable_batch_stop"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_enable_batch_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_enable_batch_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_enable_batch_stop"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_enable_batch_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_enable_batch_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; Test enabling batch requests with additional parameter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="s">&#39;urn:zimbra&#39;</span><span class="p">,</span> <span class="s">&#39;stop&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">)</span>
 
         <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
                           <span class="s">&#39;xmlns:soap=&quot;http://www.w3&#39;</span> \
@@ -224,30 +209,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&#39;Unexpected result with parameter &quot;stop&quot;: Expected </span><span class="si">%s</span><span class="s">&#39;</span>
-            <span class="s">&#39;. Got </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cleanUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_batch_add_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_batch_add_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_batch_add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_batch_add_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_batch_add_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_batch_add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; Test adding multiple request to a batch request</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="s">&#39;urn:zimbra&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">()</span>
 
         <span class="n">request_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
             <span class="s">&#39;GetInfoRequest&#39;</span><span class="p">,</span>
             <span class="p">{</span>
                 <span class="s">&#39;sections&#39;</span><span class="p">:</span> <span class="s">&#39;mbox,prefs&#39;</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&#39;urn:zimbra&#39;</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span>
@@ -267,31 +248,26 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
-                          <span class="s">&#39;xmlns:soap=&quot;http://www.w3&#39;</span> \
-                          <span class="s">&#39;.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
-                          <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;BatchRequest onerror=&quot;continue&quot; &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;&gt;&lt;GetInfoRequest requestId=&quot;1&quot; &#39;</span> \
-                          <span class="s">&#39;sections=&quot;mbox,&#39;</span> \
-                          <span class="s">&#39;prefs&quot;/&gt;&lt;/BatchRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> \
+            <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
+            <span class="s">&#39;xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap&#39;</span> \
+            <span class="s">&#39;:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
+            <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;BatchRequest &#39;</span> \
+            <span class="s">&#39;onerror=&quot;continue&quot; xmlns=&quot;urn:zimbra&quot;&gt;&lt;GetInfoRequest &#39;</span> \
+            <span class="s">&#39;requestId=&quot;1&quot; sections=&quot;mbox,prefs&quot; &#39;</span> \
+            <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/BatchRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&#39;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&quot;Got unexpected result after adding request 1. Expected: </span><span class="si">%s</span><span class="s">, &quot;</span>
-            <span class="s">&quot;Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="n">request_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
             <span class="s">&#39;GetInfoRequest&#39;</span><span class="p">,</span>
             <span class="p">{</span>
                 <span class="s">&#39;sections&#39;</span><span class="p">:</span> <span class="s">&#39;zimlets&#39;</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&#39;urn:zimbra&#39;</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span>
@@ -311,47 +287,27 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
-                          <span class="s">&#39;xmlns:soap=&quot;http://www.w3&#39;</span> \
-                          <span class="s">&#39;.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
-                          <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;BatchRequest onerror=&quot;continue&quot; &#39;</span> \
-                          <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;&gt;&lt;GetInfoRequest requestId=&quot;1&quot; &#39;</span> \
-                          <span class="s">&#39;sections=&quot;mbox,prefs&quot;/&gt;&lt;GetInfoRequest &#39;</span> \
-                          <span class="s">&#39;requestId=&quot;2&quot; &#39;</span> \
-                          <span class="s">&#39;sections=&quot;zimlets&quot;/&gt;&lt;/BatchRequest&gt;&lt;/soap:Body&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;/soap:Envelope&gt;&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> \
+            <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;soap:Envelope &#39;</span> \
+            <span class="s">&#39;xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;&lt;soap&#39;</span> \
+            <span class="s">&#39;:Header&gt;&lt;context xmlns=&quot;urn:zimbra&quot;&gt;&lt;format &#39;</span> \
+            <span class="s">&#39;type=&quot;xml&quot;/&gt;&lt;/context&gt;&lt;/soap:Header&gt;&lt;soap:Body&gt;&lt;BatchRequest &#39;</span> \
+            <span class="s">&#39;onerror=&quot;continue&quot; xmlns=&quot;urn:zimbra&quot;&gt;&lt;GetInfoRequest &#39;</span> \
+            <span class="s">&#39;requestId=&quot;1&quot; sections=&quot;mbox,prefs&quot; &#39;</span> \
+            <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;/&gt;&lt;GetInfoRequest requestId=&quot;2&quot; &#39;</span> \
+            <span class="s">&#39;sections=&quot;zimlets&quot; &#39;</span> \
+            <span class="s">&#39;xmlns=&quot;urn:zimbra&quot;/&gt;&lt;/BatchRequest&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&#39;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&quot;Got unexpected result after adding request 2. Expected: </span><span class="si">%s</span><span class="s">, &quot;</span>
-            <span class="s">&quot;Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.test_add_request_missing_xmlns"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_add_request_missing_xmlns">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_request_missing_xmlns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot; Test adding a request without specifying a XML namespace</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span>
-            <span class="n">NoXMLNSGiven</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">,</span>
-            <span class="s">&#39;GetInfoRequest&#39;</span><span class="p">,</span>
-            <span class="p">{</span>
-                <span class="s">&#39;sections&#39;</span><span class="p">:</span> <span class="s">&#39;mbox,prefs&#39;</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="TestRequest.test_add_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.test_add_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.test_add_request"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.test_add_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; Test adding a request</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -383,19 +339,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="s">&quot;Got unexpected result after adding request. Expected: </span><span class="si">%s</span><span class="s">, &quot;</span>
-            <span class="s">&quot;Got: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">expected_result</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">(),</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="TestRequest.tearDown"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestRequestXml.tearDown"><a class="viewcode-back" href="../../tests.html#tests.test_request_xml.TestRequestXml.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="bp">None</span></div></div>
 </pre></div>
 
@@ -437,7 +388,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
