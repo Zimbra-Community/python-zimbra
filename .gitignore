@@ -4,3 +4,9 @@ dist/
 *.egg-info/
 tests/config.ini
 *.pyc
+
+# Ignore IDE files
+
+*.iws
+*.iml
+*.idea
