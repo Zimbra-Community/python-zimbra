@@ -13,7 +13,9 @@ def dict_to_dom(root_node, xml_dict):
     if '_content' in xml_dict.keys():
 
         root_node.appendChild(
-            root_node.ownerDocument.createTextNode(str(xml_dict['_content']))
+            root_node.ownerDocument.createTextNode(
+                unicode(xml_dict['_content'])
+            )
         )
 
     for key, value in xml_dict.iteritems():
@@ -47,7 +49,7 @@ def dict_to_dom(root_node, xml_dict):
 
             root_node.setAttribute(
                 key,
-                str(value)
+                unicode(value)
             )
 
 
