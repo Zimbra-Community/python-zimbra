@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -56,15 +54,16 @@
 
 
 <div class="viewcode-block" id="create_preauth"><a class="viewcode-back" href="../../../pythonzimbra.tools.html#pythonzimbra.tools.preauth.create_preauth">[docs]</a><span class="k">def</span> <span class="nf">create_preauth</span><span class="p">(</span><span class="n">byval</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">expires</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot; Generates a zimbra preauth value</span>
 
 <span class="sd">    :param byval: The value of the targeted user (according to the</span>
-<span class="sd">    by-parameter). For example: The account name, if &quot;by&quot; is &quot;name&quot;.</span>
+<span class="sd">      by-parameter). For example: The account name, if &quot;by&quot; is &quot;name&quot;.</span>
 <span class="sd">    :param key: The domain preauth key (you can retrieve that using zmprov gd)</span>
 <span class="sd">    :param by: What type is the byval-parameter? Valid parameters are &quot;name&quot;</span>
-<span class="sd">    (default), &quot;id&quot; and &quot;foreignPrincipal&quot;</span>
+<span class="sd">      (default), &quot;id&quot; and &quot;foreignPrincipal&quot;</span>
 <span class="sd">    :param expires: Milliseconds when the auth token expires. Defaults to 0</span>
-<span class="sd">    for default account expiration</span>
+<span class="sd">      for default account expiration</span>
 <span class="sd">    :param timestamp: Current timestamp (is calculated by default)</span>
 <span class="sd">    :returns: The preauth value to be used in an AuthRequest</span>
 <span class="sd">    :rtype: str</span>
@@ -124,7 +123,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

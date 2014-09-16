@@ -32,8 +32,6 @@ this is how you do it:
 First, import the needed libraries (You will learn about them later):
 
     from pythonzimbra.tools import auth
-    from pythonzimbra.request_xml import RequestXml
-    from pythonzimbra.response_xml import ResponseXml
     from pythonzimbra.communication import Communication
 
 Let's assume you have a variable called "url" which holds the URL to your
@@ -58,37 +56,28 @@ This should return the authentication token to be used in Zimbra requests. If
  it returns None, the authentication is somehow failed (maybe wrong username,
   URL or preauthentication-key)
 
-Now, we create our request (we use the XML mode in this example),
+Now, we create our request
 
-    info_request = RequestXml()
+    info_request = comm.gen_request(token=token)
 
-inject the authentication token into it,
-
-    info_request.set_auth_token(token)
-
-and add our (very simple) GetVersionInfo request,
-which is in the urn:zimbraAdmin-namespace:
+and add our (very simple) GetFolder request,
+which is in the urn:zimbraMail-namespace:
 
     info_request.add_request(
-        "GetFolderRequest", 
+        "GetFolderRequest",
         {
             "folder": {
                 "path": "/inbox"
             }
-        }, 
-        "urn:zimbraAdmin"
+        },
+        "urn:zimbraMail"
     )
 
-Now, we prepare a response object for the transport (this has to use the same
- method (xml or json) as the request object):
+Finally, we sent the request:
 
-    info_response = ResponseXml()
+    info_response = comm.send_request(info_request)
 
-And finally, we sent the request:
-
-    comm.send_request(info_request, info_response)
-
-Our info_response-variable now holds the response information of the object.
+The info_response-variable now holds the response information of the object.
 
 Now, if the response was successful and has now Fault-object:
 
@@ -101,10 +90,10 @@ Print the message count of that folder:
 Batch requests
 --------------
 
-Working with batch requests is also possible. To do that, 
-you'll have to first enable the batch mode on the request:
+Working with batch requests is also possible. To do that, set the
+parameter "set_batch":
 
-    request.enable_batch()
+    batch_request = comm.gen_request(set_batch=True)
 
 And can afterwards add multiple requests using add_request to it. You'll get 
 the request id of the specific request as a return value. Use that id to 

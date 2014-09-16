@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -70,42 +68,56 @@
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
 <dl class="method">
 <dt id="tests.test_auth.TestAuth.test_admin_auth_json">
-<tt class="descname">test_admin_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_json" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_admin_auth_json</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_admin_auth_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured admin auth request in json format using the
 admin auth-method and check a successfully returned token</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_auth.TestAuth.test_admin_auth_xml">
-<tt class="descname">test_admin_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_xml" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_admin_auth_xml</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_admin_auth_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_admin_auth_xml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured admin auth request in xml format using the
 admin auth-method and check a successfully returned token</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="tests.test_auth.TestAuth.test_auth_failure_json">
+<tt class="descname">test_auth_failure_json</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_auth_failure_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_failure_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured auth request with a wrong password in json
+format and check the result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tests.test_auth.TestAuth.test_auth_failure_xml">
+<tt class="descname">test_auth_failure_xml</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_auth_failure_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_failure_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a configured auth request with a wrong password in XML format
+and check the result</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="tests.test_auth.TestAuth.test_auth_json">
-<tt class="descname">test_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_json" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_auth_json</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_auth_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in json format and check a
 successfully returned token</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_auth.TestAuth.test_auth_xml">
-<tt class="descname">test_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_xml" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_auth_xml</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_auth_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_auth_xml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in XML format and check a
 successfully returned token</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_auth.TestAuth.test_password_auth_json">
-<tt class="descname">test_password_auth_json</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_json" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_password_auth_json</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_password_auth_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in json format using password
 based authentication and check a successfully returned token</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_auth.TestAuth.test_password_auth_xml">
-<tt class="descname">test_password_auth_xml</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_xml" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_password_auth_xml</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_auth.html#TestAuth.test_password_auth_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_auth.TestAuth.test_password_auth_xml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a configured auth request in xml format using password
 based authentication and check a successfully returned token</p>
 </dd></dl>
@@ -269,12 +281,12 @@ send an exception</p>
 <p>Request tests</p>
 <dl class="class">
 <dt id="tests.test_request_xml.TestRequestXml">
-<em class="property">class </em><tt class="descclassname">tests.test_request_xml.</tt><tt class="descname">TestRequestXml</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">tests.test_request_xml.</tt><tt class="descname">TestRequestXml</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
 <p>Request tests</p>
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.cleanUp">
-<tt class="descname">cleanUp</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.cleanUp" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">cleanUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.cleanUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.cleanUp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clean up after one step to leave a dedicated result for the other
 test cases.</p>
 </dd></dl>
@@ -287,53 +299,53 @@ test cases.</p>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.setUp">
-<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.setUp" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.setUp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.tearDown">
-<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.tearDown" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.tearDown" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_add_request">
-<tt class="descname">test_add_request</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_add_request" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_add_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_add_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test adding a request</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_batch_add_request">
-<tt class="descname">test_batch_add_request</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_batch_add_request" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_batch_add_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_batch_add_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_batch_add_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test adding multiple request to a batch request</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_empty_request">
-<tt class="descname">test_empty_request</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_empty_request" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_empty_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_empty_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_empty_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an empty request and check the created xml</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_enable_batch_default">
-<tt class="descname">test_enable_batch_default</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_enable_batch_default" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_enable_batch_default</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_enable_batch_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_enable_batch_default" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test enabling batch requests</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_enable_batch_stop">
-<tt class="descname">test_enable_batch_stop</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_enable_batch_stop" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_enable_batch_stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_enable_batch_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_enable_batch_stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test enabling batch requests with additional parameter</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_set_context_params">
-<tt class="descname">test_set_context_params</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_set_context_params" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_set_context_params</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_set_context_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_set_context_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add all currently accepted params and check the result</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="tests.test_request_xml.TestRequestXml.test_set_context_params_failtype">
-<tt class="descname">test_set_context_params_failtype</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_set_context_params_failtype" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_set_context_params_failtype</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_request_xml.html#TestRequestXml.test_set_context_params_failtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_request_xml.TestRequestXml.test_set_context_params_failtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add context parameters to the request and expect the method to
 send an exception</p>
 </dd></dl>
@@ -384,7 +396,7 @@ send an exception</p>
 
 <dl class="method">
 <dt id="tests.test_response_xml.TestResponseXml.test_get_response_multi">
-<tt class="descname">test_get_response_multi</tt><big>(</big><big>)</big><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_response_multi" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">test_get_response_multi</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/tests/test_response_xml.html#TestResponseXml.test_get_response_multi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tests.test_response_xml.TestResponseXml.test_get_response_multi" title="Permalink to this definition">¶</a></dt>
 <dd><p>For cases where we have several tags with the same name.</p>
 <p>In that case, for a given tag name as a key, we want a list of dicts
 containing the content of each tag, instead of a single dict.</p>
@@ -500,7 +512,7 @@ pickled result</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
