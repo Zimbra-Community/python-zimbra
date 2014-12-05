@@ -23,15 +23,23 @@ class ResponseXml(Response):
 
     def get_body(self):
 
-        return dom_to_dict(self.response_doc.getElementsByTagNameNS(
-            "*", "Body"
-        ).item(0))
+        return self._filter_response(
+            dom_to_dict(
+                self.response_doc.getElementsByTagNameNS(
+                    "*", "Body"
+                ).item(0).firstChild
+            )
+        )
 
     def get_header(self):
 
-        return dom_to_dict(self.response_doc.getElementsByTagNameNS(
-            "*", "Header"
-        ).item(0))
+        return self._filter_response(
+            dom_to_dict(
+                self.response_doc.getElementsByTagNameNS(
+                    "*", "Header"
+                ).item(0).firstChild
+            )
+        )
 
     def is_batch(self):
 

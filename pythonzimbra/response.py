@@ -155,8 +155,7 @@ class Response(object):
         Currently the response dictionary is filtered like this:
 
           * If a list only has one item, the list is replaced by that item
-          * Keys with "_jsns" are removed (they only exist in the
-            json-version and thus aren't compatible)
+          * Namespace-Keys (_jsns and xmlns) are removed
 
         :param response_dict: the pregenerated, but unfiltered response dict
         :type response_dict: dict
@@ -168,7 +167,11 @@ class Response(object):
 
         for key, value in response_dict.items():
 
-            if key == '_jsns':
+            if key == "_jsns":
+
+                continue
+
+            if key == "xmlns":
 
                 continue
 

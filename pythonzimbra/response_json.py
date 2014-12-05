@@ -22,11 +22,11 @@ class ResponseJson(Response):
 
     def get_body(self):
 
-        return self.response_dict['Body']
+        return self._filter_response(self.response_dict['Body'])
 
     def get_header(self):
 
-        return self.response_dict['Header']
+        return self._filter_response(self.response_dict['Header'])
 
     def is_batch(self):
 

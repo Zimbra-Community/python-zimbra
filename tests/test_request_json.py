@@ -1,4 +1,5 @@
 """ Request tests """
+import json
 
 from unittest import TestCase
 from pythonzimbra.request_json import RequestJson
@@ -27,12 +28,21 @@ class TestRequestJson(TestCase):
         """ Create an empty request and check the created xml
         """
 
-        expected_result = '{"Body": {}, "Header": {"context": {"_jsns": ' \
-                          '"urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = {
+            "Body": {},
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
     def test_set_context_params_failtype(self):
@@ -88,22 +98,50 @@ class TestRequestJson(TestCase):
             }
         )
 
-        expected_result = '{"Body": {}, "Header": {"context": {"authToken": {' \
-                          '"_content": "1234567890abcdef"}, "account": {"by":' \
-                          ' "name", "_content": "user@zimbra.com"}, ' \
-                          '"via": {"_content": "proxyserver.zimbra.com"}, ' \
-                          '"targetServer": {"_content": "mailboxserver.zimbra' \
-                          '.com"}, "format": {"type": "js"}, ' \
-                          '"_jsns": "urn:zimbra", "session": {"type": ' \
-                          '"admin", "id": "1234567890abcdef", ' \
-                          '"seq": "1234567890"}, "authTokenControl": {' \
-                          '"voidOnExpired": "1"}, "userAgent": {"version": "1' \
-                          '.0", "name": "Mozilla"}, "change": {"token": ' \
-                          '"1234567890abcdef", "type": "new"}}}}'
+        expected_result = {
+            "Body": {},
+            "Header": {
+                "context": {
+                    "authToken": {
+                        "_content": "1234567890abcdef"
+                    },
+                    "account": {
+                        "by": "name",
+                        "_content": "user@zimbra.com"
+                    },
+                    "via": {
+                        "_content": "proxyserver.zimbra.com"
+                    },
+                    "targetServer": {
+                        "_content": "mailboxserver.zimbra.com"
+                    },
+                    "format": {
+                        "type": "js"
+                    },
+                    "_jsns": "urn:zimbra",
+                    "session": {
+                        "type": "admin",
+                        "id": "1234567890abcdef",
+                        "seq": "1234567890"
+                    },
+                    "authTokenControl": {
+                        "voidOnExpired": "1"
+                    },
+                    "userAgent": {
+                        "version": "1.0",
+                        "name": "Mozilla"
+                    },
+                    "change": {
+                        "token": "1234567890abcdef",
+                        "type": "new"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         # Clean up after this test
@@ -119,13 +157,26 @@ class TestRequestJson(TestCase):
 
         self.request.enable_batch()
 
-        expected_result = '{"Body": {"BatchRequest": {"onerror": "continue", ' \
-                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
-                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = {
+            "Body": {
+                "BatchRequest": {
+                    "onerror": "continue",
+                    "_jsns": "urn:zimbra"
+                }
+            },
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         # Clean up
@@ -139,13 +190,26 @@ class TestRequestJson(TestCase):
 
         self.request.enable_batch('stop')
 
-        expected_result = '{"Body": {"BatchRequest": {"onerror": "stop", ' \
-                          '"_jsns": "urn:zimbra"}}, "Header": {"context": {' \
-                          '"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = {
+            "Body": {
+                "BatchRequest": {
+                    "onerror": "stop",
+                    "_jsns": "urn:zimbra"
+                }
+            },
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         # Clean up
@@ -184,15 +248,31 @@ class TestRequestJson(TestCase):
             )
         )
 
-        expected_result = \
-            '{"Body": {"BatchRequest": {"onerror": "continue", "_jsns": ' \
-            '"urn:zimbra", "GetInfoRequest": {"_jsns": "urn_zimbra", ' \
-            '"sections": "mbox,prefs", "requestId": 1}}}, "Header": {' \
-            '"context": {"_jsns": "urn:zimbra", "format": {"type": "js"}}}}'
+        expected_result = {
+            "Body": {
+                "BatchRequest": {
+                    "onerror": "continue",
+                    "_jsns": "urn:zimbra",
+                    "GetInfoRequest": {
+                        "_jsns": "urn_zimbra",
+                        "sections": "mbox,prefs",
+                        "requestId": 1
+                    }
+                }
+            },
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         request_id = self.request.add_request(
@@ -220,17 +300,38 @@ class TestRequestJson(TestCase):
             )
         )
 
-        expected_result = \
-            '{"Body": {"BatchRequest": {"onerror": "continue", "_jsns": ' \
-            '"urn:zimbra", "GetInfoRequest": [{"_jsns": "urn_zimbra", ' \
-            '"sections": "mbox,prefs", "requestId": 1}, {"_jsns": ' \
-            '"urn:zimbra", "sections": "zimlets", "requestId": 2}]}}, ' \
-            '"Header": {"context": {"_jsns": "urn:zimbra", "format": {' \
-            '"type": "js"}}}}'
+        expected_result = {
+            "Body": {
+                "BatchRequest": {
+                    "onerror": "continue",
+                    "_jsns": "urn:zimbra",
+                    "GetInfoRequest": [
+                        {
+                            "_jsns": "urn_zimbra",
+                            "sections": "mbox,prefs",
+                            "requestId": 1
+                        },
+                        {
+                            "_jsns": "urn:zimbra",
+                            "sections": "zimlets",
+                            "requestId": 2
+                        }
+                    ]
+                }
+            },
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         # Clean up
@@ -258,14 +359,26 @@ class TestRequestJson(TestCase):
                 )
         )
 
-        expected_result = '{"Body": {"GetInfoRequest": {"_jsns": ' \
-                          '"urn:zimbra", "sections": "mbox,prefs"}}, ' \
-                          '"Header": {"context": {"_jsns": "urn:zimbra", ' \
-                          '"format": {"type": "js"}}}}'
+        expected_result = {
+            "Body": {
+                "GetInfoRequest": {
+                    "_jsns": "urn:zimbra",
+                    "sections": "mbox,prefs"
+                }
+            },
+            "Header": {
+                "context": {
+                    "_jsns": "urn:zimbra",
+                    "format": {
+                        "type": "js"
+                    }
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            self.request.get_request()
+            json.loads(self.request.get_request())
         )
 
         # Clean up
