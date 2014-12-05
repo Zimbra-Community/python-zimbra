@@ -10,15 +10,15 @@ def dict_to_dom(root_node, xml_dict):
     :type xml_dict: dict
     """
 
-    if '_content' in xml_dict.keys():
+    if '_content' in list(xml_dict.keys()):
 
         root_node.appendChild(
             root_node.ownerDocument.createTextNode(
-                unicode(xml_dict['_content'])
+                str(xml_dict['_content'])
             )
         )
 
-    for key, value in xml_dict.iteritems():
+    for key, value in xml_dict.items():
 
         if key == '_content':
             continue
@@ -49,7 +49,7 @@ def dict_to_dom(root_node, xml_dict):
 
             root_node.setAttribute(
                 key,
-                unicode(value)
+                str(value)
             )
 
 
@@ -82,7 +82,7 @@ def dom_to_dict(root_node):
 
     if root_node.hasAttributes():
 
-        for key in root_node.attributes.keys():
+        for key in list(root_node.attributes.keys()):
 
             node_dict[key] = root_node.getAttribute(key)
 
@@ -110,7 +110,7 @@ def dom_to_dict(root_node):
 
             # If we have several child with same name, put them in a list.
 
-            if node_dict.has_key(child_tag):
+            if child_tag in node_dict:
                 prev_val = node_dict[child_tag]
 
                 if type(prev_val) != list:

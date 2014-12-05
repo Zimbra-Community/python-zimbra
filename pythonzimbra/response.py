@@ -142,7 +142,7 @@ class Response(object):
 
             my_response = self.get_response()
 
-            if my_response.keys()[0] == "Fault":
+            if list(my_response.keys())[0] == "Fault":
 
                 return True
 
@@ -166,7 +166,7 @@ class Response(object):
 
         filtered_dict = {}
 
-        for key, value in response_dict.iteritems():
+        for key, value in response_dict.items():
 
             if key == '_jsns':
 

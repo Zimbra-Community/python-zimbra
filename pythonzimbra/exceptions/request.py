@@ -1,9 +1,7 @@
 """ Request exceptions """
 
-import exceptions
 
-
-class RequestHeaderContextException(exceptions.BaseException):
+class RequestHeaderContextException(Exception):
 
     """ Invalid context parameter specified
 
@@ -12,7 +10,7 @@ class RequestHeaderContextException(exceptions.BaseException):
     pass
 
 
-class NoNamespaceGiven(exceptions.BaseException):
+class NoNamespaceGiven(Exception):
 
     """ No namespace specified, when it should be
     """

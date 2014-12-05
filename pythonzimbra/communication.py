@@ -1,11 +1,21 @@
 """ Zimbra communication handler. """
 
-import urllib2
+import sys
+
+# Py2-Compatibility
+
+if sys.version < '3':
+    import urllib2 as ur
+    import urllib2 as ue
+else:
+    import urllib.request as ur
+    import urllib.error as ue
+
 from pythonzimbra.request_json import RequestJson
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.response_xml import ResponseXml
 from pythonzimbra.response_json import ResponseJson
-from exceptions.communication import *
+from .exceptions.communication import *
 
 
 class Communication(object):
@@ -101,7 +111,7 @@ class Communication(object):
 
         try:
 
-            server_request = urllib2.urlopen(
+            server_request = ur.urlopen(
                 self.url,
                 request.get_request(),
                 self.timeout
@@ -115,7 +125,7 @@ class Communication(object):
 
                 response.set_response(server_request.read())
 
-        except urllib2.HTTPError as e:
+        except ue.HTTPError as e:
 
             if e.code == 500:
 

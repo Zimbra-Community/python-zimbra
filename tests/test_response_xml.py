@@ -132,7 +132,7 @@ class TestResponseXml(TestCase):
         resp = self.response_multi.get_response()
         gad_resp = resp['GetAllDomainsResponse']
 
-        self.assertTrue(gad_resp.has_key('domain'))
+        self.assertTrue('domain' in gad_resp)
         self.assertTrue(gad_resp['domain'])
         self.assertIsInstance(gad_resp['domain'], list)
         self.assertEqual(len(gad_resp['domain']), 2)

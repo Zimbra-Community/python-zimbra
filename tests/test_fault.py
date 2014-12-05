@@ -221,7 +221,7 @@ class TestRequestFault(TestCase):
 
             # Correct error should've been returned
 
-            for request_id, code in response.get_fault_code().iteritems():
+            for request_id, code in response.get_fault_code().items():
 
                 self.assertEqual(
                     "mail.NO_SUCH_FOLDER",
@@ -230,7 +230,7 @@ class TestRequestFault(TestCase):
 
             # Correct error message should've been returned
 
-            for request_id, fault_message in response.get_fault_message().iteritems():
+            for request_id, fault_message in response.get_fault_message().items():
 
                 self.assertEqual(
                     message,

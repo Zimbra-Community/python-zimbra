@@ -71,9 +71,9 @@ class TestXmlSerializer(TestCase):
             },
             'subnode3': {
                 'subnode3attr1': 'value1',
-                'subnode3attr2': u'value2\xf6',
+                'subnode3attr2': 'value2\xf6',
                 'subnode31': {
-                    '_content': u'testcontent3\xf6'
+                    '_content': 'testcontent3\xf6'
                 }
             }
         }
@@ -85,8 +85,8 @@ class TestXmlSerializer(TestCase):
                           'subnode2attr2="value2">testcontent2</subnode2' \
                           '><subnode1>testcontent</subnode1><subnode3 ' \
                           'subnode3attr1="value1" ' \
-                          u'subnode3attr2="value2\xf6"><subnode31' \
-                          u'>testcontent3\xf6' \
+                          'subnode3attr2="value2\xf6"><subnode31' \
+                          '>testcontent3\xf6' \
                           '</subnode31></subnode3></test>'
 
         self.assertEqual(

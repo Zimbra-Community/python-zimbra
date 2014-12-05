@@ -50,8 +50,7 @@ class ResponseJson(Response):
 
         has_fault = False
 
-        for key, value in self.response_dict['Body']['BatchResponse']\
-            .iteritems():
+        for key, value in self.response_dict['Body']['BatchResponse'].items():
 
             if key == "_jsns":
                 # Skip Namespace attribute
@@ -89,7 +88,7 @@ class ResponseJson(Response):
 
             for key, value in self.response_dict[
                 'Body'
-            ]['BatchResponse'].iteritems():
+            ]['BatchResponse'].items():
 
                 if value['requestId'] == request_id:
 
@@ -99,7 +98,7 @@ class ResponseJson(Response):
 
         else:
 
-            key = self.response_dict['Body'].keys()[0]
+            key = list(self.response_dict['Body'].keys())[0]
 
             return self._filter_response({
                 key: self.response_dict['Body'][key]

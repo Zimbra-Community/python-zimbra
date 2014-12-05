@@ -1,7 +1,17 @@
 """ Python-Zimbra test suite
 """
 
-from ConfigParser import ConfigParser
+import sys
+
+# Py2-Compatibility
+
+if sys.version < '3':
+
+    from ConfigParser import ConfigParser
+
+else:
+
+    from configparser import ConfigParser
 
 
 def get_config():

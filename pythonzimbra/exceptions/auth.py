@@ -1,7 +1,7 @@
 """ Authentication exceptions """
 
 
-class AuthenticationFailed(BaseException):
+class AuthenticationFailed(Exception):
 
     """ Authentication failure
     """
