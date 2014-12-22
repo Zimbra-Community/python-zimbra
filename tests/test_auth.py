@@ -192,7 +192,7 @@ class TestAuth(TestCase):
                 response,
                 None,
                 "Authentication with the configured settings "
-                "was not ssuccessful"
+                "was not successful"
             )
 
     def test_password_auth_json(self):
@@ -220,7 +220,63 @@ class TestAuth(TestCase):
                 response,
                 None,
                 "Authentication with the configured settings "
-                "was not ssuccessful"
+                "was not successful"
+            )
+
+    def test_password_auth_failure_xml(self):
+
+        """ Send a configured auth request in xml format using password based
+        authentication and a wrong password and check the error
+        """
+
+        config = get_config()
+
+        if config.getboolean("auth_by_password_test", "enabled"):
+
+            # Run only if enabled
+
+            response = authenticate(
+                config.get("auth_by_password_test", "url"),
+                config.get("auth_by_password_test", "account"),
+                config.get("auth_by_password_test", "password") + "1234",
+                config.get("auth_by_password_test", "account_by"),
+                use_password=True,
+                request_type="xml"
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication with a bad password"
+                "was successful"
+            )
+
+    def test_password_auth_failure_json(self):
+
+        """ Send a configured auth request in json format using password based
+        authentication and a wrong password and check the error
+        """
+
+        config = get_config()
+
+        if config.getboolean("auth_by_password_test", "enabled"):
+
+            # Run only if enabled
+
+            response = authenticate(
+                config.get("auth_by_password_test", "url"),
+                config.get("auth_by_password_test", "account"),
+                config.get("auth_by_password_test", "password") + "1234",
+                config.get("auth_by_password_test", "account_by"),
+                use_password=True,
+                request_type="json"
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication with a bad password"
+                "was successful"
             )
 
     def test_admin_auth_xml(self):
