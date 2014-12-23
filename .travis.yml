@@ -17,7 +17,7 @@ script:
 
   # Run tests
   - cd tests
-  - python -m unittest discover -s ..
+  - coverage run -m unittest discover -s ..
 
 after_success:
   coveralls
