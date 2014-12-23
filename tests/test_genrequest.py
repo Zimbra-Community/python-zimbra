@@ -165,3 +165,23 @@ class TestGenrequest(TestCase):
                 True,
                 "Batch-request didn't return a Batch response."
             )
+
+            expected_batch = {
+                'nameToId': {
+                    'NoOpResponse': [
+                        '1',
+                        '2'
+                    ]
+                },
+                'hasFault': False,
+                'idToName': {
+                    '1': 'NoOpResponse',
+                    '2': 'NoOpResponse'
+                }
+            }
+
+            self.assertEqual(
+                response.get_batch(),
+                expected_batch,
+                "Batch-dictionary wasn't expected"
+            )
