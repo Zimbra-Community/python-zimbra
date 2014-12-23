@@ -1,0 +1,20 @@
+language: python
+
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+  - pypy
+  - pypy3
+
+script:
+  # Securely load config.ini from external web service
+  - curl -u $CONFDEPLOY_USER:$CONFDEPLOY_PASSWORD $CONFDEPLOY_URL > tests/config.ini
+
+  # Run tests
+  - cd tests
+  - python -m unittest discover -s ..
+
+after_success:
+  coveralls
