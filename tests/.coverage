@@ -1,0 +1,4 @@
+# Test coverage configuration.
+[run]
+branch = true
+source = pythonzimbra
