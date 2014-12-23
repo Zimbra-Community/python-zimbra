@@ -7,7 +7,7 @@ class RequestHeaderContextException(Exception):
 
     """
 
-    pass
+    pass  # pragma: no cover
 
 
 class NoNamespaceGiven(Exception):
@@ -15,4 +15,4 @@ class NoNamespaceGiven(Exception):
     """ No namespace specified, when it should be
     """
 
-    pass
+    pass  # pragma: no cover

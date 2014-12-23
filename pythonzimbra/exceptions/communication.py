@@ -6,4 +6,4 @@ class UnknownRequestType(Exception):
     """ The type of the request is neither json nor xml
     """
 
-    pass
+    pass  # pragma: no cover

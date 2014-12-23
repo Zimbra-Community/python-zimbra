@@ -16,7 +16,7 @@ class Response(object):
         """ Clean up the response, so it can be used again
         """
 
-        pass
+        pass  # pragma: no cover
 
     def set_response(self, response_text):
 
@@ -26,7 +26,7 @@ class Response(object):
         from the HTTP communication into a managed object
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_header(self):
 
@@ -36,7 +36,7 @@ class Response(object):
         :rtype: dict
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_body(self):
 
@@ -46,7 +46,7 @@ class Response(object):
         :rtype: dict
         """
 
-        pass
+        pass  # pragma: no cover
 
     def is_batch(self):
 
@@ -56,7 +56,7 @@ class Response(object):
         :rtype: bool
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_batch(self):
 
@@ -82,7 +82,7 @@ class Response(object):
         :rtype: dict or None
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_response(self, request_id=0):
 
@@ -92,7 +92,7 @@ class Response(object):
         the first (or only one in a non-batch) response is returned.
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_fault_code(self):
 
@@ -108,7 +108,7 @@ class Response(object):
         :return: Fault code string
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_fault_message(self):
 
@@ -124,7 +124,7 @@ class Response(object):
         :return: Fault code error message
         """
 
-        pass
+        pass  # pragma: no cover
 
     def is_fault(self):
 

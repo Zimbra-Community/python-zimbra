@@ -6,4 +6,4 @@ class AuthenticationFailed(Exception):
     """ Authentication failure
     """
 
-    pass
+    pass  # pragma: no cover

@@ -95,7 +95,7 @@ class Request(object):
         The params are like in enable_batch
         """
 
-        pass
+        pass  # pragma: no cover
 
     def add_request(self, request_name, request_dict, namespace):
 
@@ -118,14 +118,14 @@ class Request(object):
 
         # Currently no checks
 
-        pass
+        pass  # pragma: no cover
 
     def get_request(self):
 
         """ Return the request in the native form.
         """
 
-        pass
+        pass  # pragma: no cover
 
     def __str__(self):
         return str(self).encode('utf-8')
