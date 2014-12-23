@@ -1,6 +1,7 @@
 """ Test usage of communication.authenticate and communication.gen_request
 """
 from unittest import TestCase
+from pythonzimbra.exceptions.communication import UnknownRequestType
 from pythonzimbra.request_json import RequestJson
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.tools.auth import authenticate
@@ -55,6 +56,58 @@ class TestGenrequest(TestCase):
                         response.get_fault_message()
                     )
                 )
+
+    def test_genrequest_fail(self):
+
+        """ Create a request only using the Communication-object
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            self.assertRaises(
+                UnknownRequestType,
+                comm.gen_request,
+                request_type="INVALID",
+                token=token
+            )
+
+            request = comm.gen_request(token=token)
+
+            request.add_request(
+                "NoOpRequest",
+                {
+
+                },
+                "urn:zimbraMail"
+            )
+
+            # Deliberately break the request
+
+            request.request_type = "INVALID"
+
+            self.assertRaises(
+                UnknownRequestType,
+                comm.send_request,
+                request
+            )
 
     def test_genrequest_xml(self):
 
