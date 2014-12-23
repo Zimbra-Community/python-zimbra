@@ -1,5 +1,7 @@
 """ Zimbra communication handler. """
 
+from __future__ import unicode_literals
+
 import sys
 
 # Py2-Compatibility
@@ -43,8 +45,14 @@ class Communication(object):
         self.url = url
         self.timeout = timeout
 
+        if sys.version < '3' and self.url.startswith("https"):
+
+            # Force tlsv1 on https-requests in Python 2
+
+            import tools.urllib2_tls
+
     def gen_request(self, request_type="json", token=None, set_batch=False,
-        batch_onerror=None):
+                    batch_onerror=None):
 
         """ Convenience method to quickly generate a token
 
@@ -67,7 +75,7 @@ class Communication(object):
 
             raise UnknownRequestType()
 
-        if not token is None:
+        if token is not None:
             local_request.set_auth_token(token)
 
         if set_batch:
@@ -113,17 +121,19 @@ class Communication(object):
 
             server_request = ur.urlopen(
                 self.url,
-                request.get_request(),
+                request.get_request().encode("utf-8"),
                 self.timeout
             )
 
             if response is None:
 
-                local_response.set_response(server_request.read())
+                local_response.set_response(
+                    server_request.read().decode("utf-8")
+                )
 
             else:
 
-                response.set_response(server_request.read())
+                response.set_response(server_request.read().decode("utf-8"))
 
         except ue.HTTPError as e:
 
@@ -133,11 +143,11 @@ class Communication(object):
 
                 if response is None:
 
-                    local_response.set_response(e.fp.read())
+                    local_response.set_response(e.fp.read().decode("utf-8"))
 
                 else:
 
-                    response.set_response(e.fp.read())
+                    response.set_response(e.fp.read().decode("utf-8"))
 
             else:
 
