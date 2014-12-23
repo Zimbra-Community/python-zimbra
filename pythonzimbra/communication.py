@@ -7,11 +7,11 @@ import sys
 # Py2-Compatibility
 
 if sys.version < '3':
-    import urllib2 as ur
-    import urllib2 as ue
+    import urllib2 as ur  # pragma: no cover py3
+    import urllib2 as ue  # pragma: no cover py3
 else:
-    import urllib.request as ur
-    import urllib.error as ue
+    import urllib.request as ur  # pragma: no cover py2
+    import urllib.error as ue  # pragma: no cover py2
 
 from pythonzimbra.request_json import RequestJson
 from pythonzimbra.request_xml import RequestXml
@@ -49,7 +49,7 @@ class Communication(object):
 
             # Force tlsv1 on https-requests in Python 2
 
-            import tools.urllib2_tls
+            import tools.urllib2_tls  # pragma: no cover py3
 
     def gen_request(self, request_type="json", token=None, set_batch=False,
                     batch_onerror=None):
