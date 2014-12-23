@@ -645,3 +645,74 @@ class TestGenrequest(TestCase):
                 response.get_response(3),
                 "Querying an invalid requestId didn't return None"
             )
+
+    def test_genrequest_batch_invalid_xml(self):
+
+        """ Create a batchrequest only using the Communication-object,
+            send it and request an invalid request id (xml)
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            request = comm.gen_request(
+                request_type="xml",
+                token=token,
+                set_batch=True
+            )
+
+            self.assertEqual(
+                type(request),
+                RequestXml,
+                "Generated request wasn't an json-request, which should be "
+                "the default."
+            )
+
+            request.add_request(
+                "NoOpRequest",
+                {
+
+                },
+                "urn:zimbraMail"
+            )
+
+            request.add_request(
+                "NoOpRequest",
+                {
+
+                },
+                "urn:zimbraMail"
+            )
+
+            response = comm.send_request(request)
+
+            if response.is_fault():
+
+                self.fail(
+                    "Reponse failed: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            self.assertIsNone(
+                response.get_response(3),
+                "Querying an invalid requestId didn't return None"
+            )
