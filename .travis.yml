@@ -8,6 +8,9 @@ python:
   - pypy
   - pypy3
 
+install:
+  - pip install coveralls
+
 script:
   # Securely load config.ini from external web service
   - curl -u $CONFDEPLOY_USER:$CONFDEPLOY_PASSWORD $CONFDEPLOY_URL > tests/config.ini
