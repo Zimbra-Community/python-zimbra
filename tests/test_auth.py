@@ -1,6 +1,7 @@
 """ Test the auth tool """
 
 from unittest import TestCase
+from pythonzimbra.exceptions.auth import AuthenticationFailed
 from tests import get_config
 from pythonzimbra.tools.auth import authenticate
 
@@ -165,6 +166,42 @@ class TestAuth(TestCase):
                 "Authentication did not return 'None', but %s instead." % (
                     response
                 )
+            )
+
+    def test_auth_failure_raise(self):
+
+        """ Send a configured auth request with a wrong password in json
+        format and let it raise an exception
+        """
+
+        config = get_config()
+
+        if config.getboolean('auth_test', 'enabled'):
+
+            # Run only if enabled
+
+            try:
+
+                timestamp = config.getint('auth_test', 'timestamp')
+
+            except ValueError:
+
+                # If timestamp is set to a none-integer, we'll just assume
+                # that it's unset
+
+                timestamp = None
+
+            self.assertRaises(
+                AuthenticationFailed,
+                authenticate,
+                config.get('auth_test', 'url'),
+                config.get('auth_test', 'account'),
+                config.get('auth_test', 'preauthkey') + "1234",
+                config.get('auth_test', 'account_by'),
+                config.getint('auth_test', 'expires'),
+                timestamp,
+                request_type='json',
+                raise_on_error=True
             )
 
     def test_password_auth_xml(self):
