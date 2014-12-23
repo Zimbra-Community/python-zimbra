@@ -509,7 +509,7 @@ class TestGenrequest(TestCase):
                 "Request returned unexpected response"
             )
 
-    def test_genrequest_check_response_batch(self):
+    def test_genrequest_check_response_batch_xml(self):
 
         """ Create a batch-request only using the Communication-object
         """
