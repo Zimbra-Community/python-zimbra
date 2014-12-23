@@ -1,0 +1,6 @@
+# Test coverage configuration.
+[run]
+branch = true
+source = pythonzimbra
+omit =
+    */urllib2_tls.py

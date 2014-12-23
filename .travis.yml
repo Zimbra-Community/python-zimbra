@@ -19,6 +19,10 @@ script:
 
   # Run tests
   - cd tests
+
+  # Use a specific configuration for py3
+  - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then cp .coveragercpy3 .coveragerc
+
   - coverage run -m unittest discover -s ..
 
 after_success:

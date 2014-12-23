@@ -26,8 +26,8 @@ class TLS1Connection(httplib.HTTPSConnection):
         sock = socket.create_connection((self.host, self.port),
                                         self.timeout, self.source_address)
         if getattr(self, '_tunnel_host', None):
-            self.sock = sock
-            self._tunnel()
+            self.sock = sock  # pragma: no cover
+            self._tunnel()  # pragma: no cover
 
         # This is the only difference; default wrap_socket uses SSLv23
         self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file,
