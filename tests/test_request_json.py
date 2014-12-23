@@ -3,8 +3,7 @@ import json
 
 from unittest import TestCase
 from pythonzimbra.request_json import RequestJson
-from pythonzimbra.exceptions.request import \
-    NoNamespaceGiven, RequestHeaderContextException
+from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class TestRequestJson(TestCase):
@@ -236,8 +235,8 @@ class TestRequestJson(TestCase):
             int,
             msg="Returned request_id for request 1 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(
@@ -288,8 +287,8 @@ class TestRequestJson(TestCase):
             int,
             msg="Returned request_id for request 2 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(

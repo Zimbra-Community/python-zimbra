@@ -2,7 +2,6 @@
 
 from unittest import TestCase
 from pythonzimbra.response_xml import ResponseXml
-import pickle
 
 
 class TestResponseXml(TestCase):
@@ -26,7 +25,6 @@ class TestResponseXml(TestCase):
     """ The result we test against (coming from a GetVersionInfoRequest by
     running zmsoap -z --json -t admin GetVersionInfoRequest -vv) """
 
-
     tested_server_result_multi_value = \
         '<soap:Envelope xmlns:soap="http://www.w3' \
         '.org/2003/05/soap-envelope"><soap:Header><context' \
@@ -36,7 +34,6 @@ class TestResponseXml(TestCase):
         '<domain id="444d6b9" name="client1.unbound.example.fr"></domain>' \
         '</GetAllDomainsResponse></soap:Body' \
         '></soap:Envelope>'\
-
 
     """ This one is a stripped version of a GetAlDomains """
 
@@ -62,16 +59,16 @@ class TestResponseXml(TestCase):
 
         expected_result = {
             "GetVersionInfoResponse": {
-                "info":{
-                        "majorversion": "8",
-                        "buildDate": "20130910-1244",
-                        "microversion": "5",
-                        "platform": "UBUNTU12_64",
-                        "host": "zre-ubuntu12-64",
-                        "version": "8.0.5_GA_5839.NETWORK",
-                        "release": "20130910124124",
-                        "type": "NETWORK",
-                        "minorversion": "0"
+                "info": {
+                    "majorversion": "8",
+                    "buildDate": "20130910-1244",
+                    "microversion": "5",
+                    "platform": "UBUNTU12_64",
+                    "host": "zre-ubuntu12-64",
+                    "version": "8.0.5_GA_5839.NETWORK",
+                    "release": "20130910124124",
+                    "type": "NETWORK",
+                    "minorversion": "0"
                 }
             }
         }

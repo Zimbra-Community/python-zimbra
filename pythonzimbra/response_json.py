@@ -111,7 +111,7 @@ class ResponseJson(Response):
             ret_dict = {}
 
             for response in self.response_dict['Body'][
-                'BatchResponse']["Fault"]:
+                    'BatchResponse']["Fault"]:
 
                 request_id = response["requestId"]
 
@@ -130,7 +130,7 @@ class ResponseJson(Response):
             ret_dict = {}
 
             for response in self.response_dict['Body'][
-                'BatchResponse']["Fault"]:
+                    'BatchResponse']["Fault"]:
 
                 request_id = response["requestId"]
 

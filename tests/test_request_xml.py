@@ -1,12 +1,10 @@
 """ Request tests """
-import json
 
 from unittest import TestCase
 from xml.dom import minidom
 from pythonzimbra.tools.xmlserializer import dom_to_dict
 from pythonzimbra.request_xml import RequestXml
-from pythonzimbra.exceptions.request import \
-    NoNamespaceGiven, RequestHeaderContextException
+from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class TestRequestXml(TestCase):
@@ -197,8 +195,8 @@ class TestRequestXml(TestCase):
             int,
             msg="Returned request_id for request 1 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(
@@ -236,8 +234,8 @@ class TestRequestXml(TestCase):
             int,
             msg="Returned request_id for request 2 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(

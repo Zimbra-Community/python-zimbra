@@ -13,7 +13,7 @@
 
 
 def zimbra_to_python(zimbra_dict, key_attribute="n",
-    content_attribute="_content"):
+                     content_attribute="_content"):
 
     """
     Converts single level Zimbra dicts to a standard python dict
@@ -32,7 +32,7 @@ def zimbra_to_python(zimbra_dict, key_attribute="n",
 
 
 def get_value(haystack, needle, key_attribute="n",
-    content_attribute="_content"):
+              content_attribute="_content"):
 
     """ Fetch a value from a zimbra-like json dict (keys are "n", values are
     "_content"

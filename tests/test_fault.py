@@ -230,7 +230,8 @@ class TestRequestFault(TestCase):
 
             # Correct error message should've been returned
 
-            for request_id, fault_message in response.get_fault_message().items():
+            for request_id, fault_message in \
+                    response.get_fault_message().items():
 
                 self.assertEqual(
                     message,

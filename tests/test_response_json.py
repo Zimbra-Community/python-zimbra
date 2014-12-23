@@ -1,6 +1,5 @@
 """ Testing response class """
 
-import json
 from unittest import TestCase
 from pythonzimbra.response_json import ResponseJson
 

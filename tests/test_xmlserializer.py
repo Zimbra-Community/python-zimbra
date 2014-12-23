@@ -1,5 +1,4 @@
 """ Tests of XML Serializer tools """
-import pickle
 
 from unittest import TestCase
 from pythonzimbra.tools import xmlserializer
@@ -33,7 +32,12 @@ class TestXmlSerializer(TestCase):
                 'subnode31': {
                     '_content': 'testcontent3'
                 }
-            }
+            },
+            'listsubnode': [
+                "value1",
+                "value2",
+                "value3"
+            ]
         }
 
         xmlserializer.dict_to_dom(test_node, test_dict)
@@ -69,7 +73,12 @@ class TestXmlSerializer(TestCase):
                 'subnode31': {
                     '_content': 'testcontent3\xf6'
                 }
-            }
+            },
+            'listsubnode': [
+                "value1",
+                "value2",
+                "value3"
+            ]
         }
 
         xmlserializer.dict_to_dom(test_node, test_dict)
