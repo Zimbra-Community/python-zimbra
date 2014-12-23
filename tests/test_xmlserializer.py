@@ -34,9 +34,15 @@ class TestXmlSerializer(TestCase):
                 }
             },
             'listsubnode': [
-                "value1",
-                "value2",
-                "value3"
+                {
+                    "_content": "value1"
+                },
+                {
+                    "_content": "value2"
+                },
+                {
+                    "_content": "value3"
+                }
             ]
         }
 
@@ -75,9 +81,15 @@ class TestXmlSerializer(TestCase):
                 }
             },
             'listsubnode': [
-                "value1",
-                "value2",
-                "value3"
+                {
+                    "_content": "value1"
+                },
+                {
+                    "_content": "value2"
+                },
+                {
+                    "_content": "value3"
+                }
             ]
         }
 

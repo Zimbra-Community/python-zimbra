@@ -5,6 +5,8 @@ Python classes to access Zimbra SOAP backend with a few utilities. Handles
 creating and sending Zimbra SOAP queries to the backend and adds a few
 utilities such as a preauth generator.
 
+Compatible with Python 2.7 and 3.x (cPython and PyPy)
+
 This framework is not intended to supply user level access to Zimbra
 functions. Zimbra tends to be too dynamic and complex for this to work. This
 is actually a framework to reduce the implementation work if you want to
