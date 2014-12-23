@@ -66,6 +66,8 @@ enabled=False
 [admin_request_test]
 
 # What account can be created and removed for testing purposes?
+# You can specify TEMP inside the account. It then will be replaced by a
+# random number to allow parallelized tests
 test_account=None
 
 # The password of that account

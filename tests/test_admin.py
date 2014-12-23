@@ -1,4 +1,5 @@
 """ Test administrative requests """
+import random
 
 from unittest import TestCase
 from pythonzimbra.request_json import RequestJson
@@ -51,10 +52,21 @@ class TestAdmin(TestCase):
 
             request.set_auth_token(token)
 
+            test_account = config.get("admin_request_test", "test_account")
+
+            if "TEMP" in test_account:
+
+                # Generate a random number and add it to the test account
+
+                random.seed()
+                temp_account = random.randint(1000000, 5000000)
+
+                test_account = test_account.replace("TEMP", str(temp_account))
+
             request.add_request(
                 "CreateAccountRequest",
                 {
-                    "name": config.get("admin_request_test", "test_account"),
+                    "name": test_account,
                     "password": config.get(
                         "admin_request_test",
                         "test_password"
@@ -89,7 +101,7 @@ class TestAdmin(TestCase):
 
             user_token = authenticate(
                 config.get("admin_request_test", "url"),
-                config.get("admin_request_test", "test_account"),
+                test_account,
                 config.get("admin_request_test", "test_password"),
                 "name",
                 request_type=request_type,
