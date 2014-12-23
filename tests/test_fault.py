@@ -203,6 +203,107 @@ class TestRequestFault(TestCase):
                 response
             )
 
+    def test_fault_non_existing_folder_genrequest(self):
+        """ Request a non existing folder, so we get a fitting fault
+        """
+
+        config = get_config()
+
+        if config.getboolean('fault_test', 'enabled'):
+
+            comm = Communication(config.get('fault_test', 'url'))
+
+            token = auth.authenticate(config.get('fault_test', 'url'),
+                                      config.get('fault_test', 'account'),
+                                      config.get('fault_test', 'preauthkey'),
+                                      config.get('fault_test', 'account_by'))
+
+            request = comm.gen_request(token=token)
+
+            request.add_request(
+                "GetFolderRequest",
+                {
+                    "folder": {
+                        "path": config.get('fault_test', 'folder')
+                    }
+                },
+                "urn:zimbraMail"
+            )
+
+            response = comm.send_request(request)
+
+            self.check_response(
+                response
+            )
+
+    def test_fault_non_existing_folder_genrequest_xml(self):
+        """ Request a non existing folder, so we get a fitting fault
+        """
+
+        config = get_config()
+
+        if config.getboolean('fault_test', 'enabled'):
+
+            comm = Communication(config.get('fault_test', 'url'))
+
+            token = auth.authenticate(config.get('fault_test', 'url'),
+                                      config.get('fault_test', 'account'),
+                                      config.get('fault_test', 'preauthkey'),
+                                      config.get('fault_test', 'account_by'))
+
+            request = comm.gen_request(request_type="xml", token=token)
+
+            request.add_request(
+                "GetFolderRequest",
+                {
+                    "folder": {
+                        "path": config.get('fault_test', 'folder')
+                    }
+                },
+                "urn:zimbraMail"
+            )
+
+            response = comm.send_request(request)
+
+            self.check_response(
+                response
+            )
+
+    def test_fault_non_existing_folder_genrequest_invalidurl(self):
+        """ Request a non existing folder, so we get a fitting fault
+        """
+
+        config = get_config()
+
+        if config.getboolean('fault_test', 'enabled'):
+
+            comm = Communication(config.get('fault_test', 'url') + "1234")
+
+            token = auth.authenticate(config.get('fault_test', 'url'),
+                                      config.get('fault_test', 'account'),
+                                      config.get('fault_test', 'preauthkey'),
+                                      config.get('fault_test', 'account_by'))
+
+            request = comm.gen_request(token=token)
+
+            request.add_request(
+                "GetFolderRequest",
+                {
+                    "folder": {
+                        "path": config.get('fault_test', 'folder')
+                    }
+                },
+                "urn:zimbraMail"
+            )
+
+            # A 404 error should by raised as an exception.
+
+            self.assertRaises(
+                Exception,
+                comm.send_request,
+                request
+            )
+
     def check_response(self, response):
 
         # Should be a fault
