@@ -43,3 +43,13 @@ class TestDict(TestCase):
             "value2",
             "Unexpected value returned"
         )
+
+    def test_get_value_fault(self):
+
+        """ Try to fetch a value, when the key doesn't exist.
+        """
+
+        self.assertIsNone(
+            dict.get_value(self.zimbra_dict, "key3"),
+            "Unexpected value returned"
+        )
