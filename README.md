@@ -18,7 +18,7 @@ on how to use the SOAP backend.
 For details refer to the [API-Documentation](http://zimbra-community.github.io/python-zimbra/docs/)
 
 [![Build Status](https://travis-ci.org/Zimbra-Community/python-zimbra.svg?branch=py3)](https://travis-ci.org/Zimbra-Community/python-zimbra)
-[![Coverage Status](https://img.shields.io/coveralls/Zimbra-Community/python-zimbra.svg)](https://coveralls.io/r/Zimbra-Community/python-zimbra)
+[![Coverage Status](https://coveralls.io/repos/Zimbra-Community/python-zimbra/badge.png?branch=py3)](https://coveralls.io/r/Zimbra-Community/python-zimbra?branch=py3)
 
 Installation
 ------------
