@@ -22,6 +22,7 @@ script:
 
   # Use a specific configuration for py3
   - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then cp .coveragercpy3 .coveragerc; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == pypy3 ]]; then cp .coveragercpy3 .coveragerc; fi
 
   - coverage run -m unittest discover -s ..
 
