@@ -104,7 +104,7 @@ class ResponseXml(Response):
 
             for child in search_node.childNodes:
 
-                if child.getAttribute("requestId") == request_id:
+                if int(child.getAttribute("requestId")) == request_id:
 
                     return self._filter_response(dom_to_dict(child))
 
@@ -131,15 +131,15 @@ class ResponseXml(Response):
             for child in search_node.childNodes:
 
                 ret_dict[child.getAttribute("requestId")] = self.get_response(
-                    child.getAttribute("requestId")
-                )["Fault"]["Detail"]["Error"]["Code"]["_content"]
+                    int(child.getAttribute("requestId"))
+                )["Fault"]["Detail"]["Error"]["Code"]
 
             return ret_dict
 
         else:
 
             return self.get_response()["Fault"]["Detail"]["Error"][
-                "Code"]["_content"]
+                "Code"]
 
     def get_fault_message(self):
 
@@ -154,11 +154,11 @@ class ResponseXml(Response):
             for child in search_node.childNodes:
 
                 ret_dict[child.getAttribute("requestId")] = self.get_response(
-                    child.getAttribute("requestId")
-                )["Fault"]["Reason"]["Text"]["_content"]
+                    int(child.getAttribute("requestId"))
+                )["Fault"]["Reason"]["Text"]
 
             return ret_dict
 
         else:
 
-            return self.get_response()["Fault"]["Reason"]["Text"]["_content"]
+            return self.get_response()["Fault"]["Reason"]["Text"]

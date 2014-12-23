@@ -116,4 +116,4 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
 
         return None
 
-    return response.get_response()['AuthResponse']['authToken']['_content']
+    return response.get_response()['AuthResponse']['authToken']

@@ -86,11 +86,16 @@ class ResponseJson(Response):
 
         if self.is_batch():
 
-            for key, value in self.response_dict[
+            for key in self.response_dict[
                 'Body'
-            ]['BatchResponse'].items():
+            ]['BatchResponse'].keys():
 
-                if value['requestId'] == request_id:
+                if key == "_jsns":
+                    continue
+
+                value = self.response_dict['Body']['BatchResponse'][key]
+
+                if int(value[0]['requestId']) == request_id:
 
                     return self._filter_response({
                         key: value

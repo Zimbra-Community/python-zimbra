@@ -203,6 +203,8 @@ user account. You have to specifically enable these tests. Here's an overview
   * Authenticate as user
   * Send a NoOpRequest
   * Send a NoOpRequest inside a BatchRequest
+  * Send a GetInfoRequest
+  * Send a NoOpRequest and a GetInfoRequest inside a BatchRequest
 
 To run the test, enter the tests subdirectory and run
 

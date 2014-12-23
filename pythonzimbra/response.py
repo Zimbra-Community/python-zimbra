@@ -179,6 +179,11 @@ class Response(object):
 
                 filtered_dict[key] = value[0]
 
+            elif type(value) == dict and len(value.keys()) == 1 and "_content" \
+                    in value.keys():
+
+                filtered_dict[key] = value["_content"]
+
             elif type(value) == dict:
 
                 tmp_dict = self._filter_response(value)

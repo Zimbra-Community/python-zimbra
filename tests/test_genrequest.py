@@ -163,7 +163,7 @@ class TestGenrequest(TestCase):
 
     def test_genrequest_batch(self):
 
-        """ Create a request only using the Communication-object
+        """ Create a batch-request only using the Communication-object
         """
 
         config = get_config()
@@ -250,7 +250,8 @@ class TestGenrequest(TestCase):
 
     def test_genrequest_batch_xml(self):
 
-        """ Create a request only using the Communication-object (xml-version)
+        """ Create a batch-request only using the Communication-object (
+            xml-version)
         """
 
         config = get_config()
@@ -336,4 +337,244 @@ class TestGenrequest(TestCase):
                 response.get_batch(),
                 expected_batch,
                 "Batch-dictionary wasn't expected"
+            )
+
+    def test_genrequest_check_response(self):
+
+        """ Create a request only using the Communication-object, send it and
+            check the response
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            request = comm.gen_request(token=token)
+
+            request.add_request(
+                "GetInfoRequest",
+                {
+                },
+                "urn:zimbraAccount"
+            )
+
+            response = comm.send_request(request)
+
+            if response.is_fault():
+
+                self.fail(
+                    "Reponse failed: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            self.assertEqual(
+                response.get_response()["GetInfoResponse"]["name"],
+                config.get("genrequest_test", "account"),
+                "Request returned unexpected response"
+            )
+
+    def test_genrequest_check_response_batch(self):
+
+        """ Create a batch-request only using the Communication-object
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            request = comm.gen_request(token=token, set_batch=True)
+
+            self.assertEqual(
+                type(request),
+                RequestJson,
+                "Generated request wasn't an json-request, which should be "
+                "the default."
+            )
+
+            request.add_request(
+                "NoOpRequest",
+                {
+
+                },
+                "urn:zimbraMail"
+            )
+
+            request.add_request(
+                "GetInfoRequest",
+                {
+                },
+                "urn:zimbraAccount"
+            )
+
+            response = comm.send_request(request)
+
+            if response.is_fault():
+
+                self.fail(
+                    "Reponse failed: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            self.assertEqual(
+                response.get_response(2)["GetInfoResponse"]["name"],
+                config.get("genrequest_test", "account"),
+                "Request returned unexpected response"
+            )
+
+    def test_genrequest_check_response_xml(self):
+
+        """ Create a request only using the Communication-object, send it and
+            check the response
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            request = comm.gen_request(request_type="xml", token=token)
+
+            request.add_request(
+                "GetInfoRequest",
+                {
+                },
+                "urn:zimbraAccount"
+            )
+
+            response = comm.send_request(request)
+
+            if response.is_fault():
+
+                self.fail(
+                    "Reponse failed: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            self.assertEqual(
+                response.get_response()["GetInfoResponse"]["name"],
+                config.get("genrequest_test", "account"),
+                "Request returned unexpected response"
+            )
+
+    def test_genrequest_check_response_batch(self):
+
+        """ Create a batch-request only using the Communication-object
+        """
+
+        config = get_config()
+
+        if config.getboolean("genrequest_test", "enabled"):
+
+            # Run only if enabled
+
+            comm = Communication(config.get("genrequest_test", "url"))
+
+            token = authenticate(
+                config.get("genrequest_test", "url"),
+                config.get("genrequest_test", "account"),
+                config.get("genrequest_test", "preauthkey")
+            )
+
+            self.assertNotEqual(
+                token,
+                None,
+                "Cannot authenticate."
+            )
+
+            request = comm.gen_request(
+                request_type="xml",
+                token=token,
+                set_batch=True
+            )
+
+            self.assertEqual(
+                type(request),
+                RequestXml,
+                "Generated request wasn't an json-request, which should be "
+                "the default."
+            )
+
+            request.add_request(
+                "NoOpRequest",
+                {
+
+                },
+                "urn:zimbraMail"
+            )
+
+            request.add_request(
+                "GetInfoRequest",
+                {
+                },
+                "urn:zimbraAccount"
+            )
+
+            response = comm.send_request(request)
+
+            if response.is_fault():
+
+                self.fail(
+                    "Reponse failed: (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            self.assertEqual(
+                response.get_response(2)["GetInfoResponse"]["name"],
+                config.get("genrequest_test", "account"),
+                "Request returned unexpected response"
             )

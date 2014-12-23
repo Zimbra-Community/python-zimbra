@@ -128,7 +128,7 @@ class Request(object):
         pass  # pragma: no cover
 
     def __str__(self):
-        return str(self).encode('utf-8')
+        return str(self).encode('utf-8')  # pragma: no cover
 
     def __unicode__(self):
-        return self.get_request()
+        return self.get_request()  # pragma: no cover
