@@ -1,6 +1,9 @@
 Python-Zimbra
 =============
 
+[![Build Status](https://travis-ci.org/Zimbra-Community/python-zimbra.svg?branch=py3)](https://travis-ci.org/Zimbra-Community/python-zimbra)
+[![Coverage Status](https://coveralls.io/repos/Zimbra-Community/python-zimbra/badge.png?branch=py3)](https://coveralls.io/r/Zimbra-Community/python-zimbra?branch=py3)
+
 Python classes to access Zimbra SOAP backend with a few utilities. Handles
 creating and sending Zimbra SOAP queries to the backend and adds a few
 utilities such as a preauth generator.
@@ -16,9 +19,6 @@ Please refer to the [official SOAP documentation by Zimbra](http://wiki.zimbra.c
 on how to use the SOAP backend.
 
 For details refer to the [API-Documentation](http://zimbra-community.github.io/python-zimbra/docs/)
-
-[![Build Status](https://travis-ci.org/Zimbra-Community/python-zimbra.svg?branch=py3)](https://travis-ci.org/Zimbra-Community/python-zimbra)
-[![Coverage Status](https://coveralls.io/repos/Zimbra-Community/python-zimbra/badge.png?branch=py3)](https://coveralls.io/r/Zimbra-Community/python-zimbra?branch=py3)
 
 Installation
 ------------
