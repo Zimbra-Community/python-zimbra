@@ -103,7 +103,7 @@ class Communication(object):
 
             server_request = urllib2.urlopen(
                 self.url,
-                request.get_request(),
+                request.get_request().encode('utf-8'),
                 self.timeout
             )
 
