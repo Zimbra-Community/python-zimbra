@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -52,7 +54,6 @@
 
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
 
 
 <div class="viewcode-block" id="TestResponseXml"><a class="viewcode-back" href="../../tests.html#tests.test_response_xml.TestResponseXml">[docs]</a><span class="k">class</span> <span class="nc">TestResponseXml</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -76,7 +77,6 @@
     <span class="sd">&quot;&quot;&quot; The result we test against (coming from a GetVersionInfoRequest by</span>
 <span class="sd">    running zmsoap -z --json -t admin GetVersionInfoRequest -vv) &quot;&quot;&quot;</span>
 
-
     <span class="n">tested_server_result_multi_value</span> <span class="o">=</span> \
         <span class="s">&#39;&lt;soap:Envelope xmlns:soap=&quot;http://www.w3&#39;</span> \
         <span class="s">&#39;.org/2003/05/soap-envelope&quot;&gt;&lt;soap:Header&gt;&lt;context&#39;</span> \
@@ -86,7 +86,6 @@
         <span class="s">&#39;&lt;domain id=&quot;444d6b9&quot; name=&quot;client1.unbound.example.fr&quot;&gt;&lt;/domain&gt;&#39;</span> \
         <span class="s">&#39;&lt;/GetAllDomainsResponse&gt;&lt;/soap:Body&#39;</span> \
         <span class="s">&#39;&gt;&lt;/soap:Envelope&gt;&#39;</span>\
-
 
     <span class="sd">&quot;&quot;&quot; This one is a stripped version of a GetAlDomains &quot;&quot;&quot;</span>
 
@@ -110,31 +109,37 @@
         <span class="sd">&quot;&quot;&quot; Checks the body against a pickled expectation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&quot;(dp0</span><span class="se">\n</span><span class="s">VBody</span><span class="se">\n</span><span class="s">p1</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp2</span><span class="se">\n</span><span class="s">VGetVersionInfoResponse</span><span class="se">\n</span><span class="s">p3</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp4</span><span class="se">\n</span><span class="s">Vinfo</span><span class="se">\n</span><span class="s">p5</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp6</span><span class="se">\n</span><span class="s">Vmajorversion</span><span class="se">\n</span><span class="s">p7</span><span class="se">\n</span><span class="s">V8</span><span class="se">\n</span><span class="s">p8</span><span class="se">\n</span><span class="s">sVminorversion</span><span class="se">\n</span><span class="s">p9&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">V0</span><span class="se">\n</span><span class="s">p10</span><span class="se">\n</span><span class="s">sVmicroversion</span><span class="se">\n</span><span class="s">p11</span><span class="se">\n</span><span class="s">V5</span><span class="se">\n</span><span class="s">p12&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">sVplatform</span><span class="se">\n</span><span class="s">p13</span><span class="se">\n</span><span class="s">VUBUNTU12_64</span><span class="se">\n</span><span class="s">p14</span><span class="se">\n</span><span class="s">sVhost</span><span class="se">\n</span><span class="s">p15&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">Vzre-ubuntu12-64</span><span class="se">\n</span><span class="s">p16</span><span class="se">\n</span><span class="s">sVversion</span><span class="se">\n</span><span class="s">p17</span><span class="se">\n</span><span class="s">V8.0&quot;</span> \
-                          <span class="s">&quot;.5_GA_5839.NETWORK</span><span class="se">\n</span><span class="s">p18</span><span class="se">\n</span><span class="s">sVrelease</span><span class="se">\n</span><span class="s">p19&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">V20130910124124</span><span class="se">\n</span><span class="s">p20</span><span class="se">\n</span><span class="s">sVtype</span><span class="se">\n</span><span class="s">p21</span><span class="se">\n</span><span class="s">VNETWORK</span><span class="se">\n</span><span class="s">p22&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">sVbuildDate</span><span class="se">\n</span><span class="s">p23</span><span class="se">\n</span><span class="s">V20130910-1244</span><span class="se">\n</span><span class="s">p24</span><span class="se">\n</span><span class="s">ssS&quot;</span> \
-                          <span class="s">&quot;&#39;xmlns&#39;</span><span class="se">\n</span><span class="s">p25</span><span class="se">\n</span><span class="s">Vurn:zimbraAdmin</span><span class="se">\n</span><span class="s">p26</span><span class="se">\n</span><span class="s">sss.&quot;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;GetVersionInfoResponse&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;majorversion&quot;</span><span class="p">:</span> <span class="s">&quot;8&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;buildDate&quot;</span><span class="p">:</span> <span class="s">&quot;20130910-1244&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;microversion&quot;</span><span class="p">:</span> <span class="s">&quot;5&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;platform&quot;</span><span class="p">:</span> <span class="s">&quot;UBUNTU12_64&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;zre-ubuntu12-64&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;8.0.5_GA_5839.NETWORK&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;release&quot;</span><span class="p">:</span> <span class="s">&quot;20130910124124&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;NETWORK&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;minorversion&quot;</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_body</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_body</span><span class="p">()</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestResponseXml.test_get_header"><a class="viewcode-back" href="../../tests.html#tests.test_response_xml.TestResponseXml.test_get_header">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&quot;(dp0</span><span class="se">\n</span><span class="s">VHeader</span><span class="se">\n</span><span class="s">p1</span><span class="se">\n</span><span class="s">(dp2</span><span class="se">\n</span><span class="s">Vcontext</span><span class="se">\n</span><span class="s">p3</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp4</span><span class="se">\n</span><span class="s">S&#39;xmlns&#39;</span><span class="se">\n</span><span class="s">p5</span><span class="se">\n</span><span class="s">Vurn:zimbra</span><span class="se">\n</span><span class="s">p6</span><span class="se">\n</span><span class="s">sss.&quot;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_header</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_header</span><span class="p">()</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestResponseXml.test_is_batch"><a class="viewcode-back" href="../../tests.html#tests.test_response_xml.TestResponseXml.test_is_batch">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -155,22 +160,26 @@
 </div>
 <div class="viewcode-block" id="TestResponseXml.test_get_response"><a class="viewcode-back" href="../../tests.html#tests.test_response_xml.TestResponseXml.test_get_response">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&quot;(dp0</span><span class="se">\n</span><span class="s">VGetVersionInfoResponse</span><span class="se">\n</span><span class="s">p1</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp2</span><span class="se">\n</span><span class="s">Vinfo</span><span class="se">\n</span><span class="s">p3</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp4</span><span class="se">\n</span><span class="s">Vmajorversion</span><span class="se">\n</span><span class="s">p5</span><span class="se">\n</span><span class="s">V8</span><span class="se">\n</span><span class="s">p6</span><span class="se">\n</span><span class="s">sVminorversion</span><span class="se">\n</span><span class="s">p7&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">V0</span><span class="se">\n</span><span class="s">p8</span><span class="se">\n</span><span class="s">sVmicroversion</span><span class="se">\n</span><span class="s">p9</span><span class="se">\n</span><span class="s">V5</span><span class="se">\n</span><span class="s">p10</span><span class="se">\n</span><span class="s">sVplatform&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">p11</span><span class="se">\n</span><span class="s">VUBUNTU12_64</span><span class="se">\n</span><span class="s">p12</span><span class="se">\n</span><span class="s">sVhost</span><span class="se">\n</span><span class="s">p13</span><span class="se">\n</span><span class="s">Vzre&quot;</span> \
-                          <span class="s">&quot;-ubuntu12-64</span><span class="se">\n</span><span class="s">p14</span><span class="se">\n</span><span class="s">sVversion</span><span class="se">\n</span><span class="s">p15</span><span class="se">\n</span><span class="s">V8.0.5_GA_5839&quot;</span> \
-                          <span class="s">&quot;.NETWORK</span><span class="se">\n</span><span class="s">p16</span><span class="se">\n</span><span class="s">sVrelease</span><span class="se">\n</span><span class="s">p17</span><span class="se">\n</span><span class="s">V20130910124124&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">p18</span><span class="se">\n</span><span class="s">sVtype</span><span class="se">\n</span><span class="s">p19</span><span class="se">\n</span><span class="s">VNETWORK</span><span class="se">\n</span><span class="s">p20</span><span class="se">\n</span><span class="s">sVbuildDate&quot;</span> \
-                          <span class="s">&quot;</span><span class="se">\n</span><span class="s">p21</span><span class="se">\n</span><span class="s">V20130910-1244</span><span class="se">\n</span><span class="s">p22</span><span class="se">\n</span><span class="s">ssS&#39;xmlns&#39;</span><span class="se">\n</span><span class="s">p23</span><span class="se">\n</span><span class="s">Vurn&quot;</span> \
-                          <span class="s">&quot;:zimbraAdmin</span><span class="se">\n</span><span class="s">p24</span><span class="se">\n</span><span class="s">ss.&quot;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;GetVersionInfoResponse&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;majorversion&quot;</span><span class="p">:</span> <span class="s">&quot;8&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;buildDate&quot;</span><span class="p">:</span> <span class="s">&quot;20130910-1244&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;microversion&quot;</span><span class="p">:</span> <span class="s">&quot;5&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;platform&quot;</span><span class="p">:</span> <span class="s">&quot;UBUNTU12_64&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;zre-ubuntu12-64&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;8.0.5_GA_5839.NETWORK&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;release&quot;</span><span class="p">:</span> <span class="s">&quot;20130910124124&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;NETWORK&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;minorversion&quot;</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
         <span class="p">)</span>
-
 </div>
 <div class="viewcode-block" id="TestResponseXml.test_get_response_multi"><a class="viewcode-back" href="../../tests.html#tests.test_response_xml.TestResponseXml.test_get_response_multi">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_response_multi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; For cases where we have several tags with the same name.</span>
@@ -182,7 +191,7 @@
         <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_multi</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
         <span class="n">gad_resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s">&#39;GetAllDomainsResponse&#39;</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">gad_resp</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;domain&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;domain&#39;</span> <span class="ow">in</span> <span class="n">gad_resp</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">gad_resp</span><span class="p">[</span><span class="s">&#39;domain&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">gad_resp</span><span class="p">[</span><span class="s">&#39;domain&#39;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gad_resp</span><span class="p">[</span><span class="s">&#39;domain&#39;</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span></div></div>
@@ -226,7 +235,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

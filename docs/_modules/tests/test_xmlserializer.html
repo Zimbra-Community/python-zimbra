@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -49,7 +51,6 @@
             
   <h1>Source code for tests.test_xmlserializer</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot; Tests of XML Serializer tools &quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
 
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.tools</span> <span class="kn">import</span> <span class="n">xmlserializer</span>
@@ -83,22 +84,27 @@
                 <span class="s">&#39;subnode31&#39;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">&#39;testcontent3&#39;</span>
                 <span class="p">}</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&#39;listsubnode&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value1&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value2&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value3&quot;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
         <span class="p">}</span>
 
         <span class="n">xmlserializer</span><span class="o">.</span><span class="n">dict_to_dom</span><span class="p">(</span><span class="n">test_node</span><span class="p">,</span> <span class="n">test_dict</span><span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;test attr1=&quot;value1&quot; attr2=&quot;value2&quot;&gt;&lt;subnode2 &#39;</span> \
-                          <span class="s">&#39;subnode2attr1=&quot;value1&quot; &#39;</span> \
-                          <span class="s">&#39;subnode2attr2=&quot;value2&quot;&gt;testcontent2&lt;/subnode2&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;subnode1&gt;testcontent&lt;/subnode1&gt;&lt;subnode3 &#39;</span> \
-                          <span class="s">&#39;subnode3attr1=&quot;value1&quot; &#39;</span> \
-                          <span class="s">&#39;subnode3attr2=&quot;value2&quot;&gt;&lt;subnode31&gt;testcontent3&#39;</span> \
-                          <span class="s">&#39;&lt;/subnode31&gt;&lt;/subnode3&gt;&lt;/test&gt;&#39;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
+            <span class="n">xmlserializer</span><span class="o">.</span><span class="n">dom_to_dict</span><span class="p">(</span><span class="n">test_node</span><span class="p">),</span>
+            <span class="p">{</span>
+                <span class="s">&quot;test&quot;</span><span class="p">:</span> <span class="n">test_dict</span>
+            <span class="p">}</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestXmlSerializer.test_dict_to_dom_unicode"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer.test_dict_to_dom_unicode">[docs]</a>    <span class="k">def</span> <span class="nf">test_dict_to_dom_unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -121,27 +127,31 @@
             <span class="p">},</span>
             <span class="s">&#39;subnode3&#39;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s">&#39;subnode3attr1&#39;</span><span class="p">:</span> <span class="s">&#39;value1&#39;</span><span class="p">,</span>
-                <span class="s">&#39;subnode3attr2&#39;</span><span class="p">:</span> <span class="s">u&#39;value2</span><span class="se">\xf6</span><span class="s">&#39;</span><span class="p">,</span>
+                <span class="s">&#39;subnode3attr2&#39;</span><span class="p">:</span> <span class="s">&#39;value2</span><span class="se">\xf6</span><span class="s">&#39;</span><span class="p">,</span>
                 <span class="s">&#39;subnode31&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">u&#39;testcontent3</span><span class="se">\xf6</span><span class="s">&#39;</span>
+                    <span class="s">&#39;_content&#39;</span><span class="p">:</span> <span class="s">&#39;testcontent3</span><span class="se">\xf6</span><span class="s">&#39;</span>
                 <span class="p">}</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&#39;listsubnode&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value1&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value2&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;value3&quot;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
         <span class="p">}</span>
 
         <span class="n">xmlserializer</span><span class="o">.</span><span class="n">dict_to_dom</span><span class="p">(</span><span class="n">test_node</span><span class="p">,</span> <span class="n">test_dict</span><span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;&lt;test attr1=&quot;value1&quot; attr2=&quot;value2&quot;&gt;&lt;subnode2 &#39;</span> \
-                          <span class="s">&#39;subnode2attr1=&quot;value1&quot; &#39;</span> \
-                          <span class="s">&#39;subnode2attr2=&quot;value2&quot;&gt;testcontent2&lt;/subnode2&#39;</span> \
-                          <span class="s">&#39;&gt;&lt;subnode1&gt;testcontent&lt;/subnode1&gt;&lt;subnode3 &#39;</span> \
-                          <span class="s">&#39;subnode3attr1=&quot;value1&quot; &#39;</span> \
-                          <span class="s">u&#39;subnode3attr2=&quot;value2</span><span class="se">\xf6</span><span class="s">&quot;&gt;&lt;subnode31&#39;</span> \
-                          <span class="s">u&#39;&gt;testcontent3</span><span class="se">\xf6</span><span class="s">&#39;</span> \
-                          <span class="s">&#39;&lt;/subnode31&gt;&lt;/subnode3&gt;&lt;/test&gt;&#39;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
-            <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">test_node</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
+            <span class="n">xmlserializer</span><span class="o">.</span><span class="n">dom_to_dict</span><span class="p">(</span><span class="n">test_node</span><span class="p">),</span>
+            <span class="p">{</span>
+                <span class="s">&quot;test&quot;</span><span class="p">:</span> <span class="n">test_dict</span>
+            <span class="p">}</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestXmlSerializer.test_dom_to_dict"><a class="viewcode-back" href="../../tests.html#tests.test_xmlserializer.TestXmlSerializer.test_dom_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_dom_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -168,14 +178,18 @@
 
         <span class="n">test_dict</span> <span class="o">=</span> <span class="n">dom_to_dict</span><span class="p">(</span><span class="n">test_node</span><span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&quot;(dp0</span><span class="se">\n</span><span class="s">S&#39;test&#39;</span><span class="se">\n</span><span class="s">p1</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp2</span><span class="se">\n</span><span class="s">S&#39;testattribute&#39;</span><span class="se">\n</span><span class="s">p3</span><span class="se">\n</span><span class="s">S&#39;value&#39;</span><span class="se">\n</span><span class="s">p4</span><span class="se">\n</span><span class="s">sS&quot;</span> \
-                          <span class="s">&quot;&#39;subtest&#39;</span><span class="se">\n</span><span class="s">p5</span><span class="se">\n</span><span class="s">(&quot;</span> \
-                          <span class="s">&quot;dp6</span><span class="se">\n</span><span class="s">S&#39;_content&#39;</span><span class="se">\n</span><span class="s">p7</span><span class="se">\n</span><span class="s">S&#39;testcontent&#39;</span><span class="se">\n</span><span class="s">p8</span><span class="se">\n</span><span class="s">sss.&quot;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;test&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;testattribute&quot;</span><span class="p">:</span> <span class="s">&quot;value&quot;</span><span class="p">,</span>
+                <span class="s">&quot;subtest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;testcontent&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">test_dict</span><span class="p">)</span>
+            <span class="n">test_dict</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
@@ -217,7 +231,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

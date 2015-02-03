@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -51,6 +53,9 @@
 <span class="sd">&quot;&quot;&quot; Test usage of communication.authenticate and communication.gen_request</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.exceptions.communication</span> <span class="kn">import</span> <span class="n">UnknownRequestType</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.tools.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
 <span class="kn">from</span> <span class="nn">tests</span> <span class="kn">import</span> <span class="n">get_config</span>
@@ -103,6 +108,58 @@
                         <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_fail"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_fail">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a request only using the Communication-object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span>
+                <span class="n">UnknownRequestType</span><span class="p">,</span>
+                <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">,</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;INVALID&quot;</span><span class="p">,</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">token</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c"># Deliberately break the request</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">request_type</span> <span class="o">=</span> <span class="s">&quot;INVALID&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span>
+                <span class="n">UnknownRequestType</span><span class="p">,</span>
+                <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">,</span>
+                <span class="n">request</span>
+            <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestGenrequest.test_genrequest_xml"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -158,7 +215,7 @@
 </div>
 <div class="viewcode-block" id="TestGenrequest.test_genrequest_batch"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_batch">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="sd">&quot;&quot;&quot; Create a request only using the Communication-object</span>
+        <span class="sd">&quot;&quot;&quot; Create a batch-request only using the Communication-object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
@@ -182,6 +239,13 @@
             <span class="p">)</span>
 
             <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestJson</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an json-request, which should be &quot;</span>
+                <span class="s">&quot;the default.&quot;</span>
+            <span class="p">)</span>
 
             <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
                 <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
@@ -214,6 +278,495 @@
                 <span class="n">response</span><span class="o">.</span><span class="n">is_batch</span><span class="p">(),</span>
                 <span class="bp">True</span><span class="p">,</span>
                 <span class="s">&quot;Batch-request didn&#39;t return a Batch response.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">expected_batch</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;nameToId&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;NoOpResponse&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s">&#39;1&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;2&#39;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s">&#39;hasFault&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&#39;idToName&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;1&#39;</span><span class="p">:</span> <span class="s">&#39;NoOpResponse&#39;</span><span class="p">,</span>
+                    <span class="s">&#39;2&#39;</span><span class="p">:</span> <span class="s">&#39;NoOpResponse&#39;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(),</span>
+                <span class="n">expected_batch</span><span class="p">,</span>
+                <span class="s">&quot;Batch-dictionary wasn&#39;t expected&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_batch_xml"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_batch_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_batch_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a batch-request only using the Communication-object (</span>
+<span class="sd">            xml-version)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;xml&quot;</span><span class="p">,</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span>
+                <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestXml</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an xml-request&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">is_batch</span><span class="p">(),</span>
+                <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;Batch-request didn&#39;t return a Batch response.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">expected_batch</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;nameToId&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;NoOpResponse&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s">&#39;1&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;2&#39;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s">&#39;hasFault&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&#39;idToName&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&#39;1&#39;</span><span class="p">:</span> <span class="s">&#39;NoOpResponse&#39;</span><span class="p">,</span>
+                    <span class="s">&#39;2&#39;</span><span class="p">:</span> <span class="s">&#39;NoOpResponse&#39;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(),</span>
+                <span class="n">expected_batch</span><span class="p">,</span>
+                <span class="s">&quot;Batch-dictionary wasn&#39;t expected&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_check_response"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_check_response">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_check_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a request only using the Communication-object, send it and</span>
+<span class="sd">            check the response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAccount&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">()[</span><span class="s">&quot;GetInfoResponse&quot;</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="s">&quot;Request returned unexpected response&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_check_response_batch"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_check_response_batch">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_check_response_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a batch-request only using the Communication-object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestJson</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an json-request, which should be &quot;</span>
+                <span class="s">&quot;the default.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAccount&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="mi">2</span><span class="p">)[</span><span class="s">&quot;GetInfoResponse&quot;</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="s">&quot;Request returned unexpected response&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_check_response_xml"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_check_response_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_check_response_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a request only using the Communication-object, send it and</span>
+<span class="sd">            check the response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">request_type</span><span class="o">=</span><span class="s">&quot;xml&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAccount&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">()[</span><span class="s">&quot;GetInfoResponse&quot;</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="s">&quot;Request returned unexpected response&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_check_response_batch_xml"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_check_response_batch_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_check_response_batch_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a batch-request only using the Communication-object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;xml&quot;</span><span class="p">,</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span>
+                <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestXml</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an json-request, which should be &quot;</span>
+                <span class="s">&quot;the default.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAccount&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="mi">2</span><span class="p">)[</span><span class="s">&quot;GetInfoResponse&quot;</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="s">&quot;Request returned unexpected response&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_batch_invalid"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_batch_invalid">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_batch_invalid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a batchrequest only using the Communication-object,</span>
+<span class="sd">            send it and request an invalid request id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestJson</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an json-request, which should be &quot;</span>
+                <span class="s">&quot;the default.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                <span class="s">&quot;Querying an invalid requestId didn&#39;t return None&quot;</span>
+            <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestGenrequest.test_genrequest_batch_invalid_xml"><a class="viewcode-back" href="../../tests.html#tests.test_genrequest.TestGenrequest.test_genrequest_batch_invalid_xml">[docs]</a>    <span class="k">def</span> <span class="nf">test_genrequest_batch_invalid_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Create a batchrequest only using the Communication-object,</span>
+<span class="sd">            send it and request an invalid request id (xml)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;enabled&quot;</span><span class="p">):</span>
+
+            <span class="c"># Run only if enabled</span>
+
+            <span class="n">comm</span> <span class="o">=</span> <span class="n">Communication</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">))</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;account&quot;</span><span class="p">),</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;genrequest_test&quot;</span><span class="p">,</span> <span class="s">&quot;preauthkey&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span>
+                <span class="n">token</span><span class="p">,</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="s">&quot;Cannot authenticate.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">gen_request</span><span class="p">(</span>
+                <span class="n">request_type</span><span class="o">=</span><span class="s">&quot;xml&quot;</span><span class="p">,</span>
+                <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span>
+                <span class="n">set_batch</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
+                <span class="n">RequestXml</span><span class="p">,</span>
+                <span class="s">&quot;Generated request wasn&#39;t an json-request, which should be &quot;</span>
+                <span class="s">&quot;the default.&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;NoOpRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraMail&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;Reponse failed: (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                <span class="s">&quot;Querying an invalid requestId didn&#39;t return None&quot;</span>
             <span class="p">)</span></div></div>
 </pre></div>
 
@@ -255,7 +808,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

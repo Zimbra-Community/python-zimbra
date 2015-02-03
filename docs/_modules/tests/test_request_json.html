@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -49,11 +51,11 @@
             
   <h1>Source code for tests.test_request_json</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot; Request tests &quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
-<span class="kn">from</span> <span class="nn">pythonzimbra.exceptions.request</span> <span class="kn">import</span> \
-    <span class="n">NoNamespaceGiven</span><span class="p">,</span> <span class="n">RequestHeaderContextException</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.exceptions.request</span> <span class="kn">import</span> <span class="n">RequestHeaderContextException</span>
 
 
 <div class="viewcode-block" id="TestRequestJson"><a class="viewcode-back" href="../../tests.html#tests.test_request_json.TestRequestJson">[docs]</a><span class="k">class</span> <span class="nc">TestRequestJson</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -77,12 +79,21 @@
         <span class="sd">&quot;&quot;&quot; Create an empty request and check the created xml</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;{&quot;Body&quot;: {}, &quot;Header&quot;: {&quot;context&quot;: {&quot;_jsns&quot;: &#39;</span> \
-                          <span class="s">&#39;&quot;urn:zimbra&quot;, &quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 </div>
 <div class="viewcode-block" id="TestRequestJson.test_set_context_params_failtype"><a class="viewcode-back" href="../../tests.html#tests.test_request_json.TestRequestJson.test_set_context_params_failtype">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_context_params_failtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -138,22 +149,50 @@
             <span class="p">}</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;{&quot;Body&quot;: {}, &quot;Header&quot;: {&quot;context&quot;: {&quot;authToken&quot;: {&#39;</span> \
-                          <span class="s">&#39;&quot;_content&quot;: &quot;1234567890abcdef&quot;}, &quot;account&quot;: {&quot;by&quot;:&#39;</span> \
-                          <span class="s">&#39; &quot;name&quot;, &quot;_content&quot;: &quot;user@zimbra.com&quot;}, &#39;</span> \
-                          <span class="s">&#39;&quot;via&quot;: {&quot;_content&quot;: &quot;proxyserver.zimbra.com&quot;}, &#39;</span> \
-                          <span class="s">&#39;&quot;targetServer&quot;: {&quot;_content&quot;: &quot;mailboxserver.zimbra&#39;</span> \
-                          <span class="s">&#39;.com&quot;}, &quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}, &#39;</span> \
-                          <span class="s">&#39;&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &quot;session&quot;: {&quot;type&quot;: &#39;</span> \
-                          <span class="s">&#39;&quot;admin&quot;, &quot;id&quot;: &quot;1234567890abcdef&quot;, &#39;</span> \
-                          <span class="s">&#39;&quot;seq&quot;: &quot;1234567890&quot;}, &quot;authTokenControl&quot;: {&#39;</span> \
-                          <span class="s">&#39;&quot;voidOnExpired&quot;: &quot;1&quot;}, &quot;userAgent&quot;: {&quot;version&quot;: &quot;1&#39;</span> \
-                          <span class="s">&#39;.0&quot;, &quot;name&quot;: &quot;Mozilla&quot;}, &quot;change&quot;: {&quot;token&quot;: &#39;</span> \
-                          <span class="s">&#39;&quot;1234567890abcdef&quot;, &quot;type&quot;: &quot;new&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;authToken&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;1234567890abcdef&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;account&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;by&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;user@zimbra.com&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;via&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;proxyserver.zimbra.com&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;targetServer&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="s">&quot;mailboxserver.zimbra.com&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;session&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;admin&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="s">&quot;1234567890abcdef&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;seq&quot;</span><span class="p">:</span> <span class="s">&quot;1234567890&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;authTokenControl&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;voidOnExpired&quot;</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;userAgent&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;1.0&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Mozilla&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s">&quot;change&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;token&quot;</span><span class="p">:</span> <span class="s">&quot;1234567890abcdef&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;new&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up after this test</span>
@@ -169,13 +208,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">()</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;{&quot;Body&quot;: {&quot;BatchRequest&quot;: {&quot;onerror&quot;: &quot;continue&quot;, &#39;</span> \
-                          <span class="s">&#39;&quot;_jsns&quot;: &quot;urn:zimbra&quot;}}, &quot;Header&quot;: {&quot;context&quot;: {&#39;</span> \
-                          <span class="s">&#39;&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;BatchRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;onerror&quot;</span><span class="p">:</span> <span class="s">&quot;continue&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
@@ -189,13 +241,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">enable_batch</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;{&quot;Body&quot;: {&quot;BatchRequest&quot;: {&quot;onerror&quot;: &quot;stop&quot;, &#39;</span> \
-                          <span class="s">&#39;&quot;_jsns&quot;: &quot;urn:zimbra&quot;}}, &quot;Header&quot;: {&quot;context&quot;: {&#39;</span> \
-                          <span class="s">&#39;&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;BatchRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;onerror&quot;</span><span class="p">:</span> <span class="s">&quot;stop&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
@@ -222,8 +287,8 @@
             <span class="nb">int</span><span class="p">,</span>
             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Returned request_id for request 1 is not of type int, &quot;</span>
                 <span class="s">&quot;but of type </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="nb">type</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
-            <span class="p">)</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+                <span class="p">)</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
@@ -234,15 +299,31 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> \
-            <span class="s">&#39;{&quot;Body&quot;: {&quot;BatchRequest&quot;: {&quot;onerror&quot;: &quot;continue&quot;, &quot;_jsns&quot;: &#39;</span> \
-            <span class="s">&#39;&quot;urn:zimbra&quot;, &quot;GetInfoRequest&quot;: {&quot;_jsns&quot;: &quot;urn_zimbra&quot;, &#39;</span> \
-            <span class="s">&#39;&quot;sections&quot;: &quot;mbox,prefs&quot;, &quot;requestId&quot;: 1}}}, &quot;Header&quot;: {&#39;</span> \
-            <span class="s">&#39;&quot;context&quot;: {&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;BatchRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;onerror&quot;</span><span class="p">:</span> <span class="s">&quot;continue&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn_zimbra&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;sections&quot;</span><span class="p">:</span> <span class="s">&quot;mbox,prefs&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;requestId&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="n">request_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
@@ -258,8 +339,8 @@
             <span class="nb">int</span><span class="p">,</span>
             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Returned request_id for request 2 is not of type int, &quot;</span>
                 <span class="s">&quot;but of type </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="nb">type</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
-            <span class="p">)</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+                <span class="p">)</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
@@ -270,17 +351,38 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> \
-            <span class="s">&#39;{&quot;Body&quot;: {&quot;BatchRequest&quot;: {&quot;onerror&quot;: &quot;continue&quot;, &quot;_jsns&quot;: &#39;</span> \
-            <span class="s">&#39;&quot;urn:zimbra&quot;, &quot;GetInfoRequest&quot;: [{&quot;_jsns&quot;: &quot;urn_zimbra&quot;, &#39;</span> \
-            <span class="s">&#39;&quot;sections&quot;: &quot;mbox,prefs&quot;, &quot;requestId&quot;: 1}, {&quot;_jsns&quot;: &#39;</span> \
-            <span class="s">&#39;&quot;urn:zimbra&quot;, &quot;sections&quot;: &quot;zimlets&quot;, &quot;requestId&quot;: 2}]}}, &#39;</span> \
-            <span class="s">&#39;&quot;Header&quot;: {&quot;context&quot;: {&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &quot;format&quot;: {&#39;</span> \
-            <span class="s">&#39;&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;BatchRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;onerror&quot;</span><span class="p">:</span> <span class="s">&quot;continue&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn_zimbra&quot;</span><span class="p">,</span>
+                            <span class="s">&quot;sections&quot;</span><span class="p">:</span> <span class="s">&quot;mbox,prefs&quot;</span><span class="p">,</span>
+                            <span class="s">&quot;requestId&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                            <span class="s">&quot;sections&quot;</span><span class="p">:</span> <span class="s">&quot;zimlets&quot;</span><span class="p">,</span>
+                            <span class="s">&quot;requestId&quot;</span><span class="p">:</span> <span class="mi">2</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
@@ -308,14 +410,26 @@
                 <span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">expected_result</span> <span class="o">=</span> <span class="s">&#39;{&quot;Body&quot;: {&quot;GetInfoRequest&quot;: {&quot;_jsns&quot;: &#39;</span> \
-                          <span class="s">&#39;&quot;urn:zimbra&quot;, &quot;sections&quot;: &quot;mbox,prefs&quot;}}, &#39;</span> \
-                          <span class="s">&#39;&quot;Header&quot;: {&quot;context&quot;: {&quot;_jsns&quot;: &quot;urn:zimbra&quot;, &#39;</span> \
-                          <span class="s">&#39;&quot;format&quot;: {&quot;type&quot;: &quot;js&quot;}}}}&#39;</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;Body&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;GetInfoRequest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;sections&quot;</span><span class="p">:</span> <span class="s">&quot;mbox,prefs&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s">&quot;Header&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s">&quot;_jsns&quot;</span><span class="p">:</span> <span class="s">&quot;urn:zimbra&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;js&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
             <span class="n">expected_result</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">()</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_request</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c"># Clean up</span>
@@ -364,7 +478,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
