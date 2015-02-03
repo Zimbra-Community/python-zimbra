@@ -73,6 +73,9 @@ test_account=None
 # The password of that account
 test_password=None
 
+# The displayname of that account - include non-ascii characters here!
+test_displayname=äöüeéß
+
 # Is the auth testing enabled? Set this to true if you have configured the
 # other values!
 enabled=False

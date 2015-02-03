@@ -1,12 +1,15 @@
 """ Test administrative requests """
+
 import random
 
 from unittest import TestCase
+import sys
 from pythonzimbra.request_json import RequestJson
 from pythonzimbra.communication import Communication
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.response_json import ResponseJson
 from pythonzimbra.response_xml import ResponseXml
+from pythonzimbra.tools.dict import get_value
 from tests import get_config
 from pythonzimbra.tools.auth import authenticate
 
@@ -63,6 +66,17 @@ class TestAdmin(TestCase):
 
                 test_account = test_account.replace("TEMP", str(temp_account))
 
+            test_displayname = config.get(
+                "admin_request_test",
+                "test_displayname"
+            )
+
+            if sys.version < '3':
+
+                # Create unicode string for py2
+
+                test_displayname = test_displayname.decode("utf-8")
+
             request.add_request(
                 "CreateAccountRequest",
                 {
@@ -70,7 +84,11 @@ class TestAdmin(TestCase):
                     "password": config.get(
                         "admin_request_test",
                         "test_password"
-                    )
+                    ),
+                    "a": {
+                        "n": "displayName",
+                        "_content": test_displayname
+                    }
                 },
                 "urn:zimbraAdmin"
             )
@@ -96,6 +114,45 @@ class TestAdmin(TestCase):
 
             account_id = response.get_response(
             )["CreateAccountResponse"]["account"]["id"]
+
+            # Get account from database and compare display name to the setting
+
+            request.clean()
+            request.set_auth_token(token)
+            response.clean()
+
+            request.add_request(
+                "GetAccountRequest",
+                {
+                    "account": {
+                        "by": "name",
+                        "_content": test_account
+                    }
+                },
+                "urn:zimbraAdmin"
+            )
+
+            comm.send_request(request, response)
+
+            if response.is_fault():
+
+                self.fail(
+                    "GetAccount faulted. (%s) %s" % (
+                        response.get_fault_code(),
+                        response.get_fault_message()
+                    )
+                )
+
+            returned_name = get_value(
+                response.get_response()["GetAccountResponse"]["account"]["a"],
+                "displayName"
+            )
+
+            self.assertEqual(
+                returned_name,
+                test_displayname,
+                "Zimbra didn't save the display name as requested."
+            )
 
             # Try to log in as the new account
 

@@ -19,6 +19,10 @@ class ResponseXml(Response):
 
     def set_response(self, response_text):
 
+        if not isinstance(response_text, str):
+
+            response_text = response_text.encode("utf-8")
+
         self.response_doc = minidom.parseString(response_text)
 
     def get_body(self):

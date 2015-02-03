@@ -1,4 +1,28 @@
 """ Tools to easily serialize XML from other input forms """
+import sys
+
+
+def convert_to_str(input_string):
+
+    """ Returns a string of the input compatible between py2 and py3
+    :param input_string:
+    :return:
+    """
+
+    if sys.version < '3':
+
+        if isinstance(input_string, str) \
+                or isinstance(input_string, unicode):  # pragma: no cover py3
+
+            return input_string  # pragma: no cover py3
+
+    else:
+
+        if isinstance(input_string, str):  # pragma: no cover py3
+
+            return input_string  # pragma: no cover py3
+
+    return str(input_string)
 
 
 def dict_to_dom(root_node, xml_dict):
@@ -14,7 +38,7 @@ def dict_to_dom(root_node, xml_dict):
 
         root_node.appendChild(
             root_node.ownerDocument.createTextNode(
-                str(xml_dict['_content'])
+                convert_to_str(xml_dict['_content'])
             )
         )
 
@@ -49,7 +73,7 @@ def dict_to_dom(root_node, xml_dict):
 
             root_node.setAttribute(
                 key,
-                str(value)
+                convert_to_str(value)
             )
 
 

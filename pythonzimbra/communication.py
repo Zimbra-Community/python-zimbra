@@ -125,15 +125,21 @@ class Communication(object):
                 self.timeout
             )
 
+            server_response = server_request.read()
+
+            if isinstance(server_response, bytes):
+
+                server_response = server_response.decode("utf-8")
+
             if response is None:
 
                 local_response.set_response(
-                    server_request.read().decode("utf-8")
+                    server_response
                 )
 
             else:
 
-                response.set_response(server_request.read().decode("utf-8"))
+                response.set_response(server_response)
 
         except ue.HTTPError as e:
 
@@ -141,13 +147,19 @@ class Communication(object):
 
                 # 500 codes normally returns a SoapFault, that we can use
 
+                server_response = e.fp.read()
+
+                if isinstance(server_response, bytes):
+
+                    server_response = server_response.decode("utf-8")
+
                 if response is None:
 
-                    local_response.set_response(e.fp.read().decode("utf-8"))
+                    local_response.set_response(server_response)
 
                 else:
 
-                    response.set_response(e.fp.read().decode("utf-8"))
+                    response.set_response(server_response)
 
             else:
 
