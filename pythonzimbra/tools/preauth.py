@@ -1,4 +1,5 @@
 """ Preauth Generator """
+import codecs
 from datetime import datetime
 import hashlib
 import hmac
@@ -24,13 +25,13 @@ def create_preauth(byval, key, by='name', expires=0, timestamp=None):
         timestamp = int(datetime.now().strftime("%s")) * 1000
 
     pak = hmac.new(
-        key,
-        '%s|%s|%s|%s' % (
+        codecs.latin_1_encode(key)[0],
+        ('%s|%s|%s|%s' % (
             byval,
             by,
             expires,
             timestamp
-        ),
+        )).encode("utf-8"),
         hashlib.sha1
     ).hexdigest()
 

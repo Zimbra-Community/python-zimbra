@@ -49,7 +49,7 @@ class Request(object):
         :param params: A Dict containing context parameters.
         """
 
-        for key, value in params.iteritems():
+        for key, value in params.items():
 
             if key not in self.valid_context_params:
 
@@ -95,7 +95,7 @@ class Request(object):
         The params are like in enable_batch
         """
 
-        pass
+        pass  # pragma: no cover
 
     def add_request(self, request_name, request_dict, namespace):
 
@@ -118,17 +118,17 @@ class Request(object):
 
         # Currently no checks
 
-        pass
+        pass  # pragma: no cover
 
     def get_request(self):
 
         """ Return the request in the native form.
         """
 
-        pass
+        pass  # pragma: no cover
 
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return str(self).encode('utf-8')  # pragma: no cover
 
     def __unicode__(self):
-        return self.get_request()
+        return self.get_request()  # pragma: no cover

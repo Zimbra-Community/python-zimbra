@@ -1,7 +1,7 @@
 """ Zimbra request handling (JSON) """
 import json
 
-from request import Request
+from .request import Request
 
 
 class RequestJson(Request):
@@ -40,7 +40,7 @@ class RequestJson(Request):
 
         super(RequestJson, self).set_context_params(params)
 
-        for key, value in params.iteritems():
+        for key, value in params.items():
 
             self.request_dict['Header']['context'][key] = value
 

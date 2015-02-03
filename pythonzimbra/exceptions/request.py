@@ -1,20 +1,18 @@
 """ Request exceptions """
 
-import exceptions
 
-
-class RequestHeaderContextException(exceptions.BaseException):
+class RequestHeaderContextException(Exception):
 
     """ Invalid context parameter specified
 
     """
 
-    pass
+    pass  # pragma: no cover
 
 
-class NoNamespaceGiven(exceptions.BaseException):
+class NoNamespaceGiven(Exception):
 
     """ No namespace specified, when it should be
     """
 
-    pass
+    pass  # pragma: no cover

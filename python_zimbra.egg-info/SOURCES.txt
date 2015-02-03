@@ -22,4 +22,5 @@ pythonzimbra/tools/__init__.py
 pythonzimbra/tools/auth.py
 pythonzimbra/tools/dict.py
 pythonzimbra/tools/preauth.py
+pythonzimbra/tools/urllib2_tls.py
 pythonzimbra/tools/xmlserializer.py

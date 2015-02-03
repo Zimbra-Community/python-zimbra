@@ -22,11 +22,11 @@ class ResponseJson(Response):
 
     def get_body(self):
 
-        return self.response_dict['Body']
+        return self._filter_response(self.response_dict['Body'])
 
     def get_header(self):
 
-        return self.response_dict['Header']
+        return self._filter_response(self.response_dict['Header'])
 
     def is_batch(self):
 
@@ -50,8 +50,7 @@ class ResponseJson(Response):
 
         has_fault = False
 
-        for key, value in self.response_dict['Body']['BatchResponse']\
-            .iteritems():
+        for key, value in self.response_dict['Body']['BatchResponse'].items():
 
             if key == "_jsns":
                 # Skip Namespace attribute
@@ -65,7 +64,9 @@ class ResponseJson(Response):
 
             if not isinstance(value, list):
 
-                value = [value]
+                # This is a cornerstone
+
+                value = [value]  # pragma: no cover
 
             for item in value:
 
@@ -87,11 +88,16 @@ class ResponseJson(Response):
 
         if self.is_batch():
 
-            for key, value in self.response_dict[
+            for key in self.response_dict[
                 'Body'
-            ]['BatchResponse'].iteritems():
+            ]['BatchResponse'].keys():
 
-                if value['requestId'] == request_id:
+                if key == "_jsns":
+                    continue  # pragma: no cover
+
+                value = self.response_dict['Body']['BatchResponse'][key]
+
+                if int(value[0]['requestId']) == request_id:
 
                     return self._filter_response({
                         key: value
@@ -99,7 +105,7 @@ class ResponseJson(Response):
 
         else:
 
-            key = self.response_dict['Body'].keys()[0]
+            key = list(self.response_dict['Body'].keys())[0]
 
             return self._filter_response({
                 key: self.response_dict['Body'][key]
@@ -112,7 +118,7 @@ class ResponseJson(Response):
             ret_dict = {}
 
             for response in self.response_dict['Body'][
-                'BatchResponse']["Fault"]:
+                    'BatchResponse']["Fault"]:
 
                 request_id = response["requestId"]
 
@@ -131,7 +137,7 @@ class ResponseJson(Response):
             ret_dict = {}
 
             for response in self.response_dict['Body'][
-                'BatchResponse']["Fault"]:
+                    'BatchResponse']["Fault"]:
 
                 request_id = response["requestId"]
 

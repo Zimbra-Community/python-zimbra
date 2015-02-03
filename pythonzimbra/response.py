@@ -16,7 +16,7 @@ class Response(object):
         """ Clean up the response, so it can be used again
         """
 
-        pass
+        pass  # pragma: no cover
 
     def set_response(self, response_text):
 
@@ -26,7 +26,7 @@ class Response(object):
         from the HTTP communication into a managed object
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_header(self):
 
@@ -36,7 +36,7 @@ class Response(object):
         :rtype: dict
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_body(self):
 
@@ -46,7 +46,7 @@ class Response(object):
         :rtype: dict
         """
 
-        pass
+        pass  # pragma: no cover
 
     def is_batch(self):
 
@@ -56,7 +56,7 @@ class Response(object):
         :rtype: bool
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_batch(self):
 
@@ -82,7 +82,7 @@ class Response(object):
         :rtype: dict or None
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_response(self, request_id=0):
 
@@ -92,7 +92,7 @@ class Response(object):
         the first (or only one in a non-batch) response is returned.
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_fault_code(self):
 
@@ -108,7 +108,7 @@ class Response(object):
         :return: Fault code string
         """
 
-        pass
+        pass  # pragma: no cover
 
     def get_fault_message(self):
 
@@ -124,7 +124,7 @@ class Response(object):
         :return: Fault code error message
         """
 
-        pass
+        pass  # pragma: no cover
 
     def is_fault(self):
 
@@ -142,7 +142,7 @@ class Response(object):
 
             my_response = self.get_response()
 
-            if my_response.keys()[0] == "Fault":
+            if list(my_response.keys())[0] == "Fault":
 
                 return True
 
@@ -155,8 +155,7 @@ class Response(object):
         Currently the response dictionary is filtered like this:
 
           * If a list only has one item, the list is replaced by that item
-          * Keys with "_jsns" are removed (they only exist in the
-            json-version and thus aren't compatible)
+          * Namespace-Keys (_jsns and xmlns) are removed
 
         :param response_dict: the pregenerated, but unfiltered response dict
         :type response_dict: dict
@@ -166,15 +165,24 @@ class Response(object):
 
         filtered_dict = {}
 
-        for key, value in response_dict.iteritems():
+        for key, value in response_dict.items():
 
-            if key == '_jsns':
+            if key == "_jsns":
+
+                continue
+
+            if key == "xmlns":
 
                 continue
 
             if type(value) == list and len(value) == 1:
 
                 filtered_dict[key] = value[0]
+
+            elif type(value) == dict and len(value.keys()) == 1 and "_content" \
+                    in value.keys():
+
+                filtered_dict[key] = value["_content"]
 
             elif type(value) == dict:
 

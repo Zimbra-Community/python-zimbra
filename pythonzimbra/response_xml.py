@@ -2,7 +2,7 @@
 
 from xml.dom import minidom
 from pythonzimbra.tools.xmlserializer import dom_to_dict
-from response import Response
+from .response import Response
 
 
 class ResponseXml(Response):
@@ -19,19 +19,31 @@ class ResponseXml(Response):
 
     def set_response(self, response_text):
 
+        if not isinstance(response_text, str):
+
+            response_text = response_text.encode("utf-8")
+
         self.response_doc = minidom.parseString(response_text)
 
     def get_body(self):
 
-        return dom_to_dict(self.response_doc.getElementsByTagNameNS(
-            "*", "Body"
-        ).item(0))
+        return self._filter_response(
+            dom_to_dict(
+                self.response_doc.getElementsByTagNameNS(
+                    "*", "Body"
+                ).item(0).firstChild
+            )
+        )
 
     def get_header(self):
 
-        return dom_to_dict(self.response_doc.getElementsByTagNameNS(
-            "*", "Header"
-        ).item(0))
+        return self._filter_response(
+            dom_to_dict(
+                self.response_doc.getElementsByTagNameNS(
+                    "*", "Header"
+                ).item(0).firstChild
+            )
+        )
 
     def is_batch(self):
 
@@ -76,7 +88,7 @@ class ResponseXml(Response):
 
             ret_dict['idToName'][request_id] = tag
 
-            if tag not in ret_dict['nameToId'].keys():
+            if tag not in list(ret_dict['nameToId'].keys()):
 
                 ret_dict['nameToId'][tag] = []
 
@@ -96,7 +108,7 @@ class ResponseXml(Response):
 
             for child in search_node.childNodes:
 
-                if child.getAttribute("requestId") == request_id:
+                if int(child.getAttribute("requestId")) == request_id:
 
                     return self._filter_response(dom_to_dict(child))
 
@@ -123,15 +135,15 @@ class ResponseXml(Response):
             for child in search_node.childNodes:
 
                 ret_dict[child.getAttribute("requestId")] = self.get_response(
-                    child.getAttribute("requestId")
-                )["Fault"]["Detail"]["Error"]["Code"]["_content"]
+                    int(child.getAttribute("requestId"))
+                )["Fault"]["Detail"]["Error"]["Code"]
 
             return ret_dict
 
         else:
 
             return self.get_response()["Fault"]["Detail"]["Error"][
-                "Code"]["_content"]
+                "Code"]
 
     def get_fault_message(self):
 
@@ -146,11 +158,11 @@ class ResponseXml(Response):
             for child in search_node.childNodes:
 
                 ret_dict[child.getAttribute("requestId")] = self.get_response(
-                    child.getAttribute("requestId")
-                )["Fault"]["Reason"]["Text"]["_content"]
+                    int(child.getAttribute("requestId"))
+                )["Fault"]["Reason"]["Text"]
 
             return ret_dict
 
         else:
 
-            return self.get_response()["Fault"]["Reason"]["Text"]["_content"]
+            return self.get_response()["Fault"]["Reason"]["Text"]
