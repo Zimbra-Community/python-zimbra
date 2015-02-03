@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -50,12 +52,16 @@
   <h1>Source code for tests.test_admin</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot; Test administrative requests &quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">random</span>
+
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.request_json</span> <span class="kn">import</span> <span class="n">RequestJson</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.communication</span> <span class="kn">import</span> <span class="n">Communication</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.request_xml</span> <span class="kn">import</span> <span class="n">RequestXml</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.response_json</span> <span class="kn">import</span> <span class="n">ResponseJson</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.response_xml</span> <span class="kn">import</span> <span class="n">ResponseXml</span>
+<span class="kn">from</span> <span class="nn">pythonzimbra.tools.dict</span> <span class="kn">import</span> <span class="n">get_value</span>
 <span class="kn">from</span> <span class="nn">tests</span> <span class="kn">import</span> <span class="n">get_config</span>
 <span class="kn">from</span> <span class="nn">pythonzimbra.tools.auth</span> <span class="kn">import</span> <span class="n">authenticate</span>
 
@@ -101,14 +107,40 @@
 
             <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
+            <span class="n">test_account</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_account&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s">&quot;TEMP&quot;</span> <span class="ow">in</span> <span class="n">test_account</span><span class="p">:</span>
+
+                <span class="c"># Generate a random number and add it to the test account</span>
+
+                <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">()</span>
+                <span class="n">temp_account</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">5000000</span><span class="p">)</span>
+
+                <span class="n">test_account</span> <span class="o">=</span> <span class="n">test_account</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;TEMP&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_account</span><span class="p">))</span>
+
+            <span class="n">test_displayname</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span>
+                <span class="s">&quot;test_displayname&quot;</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="s">&#39;3&#39;</span><span class="p">:</span>
+
+                <span class="c"># Create unicode string for py2</span>
+
+                <span class="n">test_displayname</span> <span class="o">=</span> <span class="n">test_displayname</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+
             <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
                 <span class="s">&quot;CreateAccountRequest&quot;</span><span class="p">,</span>
                 <span class="p">{</span>
-                    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_account&quot;</span><span class="p">),</span>
+                    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">test_account</span><span class="p">,</span>
                     <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                         <span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span>
                         <span class="s">&quot;test_password&quot;</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
+                    <span class="s">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;n&quot;</span><span class="p">:</span> <span class="s">&quot;displayName&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="n">test_displayname</span>
+                    <span class="p">}</span>
                 <span class="p">},</span>
                 <span class="s">&quot;urn:zimbraAdmin&quot;</span>
             <span class="p">)</span>
@@ -135,11 +167,50 @@
             <span class="n">account_id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span>
             <span class="p">)[</span><span class="s">&quot;CreateAccountResponse&quot;</span><span class="p">][</span><span class="s">&quot;account&quot;</span><span class="p">][</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
 
+            <span class="c"># Get account from database and compare display name to the setting</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+            <span class="n">request</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span>
+                <span class="s">&quot;GetAccountRequest&quot;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s">&quot;account&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;by&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;_content&quot;</span><span class="p">:</span> <span class="n">test_account</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s">&quot;urn:zimbraAdmin&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">comm</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">is_fault</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span>
+                    <span class="s">&quot;GetAccount faulted. (</span><span class="si">%s</span><span class="s">) </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_code</span><span class="p">(),</span>
+                        <span class="n">response</span><span class="o">.</span><span class="n">get_fault_message</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="n">returned_name</span> <span class="o">=</span> <span class="n">get_value</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">get_response</span><span class="p">()[</span><span class="s">&quot;GetAccountResponse&quot;</span><span class="p">][</span><span class="s">&quot;account&quot;</span><span class="p">][</span><span class="s">&quot;a&quot;</span><span class="p">],</span>
+                <span class="s">&quot;displayName&quot;</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="n">returned_name</span><span class="p">,</span>
+                <span class="n">test_displayname</span><span class="p">,</span>
+                <span class="s">&quot;Zimbra didn&#39;t save the display name as requested.&quot;</span>
+            <span class="p">)</span>
+
             <span class="c"># Try to log in as the new account</span>
 
             <span class="n">user_token</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),</span>
-                <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_account&quot;</span><span class="p">),</span>
+                <span class="n">test_account</span><span class="p">,</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;admin_request_test&quot;</span><span class="p">,</span> <span class="s">&quot;test_password&quot;</span><span class="p">),</span>
                 <span class="s">&quot;name&quot;</span><span class="p">,</span>
                 <span class="n">request_type</span><span class="o">=</span><span class="n">request_type</span><span class="p">,</span>
@@ -230,7 +301,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, Dennis Ploeger &lt;develop@dieploegers.de&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
