@@ -1,6 +1,7 @@
 """ Test the auth tool """
 
 from unittest import TestCase
+from pythonzimbra.exceptions.auth import AuthenticationFailed
 from tests import get_config
 from pythonzimbra.tools.auth import authenticate
 
@@ -167,6 +168,42 @@ class TestAuth(TestCase):
                 )
             )
 
+    def test_auth_failure_raise(self):
+
+        """ Send a configured auth request with a wrong password in json
+        format and let it raise an exception
+        """
+
+        config = get_config()
+
+        if config.getboolean('auth_test', 'enabled'):
+
+            # Run only if enabled
+
+            try:
+
+                timestamp = config.getint('auth_test', 'timestamp')
+
+            except ValueError:
+
+                # If timestamp is set to a none-integer, we'll just assume
+                # that it's unset
+
+                timestamp = None
+
+            self.assertRaises(
+                AuthenticationFailed,
+                authenticate,
+                config.get('auth_test', 'url'),
+                config.get('auth_test', 'account'),
+                config.get('auth_test', 'preauthkey') + "1234",
+                config.get('auth_test', 'account_by'),
+                config.getint('auth_test', 'expires'),
+                timestamp,
+                request_type='json',
+                raise_on_error=True
+            )
+
     def test_password_auth_xml(self):
 
         """ Send a configured auth request in xml format using password
@@ -192,7 +229,7 @@ class TestAuth(TestCase):
                 response,
                 None,
                 "Authentication with the configured settings "
-                "was not ssuccessful"
+                "was not successful"
             )
 
     def test_password_auth_json(self):
@@ -220,7 +257,63 @@ class TestAuth(TestCase):
                 response,
                 None,
                 "Authentication with the configured settings "
-                "was not ssuccessful"
+                "was not successful"
+            )
+
+    def test_password_auth_failure_xml(self):
+
+        """ Send a configured auth request in xml format using password based
+        authentication and a wrong password and check the error
+        """
+
+        config = get_config()
+
+        if config.getboolean("auth_by_password_test", "enabled"):
+
+            # Run only if enabled
+
+            response = authenticate(
+                config.get("auth_by_password_test", "url"),
+                config.get("auth_by_password_test", "account"),
+                config.get("auth_by_password_test", "password") + "1234",
+                config.get("auth_by_password_test", "account_by"),
+                use_password=True,
+                request_type="xml"
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication with a bad password"
+                "was successful"
+            )
+
+    def test_password_auth_failure_json(self):
+
+        """ Send a configured auth request in json format using password based
+        authentication and a wrong password and check the error
+        """
+
+        config = get_config()
+
+        if config.getboolean("auth_by_password_test", "enabled"):
+
+            # Run only if enabled
+
+            response = authenticate(
+                config.get("auth_by_password_test", "url"),
+                config.get("auth_by_password_test", "account"),
+                config.get("auth_by_password_test", "password") + "1234",
+                config.get("auth_by_password_test", "account_by"),
+                use_password=True,
+                request_type="json"
+            )
+
+            self.assertEqual(
+                response,
+                None,
+                "Authentication with a bad password"
+                "was successful"
             )
 
     def test_admin_auth_xml(self):

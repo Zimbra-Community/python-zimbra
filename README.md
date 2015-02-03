@@ -1,9 +1,14 @@
 Python-Zimbra
 =============
 
+[![Build Status](https://travis-ci.org/Zimbra-Community/python-zimbra.svg?branch=py3)](https://travis-ci.org/Zimbra-Community/python-zimbra)
+[![Coverage Status](https://coveralls.io/repos/Zimbra-Community/python-zimbra/badge.png?branch=py3)](https://coveralls.io/r/Zimbra-Community/python-zimbra?branch=py3)
+
 Python classes to access Zimbra SOAP backend with a few utilities. Handles
 creating and sending Zimbra SOAP queries to the backend and adds a few
 utilities such as a preauth generator.
+
+Compatible with Python 2.7 and 3.x (cPython and PyPy)
 
 This framework is not intended to supply user level access to Zimbra
 functions. Zimbra tends to be too dynamic and complex for this to work. This
@@ -163,3 +168,49 @@ There are missing sanity checks on purpose. This is because the Zimbra API is
 
 So please be aware of this and use the library with caution. Don't expose the
  library to the public without doing sanity checks on your own.
+
+Testing
+-------
+
+Python-Zimbra includes a testsuite with unittests, that test the supported
+features.
+
+To enable testing in your environment, copy the config.ini.dist to config.ini
+ in the tests module and configure it to match your environment.
+
+For some tests to work you need a Zimbra server with an admin and a
+user account. You have to specifically enable these tests. Here's an overview
+ of what is done using your zimbra server inside these tests:
+
+* test_admin.py
+  * Authenticate as admin
+  * Add a test account
+  * Try logging in using that test account
+  * Delete the test account
+* test_auth.py
+  * Authenticate as user
+  * Authenticate as user with wrong preauth key
+  * Authenticate as user with password
+  * Authenticate as user with wrong password
+* test_autoresponse.py
+  * Authenticate as user
+  * Send NoOpRequest
+* test_fault.py
+  * Authenticate as user
+  * Query a non-existing folder using GetFolderRequest
+  * Query a non-existing folder using GetFolderRequest inside a BatchRequest
+* test_genrequest.py
+  * Authenticate as user
+  * Send a NoOpRequest
+  * Send a NoOpRequest inside a BatchRequest
+  * Send a GetInfoRequest
+  * Send a NoOpRequest and a GetInfoRequest inside a BatchRequest
+
+To run the test, enter the tests subdirectory and run
+
+    python -m unittest discover -s ..
+
+We thankfully use [Travis](travis-ci.org) for continuous integration and
+[Coveralls](https://coveralls.io) for code coverage.
+
+The Zimbra server used in CI-testing is kindly hosted by [efm](http://www.efm.de/).

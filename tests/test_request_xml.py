@@ -1,9 +1,10 @@
 """ Request tests """
 
 from unittest import TestCase
+from xml.dom import minidom
+from pythonzimbra.tools.xmlserializer import dom_to_dict
 from pythonzimbra.request_xml import RequestXml
-from pythonzimbra.exceptions.request import \
-    NoNamespaceGiven, RequestHeaderContextException
+from pythonzimbra.exceptions.request import RequestHeaderContextException
 
 
 class TestRequestXml(TestCase):
@@ -23,6 +24,14 @@ class TestRequestXml(TestCase):
     def setUp(self):
         self.request = RequestXml()
 
+    def tool_assert_equal_xml(self, xml_a, xml_b, message=None):
+
+        self.assertEqual(
+            dom_to_dict(minidom.parseString(xml_a).firstChild),
+            dom_to_dict(minidom.parseString(xml_b).firstChild),
+            message
+        )
+
     def test_empty_request(self):
         """ Create an empty request and check the created xml
         """
@@ -34,7 +43,7 @@ class TestRequestXml(TestCase):
                           'type="xml"/></context></soap:Header><soap:Body' \
                           '/></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -107,7 +116,7 @@ class TestRequestXml(TestCase):
                           'type="new"/></context></soap:Header><soap:Body' \
                           '/></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -133,7 +142,7 @@ class TestRequestXml(TestCase):
             'onerror="urn:zimbra" ' \
             'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -157,7 +166,7 @@ class TestRequestXml(TestCase):
                           '><BatchRequest onerror="stop" ' \
                           'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -186,8 +195,8 @@ class TestRequestXml(TestCase):
             int,
             msg="Returned request_id for request 1 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(
@@ -207,7 +216,7 @@ class TestRequestXml(TestCase):
             'requestId="1" sections="mbox,prefs" ' \
             'xmlns="urn:zimbra"/></BatchRequest></soap:Body></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -225,8 +234,8 @@ class TestRequestXml(TestCase):
             int,
             msg="Returned request_id for request 2 is not of type int, "
                 "but of type %s" % (
-                type(request_id)
-            )
+                    type(request_id)
+                )
         )
 
         self.assertEqual(
@@ -248,7 +257,7 @@ class TestRequestXml(TestCase):
             'sections="zimlets" ' \
             'xmlns="urn:zimbra"/></BatchRequest></soap:Body></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )
@@ -287,7 +296,7 @@ class TestRequestXml(TestCase):
                           'prefs" ' \
                           'xmlns="urn:zimbra"/></soap:Body></soap:Envelope>'
 
-        self.assertEqual(
+        self.tool_assert_equal_xml(
             expected_result,
             self.request.get_request()
         )

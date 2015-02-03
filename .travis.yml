@@ -1,0 +1,30 @@
+sudo: false
+
+language: python
+
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+  - pypy
+  - pypy3
+
+install:
+  - pip install coveralls
+
+script:
+  # Securely load config.ini from external web service
+  - curl -u $CONFDEPLOY_USER:$CONFDEPLOY_PASSWORD $CONFDEPLOY_URL > tests/config.ini
+
+  # Run tests
+  - cd tests
+
+  # Use a specific configuration for py3
+  - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then cp .coveragercpy3 .coveragerc; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == pypy3 ]]; then cp .coveragercpy3 .coveragerc; fi
+
+  - coverage run -m unittest discover -s ..
+
+after_success:
+  coveralls

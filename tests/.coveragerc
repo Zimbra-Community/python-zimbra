@@ -1,0 +1,9 @@
+# Test coverage configuration.
+[run]
+branch = true
+source = pythonzimbra
+
+[report]
+exclude_lines =
+    pragma: no cover
+    pragma: no cover py3

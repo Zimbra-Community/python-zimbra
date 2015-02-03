@@ -1,11 +1,23 @@
 """ Zimbra communication handler. """
 
-import urllib2
+from __future__ import unicode_literals
+
+import sys
+
+# Py2-Compatibility
+
+if sys.version < '3':
+    import urllib2 as ur  # pragma: no cover py3
+    import urllib2 as ue  # pragma: no cover py3
+else:
+    import urllib.request as ur  # pragma: no cover py2
+    import urllib.error as ue  # pragma: no cover py2
+
 from pythonzimbra.request_json import RequestJson
 from pythonzimbra.request_xml import RequestXml
 from pythonzimbra.response_xml import ResponseXml
 from pythonzimbra.response_json import ResponseJson
-from exceptions.communication import *
+from .exceptions.communication import *
 
 
 class Communication(object):
@@ -33,8 +45,14 @@ class Communication(object):
         self.url = url
         self.timeout = timeout
 
+        if sys.version < '3' and self.url.startswith("https"):
+
+            # Force tlsv1 on https-requests in Python 2
+
+            import tools.urllib2_tls  # pragma: no cover py3
+
     def gen_request(self, request_type="json", token=None, set_batch=False,
-        batch_onerror=None):
+                    batch_onerror=None):
 
         """ Convenience method to quickly generate a token
 
@@ -57,7 +75,7 @@ class Communication(object):
 
             raise UnknownRequestType()
 
-        if not token is None:
+        if token is not None:
             local_request.set_auth_token(token)
 
         if set_batch:
@@ -101,33 +119,47 @@ class Communication(object):
 
         try:
 
-            server_request = urllib2.urlopen(
+            server_request = ur.urlopen(
                 self.url,
-                request.get_request(),
+                request.get_request().encode("utf-8"),
                 self.timeout
             )
 
+            server_response = server_request.read()
+
+            if isinstance(server_response, bytes):
+
+                server_response = server_response.decode("utf-8")
+
             if response is None:
 
-                local_response.set_response(server_request.read())
+                local_response.set_response(
+                    server_response
+                )
 
             else:
 
-                response.set_response(server_request.read())
+                response.set_response(server_response)
 
-        except urllib2.HTTPError as e:
+        except ue.HTTPError as e:
 
             if e.code == 500:
 
                 # 500 codes normally returns a SoapFault, that we can use
 
+                server_response = e.fp.read()
+
+                if isinstance(server_response, bytes):
+
+                    server_response = server_response.decode("utf-8")
+
                 if response is None:
 
-                    local_response.set_response(e.fp.read())
+                    local_response.set_response(server_response)
 
                 else:
 
-                    response.set_response(e.fp.read())
+                    response.set_response(server_response)
 
             else:
 

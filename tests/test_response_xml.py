@@ -2,7 +2,6 @@
 
 from unittest import TestCase
 from pythonzimbra.response_xml import ResponseXml
-import pickle
 
 
 class TestResponseXml(TestCase):
@@ -26,7 +25,6 @@ class TestResponseXml(TestCase):
     """ The result we test against (coming from a GetVersionInfoRequest by
     running zmsoap -z --json -t admin GetVersionInfoRequest -vv) """
 
-
     tested_server_result_multi_value = \
         '<soap:Envelope xmlns:soap="http://www.w3' \
         '.org/2003/05/soap-envelope"><soap:Header><context' \
@@ -36,7 +34,6 @@ class TestResponseXml(TestCase):
         '<domain id="444d6b9" name="client1.unbound.example.fr"></domain>' \
         '</GetAllDomainsResponse></soap:Body' \
         '></soap:Envelope>'\
-
 
     """ This one is a stripped version of a GetAlDomains """
 
@@ -60,31 +57,37 @@ class TestResponseXml(TestCase):
         """ Checks the body against a pickled expectation
         """
 
-        expected_result = "(dp0\nVBody\np1\n(" \
-                          "dp2\nVGetVersionInfoResponse\np3\n(" \
-                          "dp4\nVinfo\np5\n(" \
-                          "dp6\nVmajorversion\np7\nV8\np8\nsVminorversion\np9" \
-                          "\nV0\np10\nsVmicroversion\np11\nV5\np12" \
-                          "\nsVplatform\np13\nVUBUNTU12_64\np14\nsVhost\np15" \
-                          "\nVzre-ubuntu12-64\np16\nsVversion\np17\nV8.0" \
-                          ".5_GA_5839.NETWORK\np18\nsVrelease\np19" \
-                          "\nV20130910124124\np20\nsVtype\np21\nVNETWORK\np22" \
-                          "\nsVbuildDate\np23\nV20130910-1244\np24\nssS" \
-                          "'xmlns'\np25\nVurn:zimbraAdmin\np26\nsss."
+        expected_result = {
+            "GetVersionInfoResponse": {
+                "info": {
+                    "majorversion": "8",
+                    "buildDate": "20130910-1244",
+                    "microversion": "5",
+                    "platform": "UBUNTU12_64",
+                    "host": "zre-ubuntu12-64",
+                    "version": "8.0.5_GA_5839.NETWORK",
+                    "release": "20130910124124",
+                    "type": "NETWORK",
+                    "minorversion": "0"
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_body())
+            self.response.get_body()
         )
 
     def test_get_header(self):
 
-        expected_result = "(dp0\nVHeader\np1\n(dp2\nVcontext\np3\n(" \
-                          "dp4\nS'xmlns'\np5\nVurn:zimbra\np6\nsss."
+        expected_result = {
+            "context": {
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_header())
+            self.response.get_header()
         )
 
     def test_is_batch(self):
@@ -105,22 +108,26 @@ class TestResponseXml(TestCase):
 
     def test_get_response(self):
 
-        expected_result = "(dp0\nVGetVersionInfoResponse\np1\n(" \
-                          "dp2\nVinfo\np3\n(" \
-                          "dp4\nVmajorversion\np5\nV8\np6\nsVminorversion\np7" \
-                          "\nV0\np8\nsVmicroversion\np9\nV5\np10\nsVplatform" \
-                          "\np11\nVUBUNTU12_64\np12\nsVhost\np13\nVzre" \
-                          "-ubuntu12-64\np14\nsVversion\np15\nV8.0.5_GA_5839" \
-                          ".NETWORK\np16\nsVrelease\np17\nV20130910124124" \
-                          "\np18\nsVtype\np19\nVNETWORK\np20\nsVbuildDate" \
-                          "\np21\nV20130910-1244\np22\nssS'xmlns'\np23\nVurn" \
-                          ":zimbraAdmin\np24\nss."
+        expected_result = {
+            "GetVersionInfoResponse": {
+                "info": {
+                    "majorversion": "8",
+                    "buildDate": "20130910-1244",
+                    "microversion": "5",
+                    "platform": "UBUNTU12_64",
+                    "host": "zre-ubuntu12-64",
+                    "version": "8.0.5_GA_5839.NETWORK",
+                    "release": "20130910124124",
+                    "type": "NETWORK",
+                    "minorversion": "0"
+                }
+            }
+        }
 
         self.assertEqual(
             expected_result,
-            pickle.dumps(self.response.get_response())
+            self.response.get_response()
         )
-
 
     def test_get_response_multi(self):
         """ For cases where we have several tags with the same name.
@@ -132,7 +139,7 @@ class TestResponseXml(TestCase):
         resp = self.response_multi.get_response()
         gad_resp = resp['GetAllDomainsResponse']
 
-        self.assertTrue(gad_resp.has_key('domain'))
+        self.assertTrue('domain' in gad_resp)
         self.assertTrue(gad_resp['domain'])
         self.assertIsInstance(gad_resp['domain'], list)
         self.assertEqual(len(gad_resp['domain']), 2)

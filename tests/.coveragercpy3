@@ -1,0 +1,11 @@
+# Test coverage configuration.
+[run]
+branch = true
+source = pythonzimbra
+omit =
+    */urllib2_tls.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    pragma: no cover py2
