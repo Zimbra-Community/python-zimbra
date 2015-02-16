@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: python-zimbra
-Version: 2.0rc1
+Version: 2.0
 Summary: Python classes to access Zimbra SOAP backend with a few utilities.
 Home-page: https://github.com/Zimbra-Community/python-zimbra
 Author: Dennis Ploeger
