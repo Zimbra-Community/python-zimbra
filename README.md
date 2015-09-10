@@ -1,24 +1,10 @@
 Python-Zimbra
 =============
 
-* cPython 2.7
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy27.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy27)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy27/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy27/.lastFinished/tests/htmlcov/index.html)
-* cPython 3.2
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy32.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy32)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy32/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy32/.lastFinished/tests/htmlcov/index.html)
-* cPython 3.3.6
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy336.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy336)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy336/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy336/.lastFinished/tests/htmlcov/index.html)
-* cPython 3.4.3
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy343.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy343)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy343/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy343/.lastFinished/tests/htmlcov/index.html)
-* PyPy 2.6.1
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPypy261.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPypy261)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy261/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy261/.lastFinished/tests/htmlcov/index.html)
-* PyPy3 2.4.0
-  * [![Build Status](https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPypy3240.png)](http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPypy3240)
-  * [![Coverage status](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy3240/.lastFinished/tests/coverage.png/coverage.png)](http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy3240/.lastFinished/tests/htmlcov/index.html)
+| cPython 2.7       | cPython 3.2       | cPython 3.3.6       | cPython 3.4.3       | PyPy 2.6.1              | PyPy3 2.4.0               |
+|-------------------|-------------------|---------------------|---------------------|-------------------------|---------------------------|
+| [![ibs27]] [bs27] | [![ibs32]] [bs32] | [![ibs336]] [bs336] | [![ibs343]] [bs343] | [![ibspy261]] [bspy261] | [![ibspy3240]] [bspy3240] |
+| [![icv27]] [cv27] | [![icv32]] [cv32] | [![icv336]] [cv336] | [![icv343]] [cv343] | [![icvpy261]] [cvpy261] | [![icvpy3240]] [cvpy3240] | 
 
 Python classes to access Zimbra SOAP backend with a few utilities. Handles
 creating and sending Zimbra SOAP queries to the backend and adds a few
@@ -230,3 +216,33 @@ We thankfully use [Travis](travis-ci.org) for continuous integration and
 [Coveralls](https://coveralls.io) for code coverage.
 
 The Zimbra server used in CI-testing is kindly hosted by [efm](http://www.efm.de/).
+
+[ibs27]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy27.png
+[bs27]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy27
+[icv27]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy27/.lastFinished/tests/coverage.png/coverage.png
+[cv27]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy27/.lastFinished/tests/htmlcov/index.html 
+
+[ibs32]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy32.png
+[bs32]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy32
+[icv32]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy32/.lastFinished/tests/coverage.png/coverage.png
+[cv32]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy32/.lastFinished/tests/htmlcov/index.html
+
+[ibs336]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy336.png
+[bs336]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy336
+[icv336]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy336/.lastFinished/tests/coverage.png/coverage.png
+[cv336]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy336/.lastFinished/tests/htmlcov/index.html
+ 
+[ibs343]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPy343.png
+[bs343]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPy343
+[icv343]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy343/.lastFinished/tests/coverage.png/coverage.png
+[cv343]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPy343/.lastFinished/tests/htmlcov/index.html
+ 
+[ibspy261]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPypy261.png
+[bspy261]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPypy261
+[icvpy261]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy261/.lastFinished/tests/coverage.png/coverage.png
+[cvpy261]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy261/.lastFinished/tests/htmlcov/index.html 
+
+[ibspy3240]: https://img.shields.io/teamcity/http/ci.blueocean-net.de/s/ZimbraCommunity_PythonZimbra_TestPypy3240.png
+[bspy3240]: http://ci.blueocean-net.de/viewType.html?buildTypeId=ZimbraCommunity_PythonZimbra_TestPypy3240
+[icvpy3240]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy3240/.lastFinished/tests/coverage.png/coverage.png
+[cvpy3240]: http://ci.blueocean-net.de/repository/download/ZimbraCommunity_PythonZimbra_TestPypy3240/.lastFinished/tests/htmlcov/index.html
