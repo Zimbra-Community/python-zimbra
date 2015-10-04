@@ -48,8 +48,8 @@ Now, build up the communication object:
     comm = Communication(url)
 
 This will be used to send the request later on. But first,
-we have to authenticate using Zimbra preauth. We can do this by using the
-auth-helper:
+we have to authenticate using [Zimbra preauth](https://wiki.zimbra.com/wiki/Preauth).
+We can do this by using the auth-helper:
 
     token = auth.authenticate(
         url,
