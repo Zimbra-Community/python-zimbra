@@ -41,7 +41,7 @@ First, import the needed libraries (You will learn about them later):
 
 Let's assume you have a variable called "url" which holds the URL to your
 Zimbra server. For our example this has to be the URL for the user backend, 
-that is typically "https://<yourzimbraserver>/service/soap".
+that is typically `https://your-zimbra-server/service/soap`.
 
 Now, build up the communication object:
 
@@ -123,7 +123,7 @@ Authentication against the administration console
 -------------------------------------------------
 
 Zimbra currently doesn't support the preauth-method for authentications against
-the admin-console (URL "https://<your-zimbra-server:7071/service/admin/soap").
+the admin-console (URL `https://your-zimbra-server:7071/service/admin/soap`).
 
 python-zimbra's auth tool can be used to authenticate to this url by specifying
 the password instead of the preauth-key and setting the parameter admin_auth to
