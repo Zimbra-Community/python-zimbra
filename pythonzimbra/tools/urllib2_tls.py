@@ -23,8 +23,7 @@ class TLS1Connection(httplib.HTTPSConnection):
         """Overrides HTTPSConnection.connect to specify TLS version"""
         # Standard implementation from HTTPSConnection, which is not
         # designed for extension, unfortunately
-        sock = socket.create_connection((self.host, self.port),
-                                        self.timeout, self.source_address)
+        sock = socket.create_connection((self.host, self.port), self.timeout)
         if getattr(self, '_tunnel_host', None):
             self.sock = sock  # pragma: no cover
             self._tunnel()  # pragma: no cover
