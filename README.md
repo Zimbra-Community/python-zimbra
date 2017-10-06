@@ -30,7 +30,18 @@ There are missing sanity checks on purpose. This is because the Zimbra API is
 So please be aware of this and use the library with caution. Don't expose the
  library to the public without doing sanity checks on your own.
 
-## Installation
+## Tutorial
+
+This tutorial will explain you how to get information about a folder of a specific user.
+this is how you do it in a few steps:
+* [Installation](#installation)
+* [Imports](#imports)
+* [Communication and Token](#setup)
+* [Creating your request](#request)
+* [Fault handling](#fault)
+* [Batch](#bacth)
+
+### Installation
 
 To install, either use :
 
@@ -41,15 +52,6 @@ or
 `easy_install python-zimbra`
 
 You may add `--pre` to download the pre-release
-
-## Tutorial
-
-This tutorial will explain you how to get information about a folder of a specific user.
-this is how you do it in a few steps:
-* [Imports](#imports)
-* [Communication and Token](#setup)
-* [Creating your request](#request)
-* [Fault handling](#fault)
 
 ### Imports
 First, import the needed libraries (You will learn about them later):
@@ -116,7 +118,7 @@ response.get_fault_message()
 * The fault_code is Zimbra's own fault message code (like mail.NO_SUCH_FOLDER).
 * The message is a more elaborate message like (no such folder path: /...).
  
-## Batch requests
+### Batch
 
 Working with batch requests is also possible. To do that, set the
 parameter "set_batch":
