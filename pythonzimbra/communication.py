@@ -127,7 +127,8 @@ class Communication(object):
             server_request = ur.urlopen(
                 self.url,
                 request.get_request().encode("utf-8"),
-                self.timeout
+                self.timeout,
+                context=self.context
             )
 
             server_response = server_request.read()
