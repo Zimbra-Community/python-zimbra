@@ -14,7 +14,7 @@ from pythonzimbra.exceptions.auth import *
 
 def authenticate(url, account, key, by='name', expires=0, timestamp=None,
                  timeout=None, request_type="xml", admin_auth=False,
-                 use_password=False, raise_on_error=False):
+                 use_password=False, raise_on_error=False, context=None):
 
     """ Authenticate to the Zimbra server
 
@@ -91,7 +91,7 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
         ns
     )
 
-    server = Communication(url, timeout)
+    server = Communication(url, timeout, context)
 
     if request_type == 'xml':
 
