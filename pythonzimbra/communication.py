@@ -36,14 +36,19 @@ class Communication(object):
     timeout = None
 
     """ Timeout of the request """
+    
+    context = None
+    
+    """ SSL Context of the request """
 
-    def __init__(self, url, timeout=None):
+    def __init__(self, url, timeout=None, context=None):
 
         """ Initialize the communication handler.
         """
 
         self.url = url
         self.timeout = timeout
+        self.context = context
 
         if sys.version < '3' and self.url.startswith("https"):
 
@@ -122,7 +127,8 @@ class Communication(object):
             server_request = ur.urlopen(
                 self.url,
                 request.get_request().encode("utf-8"),
-                self.timeout
+                self.timeout,
+                context=self.context
             )
 
             server_response = server_request.read()

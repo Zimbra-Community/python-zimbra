@@ -14,7 +14,7 @@ from pythonzimbra.exceptions.auth import *
 
 def authenticate(url, account, key, by='name', expires=0, timestamp=None,
                  timeout=None, request_type="xml", admin_auth=False,
-                 use_password=False, raise_on_error=False):
+                 use_password=False, raise_on_error=False, context=None):
 
     """ Authenticate to the Zimbra server
 
@@ -37,6 +37,7 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
       based user authentication.
     :param raise_on_error: Should I raise an exception when an authentication
       error occurs or just return None?
+    :param context: Use a custom SSL context
     :return: The authentication token or None
     :rtype: str or None or unicode
     """
@@ -91,7 +92,7 @@ def authenticate(url, account, key, by='name', expires=0, timestamp=None,
         ns
     )
 
-    server = Communication(url, timeout)
+    server = Communication(url, timeout, context)
 
     if request_type == 'xml':
 
