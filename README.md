@@ -167,6 +167,25 @@ All requests should conform to this dictionary format and the responses are
 also returned in this format. Subnodes can also contain lists of
 dictionaries, which will create multiple subnodes with the same tag.
 
+## Use a Custom SSL Context
+
+In test environments sometimes SSL is not available and we want to disable SSL verification.
+
+To achieve this we can use a [custom SSL context](https://docs.python.org/3/library/ssl.html#ssl-contexts):
+
+```python
+import ssl
+
+context = ssl.SSLContext()
+
+...
+
+usr_token = auth.authenticate(
+    url=url,
+    ...,
+    context=context
+)
+```
 
 ## Testing
 
