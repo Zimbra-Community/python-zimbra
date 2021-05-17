@@ -173,12 +173,19 @@ In test environments sometimes SSL is not available and we want to disable SSL v
 
 To achieve this we can use a [custom SSL context](https://docs.python.org/3/library/ssl.html#ssl-contexts):
 
+Not yet released on pypi, so put in your `requirements.txt`:
+
+    -e git+https://github.com/Zimbra-Community/python-zimbra.git#egg=python-zimbra
+
+Example:
+
 ```python
 import ssl
 
 context = ssl.SSLContext()
 
 ...
+comm = Communication(url, context=context)
 
 usr_token = auth.authenticate(
     url=url,
