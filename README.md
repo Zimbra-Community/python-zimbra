@@ -1,10 +1,5 @@
 # Python-Zimbra
 
-| cPython 2.7       | cPython 3.2       | cPython 3.3.6       | cPython 3.4.3       | PyPy 2.6.1              | PyPy3 2.4.0               |
-|-------------------|-------------------|---------------------|---------------------|-------------------------|---------------------------|
-| [![ibs27]] [bs27] | [![ibs32]] [bs32] | [![ibs336]] [bs336] | [![ibs343]] [bs343] | [![ibspy261]] [bspy261] | [![ibspy3240]] [bspy3240] |
-| [![icv27]] [cv27] | [![icv32]] [cv32] | [![icv336]] [cv336] | [![icv343]] [cv343] | [![icvpy261]] [cvpy261] | [![icvpy3240]] [cvpy3240] | 
-
 Python classes to access Zimbra SOAP backend with a few utilities. Handles
 creating and sending Zimbra SOAP queries to the backend and adds a few
 utilities such as a preauth generator.
