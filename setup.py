@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     license='BSD 2-clause License',  # example license
     description='Python classes to access Zimbra SOAP backend with a few utilities.',
-    long_description=README,
+    long_description='Python classes to access Zimbra SOAP backend with a few utilities.',
     url='https://github.com/Zimbra-Community/python-zimbra',
     author='Zeta Alliance',
     author_email='info@zetalliance.org',
