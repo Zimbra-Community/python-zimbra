@@ -8,15 +8,15 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='python-zimbra',
-    version='2.0rc1',
+    version='2.1',
     packages=['pythonzimbra'],
     include_package_data=True,
     license='BSD 2-clause License',  # example license
     description='Python classes to access Zimbra SOAP backend with a few utilities.',
     long_description=README,
     url='https://github.com/Zimbra-Community/python-zimbra',
-    author='Dennis Ploeger',
-    author_email='develop@dieploegers.de',
+    author='Zeta Alliance',
+    author_email='info@zetalliance.org',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
