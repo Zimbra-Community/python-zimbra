@@ -59,13 +59,13 @@ def dict_to_dom(root_node, xml_dict):
 
         elif type(value) == list:
 
-            for multinode in value:
+            tmp_node = root_node.ownerDocument.createElement(key)
 
-                tmp_node = root_node.ownerDocument.createElement(key)
+            for multinode in value:
 
                 dict_to_dom(tmp_node, multinode)
 
-                root_node.appendChild(tmp_node)
+            root_node.appendChild(tmp_node)
 
         else:
 
